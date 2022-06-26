@@ -1,147 +1,3 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-    <link href="https://code.jquery.com/ui/1.13.1/themes/ui-lightness/jquery-ui.css" rel="stylesheet"/>
-    <title>Hello, world!</title>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 100px;">
-        <a class="navbar-brand" href="#">NCU IoT Project 2022</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarText">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Sign In</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Data Test</a>
-            </li>
-          </ul>
-          <span class="navbar-text">
-            Under Development by Qi Xiang &copy;
-          </span>
-        </div>
-    </nav>
-
-    <!--<div id="showData" style="display: flex;justify-content: center;margin-top: 150px;">
-        <table style="border: 1px solid black;">
-            <tr style="border: 1px solid black;">
-              <th style="border: 1px solid black;">User Name</th>
-              <th style="border: 1px solid black;">Journey Title</th>
-              <th style="border: 1px solid black;">Distance Status</th>
-              <th style="border: 1px solid black;">Journey Detail</th>
-            </tr>
-            <tr style="border: 1px solid black;">
-              <td style="border: 1px solid black;" id="data-user-name">No Data!</td>
-              <td style="border: 1px solid black;" id="data-journey-title">No Data!</td>
-              <td style="border: 1px solid black;" id="data-distance-status"><a href="#" id="openDialog">Click me</a></td>
-              <td style="border: 1px solid black;" id="data-journey-detail">No Data!</td>
-            </tr>
-          </table>          
-    </div>-->
-
-    <div id="distance-modal" title="詳細車距資訊" style="display:none">
-        <p>以下為詳細的車距資訊:</p>
-        <table style="border: 1px solid black;">
-            <tr style="border: 1px solid black;">
-              <th style="border: 1px solid black;">左方平均車距</th>
-              <th style="border: 1px solid black;">右方平均車距</th>
-              <th style="border: 1px solid black;">後方平均車距</th>
-            </tr>
-            <tr style="border: 1px solid black;">
-              <td style="border: 1px solid black;" id="data-left-distance">No Data!</td>
-              <td style="border: 1px solid black;" id="data-right-distance">No Data!</td>
-              <td style="border: 1px solid black;" id="data-back-distance">No Data!</td>
-            </tr>
-          </table>
-          <div id="violation_1">
-
-          </div>
-          <div id="violation_2">
-
-          </div>
-          <div id="violation_3">
-
-          </div>
-          <!--<p style="margin-top: 20px;">以下為違規的車距資訊:</p>
-          <table style="border: 1px solid black;">
-            <p style="margin-top: 20px;">左方車距違規資訊:</p>
-            <tr style="border: 1px solid black;">
-              <th style="border: 1px solid black;">違規編號</th>
-              <th style="border: 1px solid black;">違規車距差</th>
-            </tr>
-            <tr style="border: 1px solid black;">
-              <td style="border: 1px solid black;" id="data-left-distance">No Data!</td>
-              <td style="border: 1px solid black;" id="data-right-distance">No Data!</td>
-            </tr>
-          </table>-->
-    </div>
-
-    <div id="journey-modal" title="詳細行程資訊" style="display:none">
-      <p>以下為詳細的行程資訊:</p>
-      <table style="border: 1px solid black;text-align: center;">
-          <tr style="border: 1px solid black;">
-            <th style="border: 1px solid black;padding: 5px;">開始時間</th>
-            <td style="border: 1px solid black;padding: 5px;" id="data-journey-start">No Data!</td>
-          </tr>
-          <tr style="border: 1px solid black;">
-            <th style="border: 1px solid black;padding: 5px;">結束時間</th>
-            <td style="border: 1px solid black;padding: 5px;" id="data-journey-end">No Data!</td>
-          </tr>
-          <tr style="border: 1px solid black;">
-            <th style="border: 1px solid black;padding: 5px;">行程總時間</th>
-            <td style="border: 1px solid black;padding: 5px;" id="data-journey-totaltime">No Data!</td>
-          </tr>
-        </table>
-        <!--<p style="margin-top: 20px;">以下為違規的車距資訊:</p>
-        <table style="border: 1px solid black;">
-          <p style="margin-top: 20px;">左方車距違規資訊:</p>
-          <tr style="border: 1px solid black;">
-            <th style="border: 1px solid black;">違規編號</th>
-            <th style="border: 1px solid black;">違規車距差</th>
-          </tr>
-          <tr style="border: 1px solid black;">
-            <td style="border: 1px solid black;" id="data-left-distance">No Data!</td>
-            <td style="border: 1px solid black;" id="data-right-distance">No Data!</td>
-          </tr>
-        </table>-->
-  </div>
-      
-     
-
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
-
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
-    -->
-  </body>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"referrerpolicy="no-referrer"></script>
-<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-database.js"></script>
-<script type="module" src="/FireBaseDemo/table.js"></script>
-<!--<script type="module">
 	// Import the functions you need from the SDKs you need
 	import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
 	import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-analytics.js";
@@ -186,21 +42,21 @@
           console.log(user_data);
           var basic_table = String(`<div id="showData" style="display: flex;justify-content: center;margin: 25px 0 25px 0;">
                                   <table id="`+user_name+`" style="border: 1px solid black;">
-                                    <tr style="border: 1px solid black;">
-                                        <th style="border: 1px solid black;">User Name</th>
-                                        <th style="border: 1px solid black;">Journey Title</th>
-                                        <th style="border: 1px solid black;">Distance Status</th>
-                                        <th style="border: 1px solid black;">Journey Detail</th>
+                                    <tr style="border: 1px solid black;text-align:center;">
+                                        <th style="border: 1px solid black;padding:5px;">User Name</th>
+                                        <th style="border: 1px solid black;padding:5px;"">Journey Title</th>
+                                        <th style="border: 1px solid black;padding:5px;"">Distance Status</th>
+                                        <th style="border: 1px solid black;padding:5px;"">Journey Detail</th>
                                     </tr>
                                   </table>          
                                 </div>`)
           document.body.insertAdjacentHTML('beforeend', basic_table)
           for(var j = 1;j<=Object.keys(user_data).length;j++){
-              var row = `<tr style="border: 1px solid black;">
-                              <td style="border: 1px solid black;" id="data-user-name">chock_test_`+ String(i + 3) + `</td>
-                              <td style="border: 1px solid black;" id="data-journey-title">Journey`+String(j)+`</td>
-                              <td style="border: 1px solid black;" id="data-distance-status" class="journey_`+String(j)+`"><a href="#" id="distance_`+String(j)+`">Click me</a></td>
-                              <td style="border: 1px solid black;" id="data-journey-detail"><a href="#" id="journey_`+String(j)+`">Click me</a></td>
+              var row = `<tr style="border: 1px solid black;text-align:center;">
+                              <td style="border: 1px solid black;padding:5px;"" id="data-user-name">chock_test_`+ String(i + 3) + `</td>
+                              <td style="border: 1px solid black;padding:5px;"" id="data-journey-title">Journey`+String(j)+`</td>
+                              <td style="border: 1px solid black;padding:5px;"" id="data-distance-status" class="journey_`+String(j)+`"><a href="#" id="distance_`+String(j)+`">Click me</a></td>
+                              <td style="border: 1px solid black;padding:5px;"" id="data-journey-detail"><a href="#" id="journey_`+String(j)+`">Click me</a></td>
                           </tr>`;
               document.querySelector("table#"+user_name).insertAdjacentHTML('beforeend',row);
               //document.body.insertAdjacentHTML('beforeend', basic_table)
@@ -246,24 +102,96 @@
                 data_left_distance.innerHTML = left_distance+" mm";
                 data_right_distance.innerHTML = right_distance+" mm";
                 data_back_distance.innerHTML = back_distance+" mm";
-              });
+                
+                //左方車距違規有資料
+                if(data[e["path"][4].id][e["path"][1].className]["distance_stat"][0].distance_violation != null){
+                    
+                    console.log("have data");
 
-              /*$("table#"+user_name+" #journey_"+String(j)).on("click",function(e){
-                //console.log(e.composedPath());
-                $("#journey-modal").dialog({
-                  width:320,
-                  height:200,
-                  modal: true
-                });
-                $("#journey-modal").show();
-                //行程資料
-                var data_journey_start = document.getElementById("data-journey-start");
-                var data_journey_end = document.getElementById("data-journey-end");
-                var data_journey_totaltime = document.getElementById("data-journey-totaltime");
-                data_journey_start.innerHTML = user_name;
-              });*/
+                    var dialog_1 = document.querySelector("#distance-modal div#violation_1");
+                    var count = 1;
+
+                    if(document.querySelector('table#violation1_'+String(e["path"][4].id)+'.'+e["path"][1].className) == null){ //避免重複修改 html 導致錯誤
+                        console.log(document.querySelector('table#violation1_'+String(e["path"][4].id)+'.'+e["path"][1].className));
+                        dialog_1.innerHTML = `<table id="violation1_`+String(e["path"][4].id)+`" class="`+e["path"][1].className+`" style="border: 1px solid black;"><p style="margin-top: 20px;">左方車距違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;">違規編號</th><th style="border: 1px solid black;">違規車距差</th></tr></table>`;
+                        data[e["path"][4].id][e["path"][1].className]["distance_stat"][0].distance_violation.forEach(element => {
+                            console.log(element);
+                            var violation_row = document.querySelector('table#violation1_'+String(e["path"][4].id)+'.'+e["path"][1].className);
+                            violation_row.innerHTML += '<tr style="border: 1px solid black;"><td style="border: 1px solid black;" id="data-left-distance">'+count+'</td><td style="border: 1px solid black;" id="data-right-distance">'+element+' mm</td></tr>';
+                            count += 1;
+                        });
+                    }
+                    
+                    
+                }
+                //左方車距違規沒資料
+                if(data[e["path"][4].id][e["path"][1].className]["distance_stat"][0].distance_violation == null){
+                    var dialog_1 = document.querySelector("#distance-modal div#violation_1");
+                    dialog_1.innerHTML = "";
+                }
+
+                //右方車距違規有資料
+                if(data[e["path"][4].id][e["path"][1].className]["distance_stat"][1].distance_violation != null){
+                    
+                    console.log("have data");
+
+                    var dialog_2 = document.querySelector("#distance-modal div#violation_2");
+                    var count = 1;
+
+                    if(document.querySelector('table#violation2_'+String(e["path"][4].id)+'.'+e["path"][1].className) == null){ //避免重複修改 html 導致錯誤
+                        console.log(document.querySelector('table#violation2_'+String(e["path"][4].id)+'.'+e["path"][1].className));
+                        dialog_2.innerHTML = `<table id="violation2_`+String(e["path"][4].id)+`" class="`+e["path"][1].className+`" style="border: 1px solid black;"><p style="margin-top: 20px;">右方車距違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;">違規編號</th><th style="border: 1px solid black;">違規車距差</th></tr></table>`;
+                        data[e["path"][4].id][e["path"][1].className]["distance_stat"][1].distance_violation.forEach(element => {
+                            console.log(element);
+                            var violation_row = document.querySelector('table#violation2_'+String(e["path"][4].id)+'.'+e["path"][1].className);
+                            violation_row.innerHTML += '<tr style="border: 1px solid black;"><td style="border: 1px solid black;" id="data-left-distance">'+count+'</td><td style="border: 1px solid black;" id="data-right-distance">'+element+' mm</td></tr>';
+                            count += 1;
+                        });
+                    }
+                    
+                    
+                }
+                //右方車距違規沒資料
+                if(data[e["path"][4].id][e["path"][1].className]["distance_stat"][1].distance_violation == null){
+                    var dialog_2 = document.querySelector("#distance-modal div#violation_2");
+                    dialog_2.innerHTML = "";
+                }
+
+                //後方車距違規有資料
+                if(data[e["path"][4].id][e["path"][1].className]["distance_stat"][2].distance_violation != null){
+                    
+                    console.log("have data");
+
+                    var dialog_3 = document.querySelector("#distance-modal div#violation_3");
+                    var count = 1;
+
+                    if(document.querySelector('table#violation3_'+String(e["path"][4].id)+'.'+e["path"][1].className) == null){ //避免重複修改 html 導致錯誤
+                        console.log(document.querySelector('table#violation3_'+String(e["path"][4].id)+'.'+e["path"][1].className));
+                        dialog_3.innerHTML = `<table id="violation3_`+String(e["path"][4].id)+`" class="`+e["path"][1].className+`" style="border: 1px solid black;"><p style="margin-top: 20px;">後方車距違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;">違規編號</th><th style="border: 1px solid black;">違規車距差</th></tr></table>`;
+                        data[e["path"][4].id][e["path"][1].className]["distance_stat"][2].distance_violation.forEach(element => {
+                            console.log(element);
+                            var violation_row = document.querySelector('table#violation3_'+String(e["path"][4].id)+'.'+e["path"][1].className);
+                            violation_row.innerHTML += '<tr style="border: 1px solid black;"><td style="border: 1px solid black;" id="data-left-distance">'+count+'</td><td style="border: 1px solid black;" id="data-right-distance">'+element+' mm</td></tr>';
+                            count += 1;
+                        });
+                    }
+                    
+                    
+                }
+                //後方車距違規沒資料
+                if(data[e["path"][4].id][e["path"][1].className]["distance_stat"][2].distance_violation == null){
+                    var dialog_3 = document.querySelector("#distance-modal div#violation_3");
+                    dialog_3.innerHTML = "";
+                }
+              
+            
+            });
+
+              
           }   
         }
+
+
         //var user_data = data.chock_test_4;
         //console.log(user_data.end_time);
         /*data_name.innerHTML = 'chock_test_4';
@@ -274,10 +202,7 @@
     });
 
 
-    
-</script>-->
-<script>
-    /*$(function() {
+        /*$(function() {
         $( "#openDialog").on("click", function(){ 
             $( "#dialog-modal" ).dialog({
               height: 300,
@@ -342,5 +267,3 @@
             });
         });
     });*/
-</script>
-</html>
