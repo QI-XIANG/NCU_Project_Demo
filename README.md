@@ -7,3 +7,8 @@
 * [個人頁面](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/user_profile.html)
 
 ### 建議使用電腦瀏覽，RWD尚未完善!!!
+
+### 附註:
+
+* 1. 已完成登入/登出/註冊/找回密碼功能
+* 2. 個人頁面必須先登入才能檢視
