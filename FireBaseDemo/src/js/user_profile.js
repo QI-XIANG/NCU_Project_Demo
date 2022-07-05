@@ -37,6 +37,9 @@ var user_birthDate = document.querySelector(".user_birthDate");
 var user_gender = document.querySelector(".user_gender");
 var user_idCardNumber = document.querySelector(".user_idCardNumber");
 var user_realName = document.querySelector(".user_realName");
+var user_motorcycle = document.querySelector(".user_motorcycle");
+var user_referenceNumber = document.querySelector(".user_referenceNumber");
+var user_insuranceCompanyName = document.querySelector('.user_insuranceCompanyName');
 
 //console.log(user_account);
 
@@ -51,6 +54,8 @@ db.ref("/Users/"+getCookie("uid")).once('value', function (snapshot) {
     user_gender.innerHTML = data['gender'];
     user_idCardNumber.innerHTML = data['idCardNumber'];
     user_realName.innerHTML = data['realName'];
+    user_insuranceCompanyName.innerHTML = data['insuranceCompanyName'];
+    user_referenceNumber.innerHTML = data['referenceNumber'];
 });
 
 //刪除cookie
@@ -75,3 +80,40 @@ if(getCookie("uid") == null){
     alert("您還沒有登入喔~\n即將跳轉回登入頁面!");
     window.location = "index.html";
 }
+
+//摩托車資料變數宣告
+var motorcycle_brand = document.getElementById("motorcycle_brand");
+var motorcycle_cc = document.getElementById("motorcycle_cc");
+var motorcycle_oener = document.getElementById("motorcycle_owner");
+var motorcycle_plateNumber = document.getElementById("motorcycle_plateNumber");
+
+//處理摩托車資料
+document.querySelector("#user_motorcycle").addEventListener("click",e=>{
+    $("#motorcycle_detail").dialog({
+      width:320,
+      height:280,
+      modal: true
+    });
+    db.ref("/Users/"+getCookie("uid")).once('value', function (snapshot){
+        var data = snapshot.val(); 
+        //var size = Object.keys(data).length;
+        //console.log(size);
+        var motorcycle = data['motorcycle'];
+        console.log(motorcycle);
+        motorcycle_brand.innerHTML = motorcycle["brand"];
+        motorcycle_cc.innerHTML = motorcycle["cc"];
+        motorcycle_owner.innerHTML = motorcycle["owner"];
+        motorcycle_plateNumber.innerHTML = motorcycle["plateNumber"];
+    });
+    $("#motorcycle_detail").show();
+});
+
+
+db.ref("/Users/"+getCookie("uid")).once('value', function (snapshot) {
+    //var size = Object.keys(data).length;
+    var data = snapshot.val(); 
+    console.log(Object.keys(data['journey']));
+    //var size = Object.keys(data).length;
+    //console.log(size);
+    
+});
