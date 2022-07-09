@@ -64,7 +64,7 @@ body {
 
 @font-face {
     font-family: NotoSansTC-Regular;
-    src: url(https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/src/font/NotoSansTC-Regular.otf);
+    src: url(../font/NotoSansTC-Regular.otf);
 }
 
 @media (min-width: 1439px) {
