@@ -8,13 +8,13 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: "AIzaSyDtTxfCIJIfPTEw44Ah5I1lpjiDO96FlJM",
-      authDomain: "mydatabase-8f225.firebaseapp.com",
-      databaseURL: "https://mydatabase-8f225-default-rtdb.firebaseio.com",
-      projectId: "mydatabase-8f225",
-      storageBucket: "mydatabase-8f225.appspot.com",
-      messagingSenderId: "68532714578",
-      appId: "1:68532714578:web:fc038b336827906b65338b",
-      measurementId: "G-68RXLWEXS7"
+    authDomain: "mydatabase-8f225.firebaseapp.com",
+    databaseURL: "https://mydatabase-8f225-default-rtdb.firebaseio.com",
+    projectId: "mydatabase-8f225",
+    storageBucket: "mydatabase-8f225.appspot.com",
+    messagingSenderId: "68532714578",
+    appId: "1:68532714578:web:fc038b336827906b65338b",
+    measurementId: "G-68RXLWEXS7"
 };
 
 
@@ -43,9 +43,9 @@ var user_insuranceCompanyName = document.querySelector('.user_insuranceCompanyNa
 
 //console.log(user_account);
 
-db.ref("/Users/"+getCookie("uid")).once('value', function (snapshot) {
+db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) {
     //var size = Object.keys(data).length;
-    var data = snapshot.val(); 
+    var data = snapshot.val();
     console.log(data);
     //var size = Object.keys(data).length;
     //console.log(size);
@@ -59,7 +59,7 @@ db.ref("/Users/"+getCookie("uid")).once('value', function (snapshot) {
 });
 
 //刪除cookie
-function delCookie(name){
+function delCookie(name) {
     var exp = new Date();
     exp.setTime(exp.getTime() - 1);
     var cval = getCookie(name);
@@ -69,14 +69,14 @@ function delCookie(name){
 //登出
 var user_logout = document.querySelector(".user_logout");
 user_logout.addEventListener("click", e => {
-    if(getCookie("uid") != null){
+    if (getCookie("uid") != null) {
         delCookie("uid");
         window.location = "index.html";
     }
 });
 
 //是否已經登入
-if(getCookie("uid") == null){
+if (getCookie("uid") == null) {
     alert("您還沒有登入喔~\n即將跳轉回登入頁面!");
     window.location = "index.html";
 }
@@ -88,14 +88,14 @@ var motorcycle_oener = document.getElementById("motorcycle_owner");
 var motorcycle_plateNumber = document.getElementById("motorcycle_plateNumber");
 
 //處理摩托車資料
-document.querySelector("#user_motorcycle").addEventListener("click",e=>{
+document.querySelector("#user_motorcycle").addEventListener("click", e => {
     $("#motorcycle_detail").dialog({
-      width:320,
-      height:280,
-      modal: true
+        width: 320,
+        height: 280,
+        modal: true
     });
-    db.ref("/Users/"+getCookie("uid")).once('value', function (snapshot){
-        var data = snapshot.val(); 
+    db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) {
+        var data = snapshot.val();
         //var size = Object.keys(data).length;
         //console.log(size);
         var motorcycle = data['motorcycle'];
@@ -108,12 +108,119 @@ document.querySelector("#user_motorcycle").addEventListener("click",e=>{
     $("#motorcycle_detail").show();
 });
 
+var row = `
+        <td id="journey-title"></td>
+        <td id="acceleration_stat"></td>
+        <td id="distance_stat"><a href="#">Click me</a></td>
+        <td id="gps_stat"><a href="#">Click me</a></td>
+        <td id="journey-detail"><a href="#">Click me</a></td>
+        `;
 
-db.ref("/Users/"+getCookie("uid")).once('value', function (snapshot) {
+
+
+
+function showweek(now) {
+
+    
+
+    if (now.getDay() == 0) return ('星期日');
+
+    if (now.getDay() == 1) return ('星期一');
+
+    if (now.getDay() == 2) return ('星期二');
+
+    if (now.getDay() == 3) return ('星期三');
+
+    if (now.getDay() == 4) return ('星期四');
+
+    if (now.getDay() == 5) return ('星期五');
+
+    if (now.getDay() == 6) return ('星期六');
+
+}
+
+
+
+function showdate(now) {
+
+    var year = now.getFullYear();
+
+    var month = now.getMonth() + 1;
+
+    var day = now.getDate();
+
+    var hour = now.getHours();
+
+    var min = now.getMinutes();
+
+    return year + '年' + month + '月' + day+"日 "+showweek(now)+" "+hour+":"+min;
+
+}
+
+
+
+db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) {
     //var size = Object.keys(data).length;
-    var data = snapshot.val(); 
-    console.log(Object.keys(data['journey']));
+    var data = snapshot.val();
+    //console.log(Object.keys(data));
     //var size = Object.keys(data).length;
     //console.log(size);
-    
+    if (data["journey"] == null){
+        var journey_table = document.querySelector(".journey-table-tbody");
+        row = `<tr>
+                <td id="journey-title">查無資料</td>
+                <td id="acceleration_stat">查無資料</td>
+                <td id="distance_stat">查無資料</td>
+                <td id="gps_stat">查無資料</td>
+                <td id="journey-detail">查無資料</td>
+            </tr>`;
+        journey_table.insertAdjacentHTML('afterbegin', row);
+    }
+    if (data["journey"] != null) {
+        console.log("aru");
+        var journey_table = document.querySelector(".journey-table-tbody");
+        var journey = data["journey"];
+        for (var i = 0; i < Object.keys(journey).length - 1; i++) {
+            console.log(journey[Object.keys(journey)[i]]);
+            row = `
+                <td id="journey-title">`+ journey[Object.keys(journey)[i]]['start_time'] + `</td>
+                <td id="acceleration_stat"><a href="#">Click me</a></td>
+                <td id="distance_stat"><a href="#">Click me</a></td>
+                <td id="gps_stat"><a href="#">Click me</a></td>
+                <td id="journey-detail"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">Click me</a></td>
+            `;
+
+            journey_table.insertAdjacentHTML('afterbegin', row);
+
+            console.log(document.querySelector("td#journey-detail a#journey_" + String(journey[Object.keys(journey)[i]]['start_time'])));
+
+
+            //行程資訊的 event handle
+            document.querySelector("td#journey-detail a#journey_" + String(journey[Object.keys(journey)[i]]['start_time'])).addEventListener("click", e => {
+                console.log(String(e['path'][0].id).substring(8));
+                $("#journey-modal").dialog({
+                    width: 375,
+                    height: 250,
+                    modal: true
+                });
+                $("#journey-modal").show();
+                //行程資料
+                var data_journey_start = document.getElementById("data-journey-start");
+                var data_journey_end = document.getElementById("data-journey-end");
+                var data_journey_totaltime = document.getElementById("data-journey-totaltime");
+                console.log(journey[String(e['path'][0].id).substring(8)]);
+                var journey_start_time = showdate(new Date(journey[String(e['path'][0].id).substring(8)].start_time * 1000));
+                var journey_end_time = showdate(new Date(journey[String(e['path'][0].id).substring(8)].end_time * 1000));
+                var journey_time = journey[String(e['path'][0].id).substring(8)].journey_time;
+                data_journey_start.innerHTML = journey_start_time;
+                data_journey_end.innerHTML = journey_end_time;
+                data_journey_totaltime.innerHTML = journey_time + "秒";
+            });
+        }
+        console.log(Object.keys(data['journey']));
+
+
+    }
+
 });
+

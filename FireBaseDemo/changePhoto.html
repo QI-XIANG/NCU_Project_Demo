@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <h1>我在測試簡易修改大頭貼</h1>
+    <input class='prompttest' type="button" value="按我">
+    <img class='show' alt="source image"></img>
+
+    <script>
+        var button = document.querySelector('.prompttest');
+        var showtxt = document.querySelector('.show');
+
+        function popup3(e) {
+            var guest = window.prompt('您好!請輸入圖片網址修改大頭貼', '圖片網址');
+            if (guest == null || "") {
+                showtxt.src = "";
+            } else {
+                showtxt.src = guest;
+            }
+
+        }
+        button.addEventListener('click', popup3);
+    </script>
+  </body>
+</html>
