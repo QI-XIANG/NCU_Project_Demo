@@ -120,41 +120,24 @@ var row = `
 
 
 function showweek(now) {
-
-    
-
     if (now.getDay() == 0) return ('星期日');
-
     if (now.getDay() == 1) return ('星期一');
-
     if (now.getDay() == 2) return ('星期二');
-
     if (now.getDay() == 3) return ('星期三');
-
     if (now.getDay() == 4) return ('星期四');
-
     if (now.getDay() == 5) return ('星期五');
-
     if (now.getDay() == 6) return ('星期六');
-
 }
 
 
 
 function showdate(now) {
-
     var year = now.getFullYear();
-
     var month = now.getMonth() + 1;
-
     var day = now.getDate();
-
     var hour = now.getHours();
-
     var min = now.getMinutes();
-
-    return year + '年' + month + '月' + day+"日 "+showweek(now)+" "+hour+":"+min;
-
+    return year + '年' + month + '月' + day + "日 " + showweek(now) + " " + hour + ":" + min;
 }
 
 
@@ -165,7 +148,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) {
     //console.log(Object.keys(data));
     //var size = Object.keys(data).length;
     //console.log(size);
-    if (data["journey"] == null){
+    if (data["journey"] == null) {
         var journey_table = document.querySelector(".journey-table-tbody");
         row = `<tr>
                 <td id="journey-title">查無資料</td>
@@ -184,8 +167,8 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) {
             console.log(journey[Object.keys(journey)[i]]);
             row = `
                 <td id="journey-title">`+ journey[Object.keys(journey)[i]]['start_time'] + `</td>
-                <td id="acceleration_stat"><a href="#">Click me</a></td>
-                <td id="distance_stat"><a href="#">Click me</a></td>
+                <td id="acceleration_stat"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">Click me</a></td>
+                <td id="distance_stat"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">Click me</a></td>
                 <td id="gps_stat"><a href="#">Click me</a></td>
                 <td id="journey-detail"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">Click me</a></td>
             `;
@@ -199,7 +182,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) {
             document.querySelector("td#journey-detail a#journey_" + String(journey[Object.keys(journey)[i]]['start_time'])).addEventListener("click", e => {
                 console.log(String(e['path'][0].id).substring(8));
                 $("#journey-modal").dialog({
-                    width: 375,
+                    width: 400,
                     height: 250,
                     modal: true
                 });
@@ -216,9 +199,163 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) {
                 data_journey_end.innerHTML = journey_end_time;
                 data_journey_totaltime.innerHTML = journey_time + "秒";
             });
+
+            //車距資料 event handle
+            document.querySelector("td#distance_stat a#journey_" + String(journey[Object.keys(journey)[i]]['start_time'])).addEventListener("click", e => {
+                $("#distance-modal").dialog({
+                    width: 420,
+                    height: 250,
+                    modal: true
+                });
+                $("#distance-modal").show();
+                //車距資料
+                var data_left_distance = document.getElementById("data-left-distance");
+                var data_right_distance = document.getElementById("data-right-distance");
+                var data_back_distance = document.getElementById("data-back-distance");
+                var left_distance = journey[String(e['path'][0].id).substring(8)]["distance_stat"][0].avg_distance;
+                var right_distance = journey[String(e['path'][0].id).substring(8)]["distance_stat"][1].avg_distance;
+                var back_distance = journey[String(e['path'][0].id).substring(8)]["distance_stat"][2].avg_distance;
+                data_left_distance.innerHTML = left_distance + " mm";
+                data_right_distance.innerHTML = right_distance + " mm";
+                data_back_distance.innerHTML = back_distance + " mm";
+
+                //左方車距違規有資料
+                if (journey[String(e['path'][0].id).substring(8)]["distance_stat"][0].distance_violation != null) {
+
+                    console.log("have data");
+
+                    var dialog_1 = document.querySelector("#distance-modal div#violation_1");
+                    var count = 1;
+
+                    if (document.querySelector('table#violation1_' + String(e['path'][0].id).substring(8)) == null) { //避免重複修改 html 導致錯誤
+                        console.log(document.querySelector('table#violation1_' + String(e['path'][0].id).substring(8)));
+                        dialog_1.innerHTML = `<table id="violation1_` + String(e['path'][0].id).substring(8) + `" style="border: 1px solid black;text-align: center;"><p style="margin-top: 20px;">左方車距違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;padding: 5px;">違規編號</th><th style="border: 1px solid black;padding: 5px;">違規車距差</th></tr></table>`;
+                        journey[String(e['path'][0].id).substring(8)]["distance_stat"][0].distance_violation.forEach(element => {
+                            console.log(element);
+                            var violation_row = document.querySelector('table#violation1_' + String(e['path'][0].id).substring(8));
+                            violation_row.innerHTML += '<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;" id="data-left-distance">' + count + '</td><td style="border: 1px solid black;padding: 5px;" id="data-right-distance">' + element + ' mm</td></tr>';
+                            count += 1;
+                        });
+                    }
+
+
+                }
+
+                //左方車距違規沒資料
+                if (journey[String(e['path'][0].id).substring(8)]["distance_stat"][0].distance_violation == null) {
+                    var dialog_1 = document.querySelector("#distance-modal div#violation_1");
+                    dialog_1.innerHTML = "";
+                }
+
+                //右方車距違規有資料
+                if (journey[String(e['path'][0].id).substring(8)]["distance_stat"][1].distance_violation != null) {
+
+                    console.log("have data");
+
+                    var dialog_1 = document.querySelector("#distance-modal div#violation_2");
+                    var count = 1;
+
+                    if (document.querySelector('table#violation2_' + String(e['path'][0].id).substring(8)) == null) { //避免重複修改 html 導致錯誤
+                        console.log(document.querySelector('table#violation2_' + String(e['path'][0].id).substring(8)));
+                        dialog_1.innerHTML = `<table id="violation2_` + String(e['path'][0].id).substring(8) + `" style="border: 1px solid black;text-align: center;"><p style="margin-top: 20px;">右方車距違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;padding: 5px;">違規編號</th><th style="border: 1px solid black;padding: 5px;">違規車距差</th></tr></table>`;
+                        journey[String(e['path'][0].id).substring(8)]["distance_stat"][1].distance_violation.forEach(element => {
+                            console.log(element);
+                            var violation_row = document.querySelector('table#violation2_' + String(e['path'][0].id).substring(8));
+                            violation_row.innerHTML += '<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;" id="data-left-distance">' + count + '</td><td style="border: 1px solid black;padding: 5px;" id="data-right-distance">' + element + ' mm</td></tr>';
+                            count += 1;
+                        });
+                    }
+
+
+                }
+
+                //右方車距違規沒資料
+                if (journey[String(e['path'][0].id).substring(8)]["distance_stat"][1].distance_violation == null) {
+                    var dialog_1 = document.querySelector("#distance-modal div#violation_2");
+                    dialog_1.innerHTML = "";
+                }
+
+                //後方車距違規有資料
+                if (journey[String(e['path'][0].id).substring(8)]["distance_stat"][2].distance_violation != null) {
+
+                    console.log("have data");
+
+                    var dialog_1 = document.querySelector("#distance-modal div#violation_3");
+                    var count = 1;
+
+                    if (document.querySelector('table#violation3_' + String(e['path'][0].id).substring(8)) == null) { //避免重複修改 html 導致錯誤
+                        console.log(document.querySelector('table#violation3_' + String(e['path'][0].id).substring(8)));
+                        dialog_1.innerHTML = `<table id="violation3_` + String(e['path'][0].id).substring(8) + `" style="border: 1px solid black;text-align: center;"><p style="margin-top: 20px;">後方車距違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;padding: 5px;">違規編號</th><th style="border: 1px solid black;padding: 5px;">違規車距差</th></tr></table>`;
+                        journey[String(e['path'][0].id).substring(8)]["distance_stat"][2].distance_violation.forEach(element => {
+                            console.log(element);
+                            var violation_row = document.querySelector('table#violation3_' + String(e['path'][0].id).substring(8));
+                            violation_row.innerHTML += '<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;" id="data-left-distance">' + count + '</td><td style="border: 1px solid black;padding: 5px;" id="data-right-distance">' + element + ' mm</td></tr>';
+                            count += 1;
+                        });
+                    }
+
+
+                }
+
+                //後方車距違規沒資料
+                if (journey[String(e['path'][0].id).substring(8)]["distance_stat"][2].distance_violation == null) {
+                    var dialog_1 = document.querySelector("#distance-modal div#violation_3");
+                    dialog_1.innerHTML = "";
+                }
+
+
+
+            });
+
+            //加速度 event handle
+            document.querySelector("td#acceleration_stat a#journey_" + String(journey[Object.keys(journey)[i]]['start_time'])).addEventListener("click", e => {
+                $("#acceleration-modal").dialog({
+                    width: 300,
+                    height: 250,
+                    modal: true
+                });
+                $("#acceleration-modal").show();
+                //加速度資料
+                var avg_acceleration = document.getElementById("avg_acceleration");
+                var avg_gyro = document.getElementById("avg_gyro");
+                //將實際資料放入 variable
+                var data_avg_acceleration = (Math.round(journey[String(e['path'][0].id).substring(8)]["acceleration_stat"][0].avg_acceleration * 1000) / 1000).toFixed(3);
+                var data_avg_gyro = (Math.round(journey[String(e['path'][0].id).substring(8)]["acceleration_stat"][1].avg_gyro * 1000) / 1000).toFixed(3);
+                //修改表格內資料
+                avg_acceleration.innerHTML = data_avg_acceleration;
+                avg_gyro.innerHTML = data_avg_gyro;
+
+                //加速度違規有資料
+                if (journey[String(e['path'][0].id).substring(8)]["acceleration_stat"][0].acceleration_violation != null) {
+
+                    console.log("have data");
+
+                    var dialog_1 = document.querySelector("#acceleration-modal div#violation_1");
+                    var count = 1;
+
+                    if (document.querySelector('table#acceleration_violation1_' + String(e['path'][0].id).substring(8)) == null) { //避免重複修改 html 導致錯誤
+                        console.log(document.querySelector('table#acceleration_violation1_' + String(e['path'][0].id).substring(8)));
+                        dialog_1.innerHTML = `<table id="acceleration_violation1_` + String(e['path'][0].id).substring(8) + `" style="border: 1px solid black;text-align: center;"><p style="margin-top: 20px;">加速度違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;padding: 5px;">違規編號</th><th style="border: 1px solid black;padding: 5px;">違規加速度差</th></tr></table>`;
+                        journey[String(e['path'][0].id).substring(8)]["acceleration_stat"][0].acceleration_violation.forEach(element => {
+                            console.log(element);
+                            var violation_row = document.querySelector('table#acceleration_violation1_' + String(e['path'][0].id).substring(8));
+                            violation_row.innerHTML += '<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;" id="data-left-distance">' + count + '</td><td style="border: 1px solid black;padding: 5px;" id="data-right-distance">' + (Math.round(element * 1000) / 1000).toFixed(3); + '</td></tr>';
+                            count += 1;
+                        });
+                    }
+                }
+
+                //加速度違規沒資料
+                if (journey[String(e['path'][0].id).substring(8)]["acceleration_stat"][0].acceleration_violation == null) {
+                    var dialog_1 = document.querySelector("#acceleration-modal div#violation_1");
+                    dialog_1.innerHTML = "";
+                }
+
+
+            });
+
         }
         console.log(Object.keys(data['journey']));
-
 
     }
 

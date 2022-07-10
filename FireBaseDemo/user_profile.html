@@ -13,6 +13,7 @@
 </head>
 
 <body>
+
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">NCU IoT Project 2022</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
@@ -258,10 +259,78 @@
           </tr>
         </table>
       </div>
-</body>
-<script>
 
-</script>
+      <div id="distance-modal" title="詳細車距資訊" style="display:none">
+        <p>以下為詳細的車距資訊:</p>
+        <table style="border: 1px solid black;text-align: center;">
+          <tr style="border: 1px solid black;">
+            <th style="border: 1px solid black;padding: 5px;">左方平均車距</th>
+            <th style="border: 1px solid black;padding: 5px;">右方平均車距</th>
+            <th style="border: 1px solid black;padding: 5px;">後方平均車距</th>
+          </tr>
+          <tr style="border: 1px solid black;">
+            <td style="border: 1px solid black;padding: 5px;" id="data-left-distance">No Data!</td>
+            <td style="border: 1px solid black;padding: 5px;" id="data-right-distance">No Data!</td>
+            <td style="border: 1px solid black;padding: 5px;" id="data-back-distance">No Data!</td>
+          </tr>
+        </table>
+        <div id="violation_1">
+
+        </div>
+        <div id="violation_2">
+
+        </div>
+        <div id="violation_3">
+
+        </div>
+      </div>
+
+      <div id="acceleration-modal" title="詳細加速度資訊" style="display:none">
+        <p>以下為詳細的加速度資訊:</p>
+        <table style="border: 1px solid black;text-align: center;">
+          <tr style="border: 1px solid black;">
+            <th style="border: 1px solid black;padding: 5px;">平均加速度</th>
+            <th style="border: 1px solid black;padding: 5px;">avg_gyro</th>
+          </tr>
+          <tr style="border: 1px solid black;">
+            <td style="border: 1px solid black;padding: 5px;" id="avg_acceleration">No Data!</td>
+            <td style="border: 1px solid black;padding: 5px;" id="avg_gyro">No Data!</td>
+          </tr>
+        </table>
+        <div id="violation_1">
+
+        </div>
+      
+      </div>
+
+      <snowfall>
+        <!-- @link https://emojikopieren.de/ -->
+        <!-- Add inside the flakes, whatever you like. -->
+        <snowflake><img src="src/img/spy/01.png">️</snowflake>
+        <snowflake><img src="src/img/spy/02.png">️</snowflake>
+        <snowflake><img src="src/img/spy/03 (1).png">️</snowflake>
+        <snowflake><img src="src/img/spy/03 (2).png">️</snowflake>
+        <snowflake><img src="src/img/spy/03.png">️</snowflake>
+        <snowflake><img src="src/img/spy/04 (1).png">️</snowflake>
+        <snowflake><img src="src/img/spy/04 (2).png">️</snowflake>
+        <snowflake><img src="src/img/spy/04.png">️</snowflake>
+        <snowflake><img src="src/img/spy/05.png">️</snowflake>
+        <snowflake><img src="src/img/spy/06.png">️</snowflake>
+        <snowflake><img src="src/img/spy/01.png">️</snowflake>
+        <snowflake><img src="src/img/spy/02.png">️</snowflake>
+        <snowflake><img src="src/img/spy/03 (1).png">️</snowflake>
+        <snowflake><img src="src/img/spy/03 (2).png">️</snowflake>
+        <snowflake><img src="src/img/spy/03.png">️</snowflake>
+        <snowflake><img src="src/img/spy/04 (1).png">️</snowflake>
+        <snowflake><img src="src/img/spy/04 (2).png">️</snowflake>
+        <snowflake><img src="src/img/spy/04.png">️</snowflake>
+        <snowflake><img src="src/img/spy/05.png">️</snowflake>
+        <snowflake><img src="src/img/spy/06.png">️</snowflake>
+      </snowfall>
+      
+
+</body>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
@@ -273,6 +342,6 @@
 <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-database.js"></script>
 <link href="https://code.jquery.com/ui/1.13.1/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
 <link href="src/css/user_profile.css" rel="stylesheet" />
+<link href="src/css/snowfall.css" rel="stylesheet" />
 <script type="module" src="src/js/user_profile.js"></script>
-
 </html>
