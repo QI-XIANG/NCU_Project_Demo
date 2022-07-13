@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
-	<title>Login</title>
+	<title>一般用戶登入</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -34,20 +34,20 @@
 			<div class="wrap-login100">
 				<div class="login100-form-title" style="background-image: url(images/bg-01.png);">
 					<span class="login100-form-title-1">
-						Sign In
+						一般用戶登入
 					</span>
 				</div>
 
 				<form class="login100-form validate-form">
 					<div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
-						<span class="label-input100">Account</span>
-						<input class="input100" id="Email" type="text" name="username" placeholder="Enter email">
+						<span class="label-input100">帳號</span>
+						<input class="input100" id="Email" type="text" name="username" placeholder="請輸入電子信箱">
 						<span class="focus-input100"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
-						<span class="label-input100">Password</span>
-						<input class="input100" id="Password" type="password" name="pass" placeholder="Enter password">
+						<span class="label-input100">密碼</span>
+						<input class="input100" id="Password" type="password" name="pass" placeholder="請輸入密碼">
 						<span class="focus-input100"></span>
 					</div>
 
@@ -61,17 +61,17 @@
 
 						<div>
 							<a href="signup.html" class="txt1">
-								Sign Up /
+								註冊 /
 							</a>
 							<a href="resetPassword.html" class="txt1">
-								Forget Password?
+								忘記密碼?
 							</a>
 						</div>
 					</div>
 
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn" id="loginBtn">
-							Sign In
+							登入
 						</button>
 					</div>
 
@@ -150,8 +150,8 @@
 
         firebase.auth().signInWithEmailAndPassword(email.value,password.value)
         .then(()=>{
-            console.log('註冊成功')
-            alert('登入成功，跳轉回???');
+            console.log('登入成功')
+            alert('登入成功，跳轉回個人頁面!');
 			console.log(document.cookie);
             //window.location = "user_profile.html";
 			document.cookie = 'uid='+firebase.auth().currentUser.uid;
