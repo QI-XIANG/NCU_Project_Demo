@@ -178,7 +178,7 @@
       <div></div>
 
       <div class="table-responsive" style="padding: 0 3% 0 3%;">
-        <table class="journey-table table table-hover table-borderless">
+        <table id="table-demo" class="journey-table table table-hover table-borderless">
           <thead>
             <tr>
               <th scope="col">行程編號</th>
@@ -288,7 +288,7 @@
         <table style="border: 1px solid black;text-align: center;">
           <tr style="border: 1px solid black;">
             <th style="border: 1px solid black;padding: 5px;">平均加速度</th>
-            <th style="border: 1px solid black;padding: 5px;">avg_gyro</th>
+            <th style="border: 1px solid black;padding: 5px;">平均角加速度</th>
           </tr>
           <tr style="border: 1px solid black;">
             <td style="border: 1px solid black;padding: 5px;" id="avg_acceleration">No Data!</td>
@@ -301,9 +301,9 @@
 
       </div>
 
-      <snowfall>
-        <!-- @link https://emojikopieren.de/ -->
-        <!-- Add inside the flakes, whatever you like. -->
+      <!-- @link https://emojikopieren.de/ -->
+      <!-- Add inside the flakes, whatever you like. -->
+      <!--<snowfall>
         <snowflake><img src="src/img/spy/01.png">️</snowflake>
         <snowflake><img src="src/img/spy/02.png">️</snowflake>
         <snowflake><img src="src/img/spy/03 (1).png">️</snowflake>
@@ -324,7 +324,7 @@
         <snowflake><img src="src/img/spy/04.png">️</snowflake>
         <snowflake><img src="src/img/spy/05.png">️</snowflake>
         <snowflake><img src="src/img/spy/06.png">️</snowflake>
-      </snowfall>
+      </snowfall>-->
 
 
 </body>
@@ -339,8 +339,7 @@
 <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-database.js"></script>
 <link href="https://code.jquery.com/ui/1.13.1/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
-<link href="src/css/user_profile.css" rel="stylesheet" />
 <link href="src/css/snowfall.css" rel="stylesheet" />
 <script type="module" src="src/js/user_profile.js"></script>
-
+<link href="src/css/user_profile.css" rel="stylesheet" />
 </html>

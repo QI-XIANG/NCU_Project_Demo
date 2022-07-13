@@ -12,6 +12,7 @@
 
 1. 已完成登入/登出/註冊/找回密碼功能
 2. 個人頁面必須先登入才能檢視
-3. 個人頁面表格已完成部分: 行程編號、行程詳情
+3. 個人頁面表格未完成部分: GPS 資料
+4. 表格的分頁功能(Pagination)已完成
 
 ![](https://spy-family.net/assets/img/episodes/episode3_1.jpg)
