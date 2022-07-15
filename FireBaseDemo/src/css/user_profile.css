@@ -108,6 +108,7 @@ a {
     color: rgb(84, 84, 247) !important;
 }
 
+
 a:hover {
     cursor: pointer;
 }
@@ -129,3 +130,5 @@ div#nav{
 div#nav a.active{
     background-color: #d1d1d1;
 }
+
+

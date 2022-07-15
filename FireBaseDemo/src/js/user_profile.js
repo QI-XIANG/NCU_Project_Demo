@@ -198,10 +198,10 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
             //console.log(journey[Object.keys(journey)[i]]['start_time']);
             row = `
                 <td id="journey-title">`+ journey[Object.keys(journey)[i]].start_time + `</td>
-                <td id="acceleration_stat"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">Click me</a></td>
-                <td id="distance_stat"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">Click me</a></td>
-                <td id="gps_stat"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">Click me</a></td>
-                <td id="journey-detail"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">Click me</a></td>
+                <td id="acceleration_stat"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">點擊查看</a></td>
+                <td id="distance_stat"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">點擊查看</a></td>
+                <td id="gps_stat"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">點擊查看</a></td>
+                <td id="journey-detail"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">點擊查看</a></td>
             `;
 
             //console.log(row);
