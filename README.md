@@ -20,6 +20,6 @@
 5. 表格資料顯示相關 bug 已修正
 6. 暫不支援保險公司相關功能 (資料庫資料表尚未建置)
 7. 修正個人頁面 toggleButton 點擊後無法展開 bug
-8. 目前確認支援的瀏覽器為 Chrome、Edge、FireFox、Samsung Internet (已知使用 Safari 會無法正確顯示資料)
+8. 目前確認支援的瀏覽器為 Chrome、Edge、FireFox、Samsung Internet、Safari
 
 ![](https://i.imgur.com/7Lu3FLq.jpg)
