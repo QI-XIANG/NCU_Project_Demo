@@ -215,22 +215,23 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
             //行程資訊的 event handle
             //在行程資訊上註冊 click event
             document.querySelector("td#journey-detail a#journey_" + String(journey[Object.keys(journey)[i]]['start_time'])).addEventListener("click", e => {
-                console.log(String(e['path'][0].id).substring(8));
+                console.log(String(e.target.id.substring(8)));
+                //console.log(String(e.target.id.substring(8)));
                 $("#journey-modal").dialog({ //彈出視窗的外觀大小設定
                     width: 400,
                     height: 250,
                     modal: true
-                });
+                });          
                 $("#journey-modal").show(); //實際顯示視窗
                 //行程資料
                 var data_journey_start = document.getElementById("data-journey-start"); //行程開始時間
                 var data_journey_end = document.getElementById("data-journey-end"); //行程結束時間
                 var data_journey_totaltime = document.getElementById("data-journey-totaltime"); //行程總時間
-                console.log(journey[String(e['path'][0].id).substring(8)]); //取出觸發事件的 journey 編號
+                console.log(journey[String(e.target.id.substring(8))]); //取出觸發事件的 journey 編號
                 //行程資料數值取出
-                var journey_start_time = showdate(new Date(journey[String(e['path'][0].id).substring(8)].start_time * 1000));
-                var journey_end_time = showdate(new Date(journey[String(e['path'][0].id).substring(8)].end_time * 1000));
-                var journey_time = journey[String(e['path'][0].id).substring(8)].journey_time;
+                var journey_start_time = showdate(new Date(journey[String(e.target.id.substring(8))].start_time * 1000));
+                var journey_end_time = showdate(new Date(journey[String(e.target.id.substring(8))].end_time * 1000));
+                var journey_time = journey[String(e.target.id.substring(8))].journey_time;
                 //實際修改行程資料的 innerHTML
                 data_journey_start.innerHTML = journey_start_time;
                 data_journey_end.innerHTML = journey_end_time;
@@ -251,31 +252,31 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 var data_right_distance = document.getElementById("data-right-distance"); //右方車距
                 var data_back_distance = document.getElementById("data-back-distance"); // 後方車距
                 //車距資料數值取出
-                var left_distance = journey[String(e['path'][0].id).substring(8)]["distance_stat"][0].avg_distance;
-                var right_distance = journey[String(e['path'][0].id).substring(8)]["distance_stat"][1].avg_distance;
-                var back_distance = journey[String(e['path'][0].id).substring(8)]["distance_stat"][2].avg_distance;
+                var left_distance = journey[String(e.target.id.substring(8))]["distance_stat"][0].avg_distance;
+                var right_distance = journey[String(e.target.id.substring(8))]["distance_stat"][1].avg_distance;
+                var back_distance = journey[String(e.target.id.substring(8))]["distance_stat"][2].avg_distance;
                 //實際修改車距資料的 innerHTML
                 data_left_distance.innerHTML = left_distance + " mm";
                 data_right_distance.innerHTML = right_distance + " mm";
                 data_back_distance.innerHTML = back_distance + " mm";
 
                 //左方車距違規有資料
-                if (journey[String(e['path'][0].id).substring(8)]["distance_stat"][0].distance_violation != null) {
+                if (journey[String(e.target.id.substring(8))]["distance_stat"][0].distance_violation != null) {
 
                     console.log("have data");
 
                     var dialog_1 = document.querySelector("#distance-modal div#violation_1");
                     var count = 1; //用來計算違規編號的 count
 
-                    if (document.querySelector('table#violation1_' + String(e['path'][0].id).substring(8)) == null) { //避免重複修改 html 導致錯誤
-                        console.log(document.querySelector('table#violation1_' + String(e['path'][0].id).substring(8)));
+                    if (document.querySelector('table#violation1_' + String(e.target.id.substring(8))) == null) { //避免重複修改 html 導致錯誤
+                        console.log(document.querySelector('table#violation1_' + String(e.target.id.substring(8))));
                         //新增車距違規的資料表
-                        dialog_1.innerHTML = `<table id="violation1_` + String(e['path'][0].id).substring(8) + `" style="border: 1px solid black;text-align: center;"><p style="margin-top: 20px;">左方車距違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;padding: 5px;">違規編號</th><th style="border: 1px solid black;padding: 5px;">違規車距差</th></tr></table>`;
+                        dialog_1.innerHTML = `<table id="violation1_` + String(e.target.id.substring(8)) + `" style="border: 1px solid black;text-align: center;"><p style="margin-top: 20px;">左方車距違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;padding: 5px;">違規編號</th><th style="border: 1px solid black;padding: 5px;">違規車距差</th></tr></table>`;
                         //針對每個違規做處理並各自生成 row 後添加到 table 中
-                        journey[String(e['path'][0].id).substring(8)]["distance_stat"][0].distance_violation.forEach(element => {
+                        journey[String(e.target.id.substring(8))]["distance_stat"][0].distance_violation.forEach(element => {
                             console.log(element);
                             //選取特定 journey 編號的 table
-                            var violation_row = document.querySelector('table#violation1_' + String(e['path'][0].id).substring(8));
+                            var violation_row = document.querySelector('table#violation1_' + String(e.target.id.substring(8)));
                             violation_row.innerHTML += '<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;" id="data-left-distance">' + count + '</td><td style="border: 1px solid black;padding: 5px;" id="data-right-distance">' + element + ' mm</td></tr>';
                             count += 1; //編號加一
                         });
@@ -285,27 +286,27 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 }
 
                 //左方車距違規沒資料
-                if (journey[String(e['path'][0].id).substring(8)]["distance_stat"][0].distance_violation == null) {
+                if (journey[String(e.target.id.substring(8))]["distance_stat"][0].distance_violation == null) {
                     var dialog_1 = document.querySelector("#distance-modal div#violation_1");
                     dialog_1.innerHTML = ""; //沒資料預設違規的 innerHTML 為空值
                 }
 
                 //右方車距違規有資料
-                if (journey[String(e['path'][0].id).substring(8)]["distance_stat"][1].distance_violation != null) {
+                if (journey[String(e.target.id.substring(8))]["distance_stat"][1].distance_violation != null) {
 
                     console.log("have data");
                     var dialog_1 = document.querySelector("#distance-modal div#violation_2");
                     var count = 1; //用來計算違規編號的 count
 
-                    if (document.querySelector('table#violation2_' + String(e['path'][0].id).substring(8)) == null) { //避免重複修改 html 導致錯誤
-                        console.log(document.querySelector('table#violation2_' + String(e['path'][0].id).substring(8)));
+                    if (document.querySelector('table#violation2_' + String(e.target.id.substring(8))) == null) { //避免重複修改 html 導致錯誤
+                        console.log(document.querySelector('table#violation2_' + String(e.target.id.substring(8))));
                         //新增車距違規的資料表
-                        dialog_1.innerHTML = `<table id="violation2_` + String(e['path'][0].id).substring(8) + `" style="border: 1px solid black;text-align: center;"><p style="margin-top: 20px;">右方車距違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;padding: 5px;">違規編號</th><th style="border: 1px solid black;padding: 5px;">違規車距差</th></tr></table>`;
+                        dialog_1.innerHTML = `<table id="violation2_` + String(e.target.id.substring(8)) + `" style="border: 1px solid black;text-align: center;"><p style="margin-top: 20px;">右方車距違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;padding: 5px;">違規編號</th><th style="border: 1px solid black;padding: 5px;">違規車距差</th></tr></table>`;
                         //針對每個違規做處理並各自生成 row 後添加到 table 中
-                        journey[String(e['path'][0].id).substring(8)]["distance_stat"][1].distance_violation.forEach(element => {
+                        journey[String(e.target.id.substring(8))]["distance_stat"][1].distance_violation.forEach(element => {
                             console.log(element);
                             //選取特定 journey 編號的 table
-                            var violation_row = document.querySelector('table#violation2_' + String(e['path'][0].id).substring(8));
+                            var violation_row = document.querySelector('table#violation2_' + String(e.target.id.substring(8)));
                             violation_row.innerHTML += '<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;" id="data-left-distance">' + count + '</td><td style="border: 1px solid black;padding: 5px;" id="data-right-distance">' + element + ' mm</td></tr>';
                             count += 1;//編號加一
                         });
@@ -315,28 +316,28 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 }
 
                 //右方車距違規沒資料
-                if (journey[String(e['path'][0].id).substring(8)]["distance_stat"][1].distance_violation == null) {
+                if (journey[String(e.target.id.substring(8))]["distance_stat"][1].distance_violation == null) {
                     var dialog_1 = document.querySelector("#distance-modal div#violation_2");
                     dialog_1.innerHTML = ""; //沒資料預設違規的 innerHTML 為空值
                 }
 
                 //後方車距違規有資料
-                if (journey[String(e['path'][0].id).substring(8)]["distance_stat"][2].distance_violation != null) {
+                if (journey[String(e.target.id.substring(8))]["distance_stat"][2].distance_violation != null) {
 
                     console.log("have data");
 
                     var dialog_1 = document.querySelector("#distance-modal div#violation_3");
                     var count = 1;
 
-                    if (document.querySelector('table#violation3_' + String(e['path'][0].id).substring(8)) == null) { //避免重複修改 html 導致錯誤
-                        console.log(document.querySelector('table#violation3_' + String(e['path'][0].id).substring(8)));
+                    if (document.querySelector('table#violation3_' + String(e.target.id.substring(8))) == null) { //避免重複修改 html 導致錯誤
+                        console.log(document.querySelector('table#violation3_' + String(e.target.id.substring(8))));
                         //新增車距違規的資料表
-                        dialog_1.innerHTML = `<table id="violation3_` + String(e['path'][0].id).substring(8) + `" style="border: 1px solid black;text-align: center;"><p style="margin-top: 20px;">後方車距違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;padding: 5px;">違規編號</th><th style="border: 1px solid black;padding: 5px;">違規車距差</th></tr></table>`;
+                        dialog_1.innerHTML = `<table id="violation3_` + String(e.target.id.substring(8)) + `" style="border: 1px solid black;text-align: center;"><p style="margin-top: 20px;">後方車距違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;padding: 5px;">違規編號</th><th style="border: 1px solid black;padding: 5px;">違規車距差</th></tr></table>`;
                         //針對每個違規做處理並各自生成 row 後添加到 table 中
-                        journey[String(e['path'][0].id).substring(8)]["distance_stat"][2].distance_violation.forEach(element => {
+                        journey[String(e.target.id.substring(8))]["distance_stat"][2].distance_violation.forEach(element => {
                             console.log(element);
                             //選取特定 journey 編號的 table
-                            var violation_row = document.querySelector('table#violation3_' + String(e['path'][0].id).substring(8));
+                            var violation_row = document.querySelector('table#violation3_' + String(e.target.id.substring(8)));
                             violation_row.innerHTML += '<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;" id="data-left-distance">' + count + '</td><td style="border: 1px solid black;padding: 5px;" id="data-right-distance">' + element + ' mm</td></tr>';
                             count += 1; //編號加一
                         });
@@ -346,7 +347,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 }
 
                 //後方車距違規沒資料
-                if (journey[String(e['path'][0].id).substring(8)]["distance_stat"][2].distance_violation == null) {
+                if (journey[String(e.target.id.substring(8))]["distance_stat"][2].distance_violation == null) {
                     var dialog_1 = document.querySelector("#distance-modal div#violation_3");
                     dialog_1.innerHTML = "";  //沒資料預設違規的 innerHTML 為空值
                 }
@@ -368,26 +369,26 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 var avg_acceleration = document.getElementById("avg_acceleration");
                 var avg_gyro = document.getElementById("avg_gyro");
                 //將實際資料放入 variable
-                var data_avg_acceleration = (Math.round(journey[String(e['path'][0].id).substring(8)]["acceleration_stat"][0].avg_acceleration * 1000) / 1000).toFixed(3);
-                var data_avg_gyro = (Math.round(journey[String(e['path'][0].id).substring(8)]["acceleration_stat"][1].avg_gyro * 1000) / 1000).toFixed(3);
+                var data_avg_acceleration = (Math.round(journey[String(e.target.id.substring(8))]["acceleration_stat"][0].avg_acceleration * 1000) / 1000).toFixed(3);
+                var data_avg_gyro = (Math.round(journey[String(e.target.id.substring(8))]["acceleration_stat"][1].avg_gyro * 1000) / 1000).toFixed(3);
                 //修改表格內資料
                 avg_acceleration.innerHTML = data_avg_acceleration;
                 avg_gyro.innerHTML = data_avg_gyro;
 
                 //加速度違規有資料
-                if (journey[String(e['path'][0].id).substring(8)]["acceleration_stat"][0].acceleration_violation != null) {
+                if (journey[String(e.target.id.substring(8))]["acceleration_stat"][0].acceleration_violation != null) {
 
                     console.log("have data");
 
                     var dialog_1 = document.querySelector("#acceleration-modal div#violation_1");
                     var count = 1;
 
-                    if (document.querySelector('table#acceleration_violation1_' + String(e['path'][0].id).substring(8)) == null) { //避免重複修改 html 導致錯誤
-                        console.log(document.querySelector('table#acceleration_violation1_' + String(e['path'][0].id).substring(8)));
-                        dialog_1.innerHTML = `<table id="acceleration_violation1_` + String(e['path'][0].id).substring(8) + `" style="border: 1px solid black;text-align: center;"><p style="margin-top: 20px;">加速度違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;padding: 5px;">違規編號</th><th style="border: 1px solid black;padding: 5px;">違規加速度差</th></tr></table>`;
-                        journey[String(e['path'][0].id).substring(8)]["acceleration_stat"][0].acceleration_violation.forEach(element => {
+                    if (document.querySelector('table#acceleration_violation1_' + String(e.target.id.substring(8))) == null) { //避免重複修改 html 導致錯誤
+                        console.log(document.querySelector('table#acceleration_violation1_' + String(e.target.id.substring(8))));
+                        dialog_1.innerHTML = `<table id="acceleration_violation1_` + String(e.target.id.substring(8)) + `" style="border: 1px solid black;text-align: center;"><p style="margin-top: 20px;">加速度違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;padding: 5px;">違規編號</th><th style="border: 1px solid black;padding: 5px;">違規加速度差</th></tr></table>`;
+                        journey[String(e.target.id.substring(8))]["acceleration_stat"][0].acceleration_violation.forEach(element => {
                             console.log(element);
-                            var violation_row = document.querySelector('table#acceleration_violation1_' + String(e['path'][0].id).substring(8));
+                            var violation_row = document.querySelector('table#acceleration_violation1_' + String(e.target.id.substring(8)));
                             violation_row.innerHTML += '<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;" id="data-left-distance">' + count + '</td><td style="border: 1px solid black;padding: 5px;" id="data-right-distance">' + (Math.round(element * 1000) / 1000).toFixed(3); + '</td></tr>';
                             count += 1;
                         });
@@ -395,7 +396,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 }
 
                 //加速度違規沒資料
-                if (journey[String(e['path'][0].id).substring(8)]["acceleration_stat"][0].acceleration_violation == null) {
+                if (journey[String(e.target.id.substring(8))]["acceleration_stat"][0].acceleration_violation == null) {
                     var dialog_1 = document.querySelector("#acceleration-modal div#violation_1");
                     dialog_1.innerHTML = "";
                 }
@@ -415,24 +416,24 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 //速度資料
                 var avg_speed = document.getElementById("avg_speed");
                 //將實際資料放入 variable
-                var data_avg_speed = (Math.round(journey[String(e['path'][0].id).substring(8)]["speed_stat"].avg_speed * 1000) / 1000).toFixed(2);
+                var data_avg_speed = (Math.round(journey[String(e.target.id.substring(8))]["speed_stat"].avg_speed * 1000) / 1000).toFixed(2);
                 //修改表格內資料
                 avg_speed.innerHTML = data_avg_speed + " km/hr";
 
                 //速度違規有資料
-                if (journey[String(e['path'][0].id).substring(8)]["speed_stat"].speed_violation != null) {
+                if (journey[String(e.target.id.substring(8))]["speed_stat"].speed_violation != null) {
 
                     console.log("have data");
 
                     var dialog_1 = document.querySelector("#speed-modal div#violation_1");
                     var count = 1;
 
-                    if (document.querySelector('table#speed_violation1_' + String(e['path'][0].id).substring(8)) == null) { //避免重複修改 html 導致錯誤
-                        console.log(document.querySelector('table#speed_violation1_' + String(e['path'][0].id).substring(8)));
-                        dialog_1.innerHTML = `<table id="speed_violation1_` + String(e['path'][0].id).substring(8) + `" style="border: 1px solid black;text-align: center;"><p style="margin-top: 20px;">速度違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;padding: 5px;">違規編號</th><th style="border: 1px solid black;padding: 5px;">道路名稱</th><th style="border: 1px solid black;padding: 5px;">車速</th><th style="border: 1px solid black;padding: 5px;">道路速限</th></tr></table>`;
-                        journey[String(e['path'][0].id).substring(8)]["speed_stat"].speed_violation.forEach(element => {
+                    if (document.querySelector('table#speed_violation1_' + String(e.target.id.substring(8))) == null) { //避免重複修改 html 導致錯誤
+                        console.log(document.querySelector('table#speed_violation1_' + String(e.target.id.substring(8))));
+                        dialog_1.innerHTML = `<table id="speed_violation1_` + String(e.target.id.substring(8)) + `" style="border: 1px solid black;text-align: center;"><p style="margin-top: 20px;">速度違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;padding: 5px;">違規編號</th><th style="border: 1px solid black;padding: 5px;">道路名稱</th><th style="border: 1px solid black;padding: 5px;">車速</th><th style="border: 1px solid black;padding: 5px;">道路速限</th></tr></table>`;
+                        journey[String(e.target.id.substring(8))]["speed_stat"].speed_violation.forEach(element => {
                             console.log(element);
-                            var violation_row = document.querySelector('table#speed_violation1_' + String(e['path'][0].id).substring(8));
+                            var violation_row = document.querySelector('table#speed_violation1_' + String(e.target.id.substring(8)));
                             violation_row.innerHTML += `<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;">` + count + `</td><td style="border: 1px solid black;padding: 5px;">` + element.road + `</td><td style="border: 1px solid black;padding: 5px;">` + (Math.round(element.speed * 1000) / 1000).toFixed(2) + " km/hr" + `</td><td style="border: 1px solid black;padding: 5px;">` + (Math.round(element.speed_limit * 1000) / 1000).toFixed(0) + " km/hr" + `</td></tr>`;
                             count += 1;
                         });
@@ -440,7 +441,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 }
 
                 //速度違規沒資料
-                if (journey[String(e['path'][0].id).substring(8)]["speed_stat"].speed_violation == null) {
+                if (journey[String(e.target.id.substring(8))]["speed_stat"].speed_violation == null) {
                     var dialog_1 = document.querySelector("#speed-modal div#violation_1");
                     dialog_1.innerHTML = "";
                 }
@@ -591,7 +592,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
 
 });
 
-$(".navbar-toggler").bind("click", function () { // toggle button bug fix
-    //console.log("clicked");
+$(".navbar-toggler").bind("click", function (e) { // toggle button bug fix
+    console.log(e);
     $('div.navbar-collapse').slideToggle(500);
 });
