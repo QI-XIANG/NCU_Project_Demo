@@ -32,59 +32,60 @@ function getCookie(name) {
 }
 
 //用戶資料變數宣告
-var user_account = document.querySelector(".user_account");
-var user_birthDate = document.querySelector(".user_birthDate");
-var user_gender = document.querySelector(".user_gender");
-var user_idCardNumber = document.querySelector(".user_idCardNumber");
-var user_realName = document.querySelector(".user_realName");
-var user_motorcycle = document.querySelector(".user_motorcycle");
-var user_referenceNumber = document.querySelector(".user_referenceNumber");
-var user_insuranceCompanyName = document.querySelector('.user_insuranceCompanyName');
+var user_account = document.querySelector(".user_account"); //帳號
+var user_birthDate = document.querySelector(".user_birthDate"); //生日
+var user_gender = document.querySelector(".user_gender"); //性別
+var user_idCardNumber = document.querySelector(".user_idCardNumber"); //身分證字號
+var user_realName = document.querySelector(".user_realName"); //真實姓名
+var user_motorcycle = document.querySelector(".user_motorcycle"); //摩托車 (暫未使用)
+var user_referenceNumber = document.querySelector(".user_referenceNumber"); //管轄編號 (駕照)
+var user_insuranceCompanyName = document.querySelector('.user_insuranceCompanyName'); //投保的保險公司  
 
 //console.log(user_account);
 
 db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) {
-    //var size = Object.keys(data).length;
-    var data = snapshot.val();
-    console.log(data);
+    //var size = Object.keys(data).length; 資料庫 key 的長度取得
+    var data = snapshot.val(); //讀出資料庫的使用者資料
+    //console.log(data); 
     //var size = Object.keys(data).length;
     //console.log(size);
-    user_account.innerHTML = data['account'];
-    user_birthDate.innerHTML = data['birthDate'];
-    user_gender.innerHTML = data['gender'];
-    user_idCardNumber.innerHTML = data['idCardNumber'];
-    user_realName.innerHTML = data['realName'];
-    user_insuranceCompanyName.innerHTML = data['insuranceCompanyName'];
-    user_referenceNumber.innerHTML = data['referenceNumber'];
+    /*===========使用者基本資料處理==============*/
+    user_account.innerHTML = data['account']; //修改帳號的 innerHTML
+    user_birthDate.innerHTML = data['birthDate']; //修改生日的 innerHTML
+    user_gender.innerHTML = data['gender']; //修改性別的 innerHTML
+    user_idCardNumber.innerHTML = data['idCardNumber']; //修改身分證字號的 innerHTML
+    user_realName.innerHTML = data['realName']; //修改真實名稱的 innerHTML
+    user_insuranceCompanyName.innerHTML = data['insuranceCompanyName']; //修改保險公司的 innerHTML
+    user_referenceNumber.innerHTML = data['referenceNumber']; //修改管轄編號的 innerHTML
 });
 
 //刪除cookie
 function delCookie(name) {
     var exp = new Date();
-    exp.setTime(exp.getTime() - 1);
+    exp.setTime(exp.getTime() - 1); //強制讓 cookie 過期
     var cval = getCookie(name);
     if (cval != null) document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
 }
 
-//登出
+//登出功能
 var user_logout = document.querySelector(".user_logout");
 user_logout.addEventListener("click", e => {
     if (getCookie("uid") != null) {
         delCookie("uid");
-        window.location = "index.html";
+        window.location = "index.html"; //登出會強制導引到登入頁面
     }
 });
 
 //是否已經登入
 if (getCookie("uid") == null) {
     alert("您還沒有登入喔~\n即將跳轉回登入頁面!");
-    window.location = "index.html";
+    window.location = "index.html"; //未登入會強制導引到登入介面
 }
 
 //摩托車資料變數宣告
 var motorcycle_brand = document.getElementById("motorcycle_brand");
 var motorcycle_cc = document.getElementById("motorcycle_cc");
-var motorcycle_oener = document.getElementById("motorcycle_owner");
+var motorcycle_owner = document.getElementById("motorcycle_owner");
 var motorcycle_plateNumber = document.getElementById("motorcycle_plateNumber");
 
 //處理摩托車資料
@@ -108,6 +109,8 @@ document.querySelector("#user_motorcycle").addEventListener("click", e => {
     $("#motorcycle_detail").show();
 });
 
+
+/*===============表格範例================*/
 var row = `
         <td id="journey-title"></td>
         <td id="acceleration_stat"></td>
@@ -117,7 +120,7 @@ var row = `
         `;
 
 
-
+/*===================星期轉換=====================*/
 
 function showweek(now) {
     if (now.getDay() == 0) return ('星期日');
@@ -129,7 +132,7 @@ function showweek(now) {
     if (now.getDay() == 6) return ('星期六');
 }
 
-
+/*====================日期轉換=========================*/
 
 function showdate(now) {
     var year = now.getFullYear();
@@ -146,17 +149,32 @@ function showdate(now) {
     return year + '年' + month + '月' + day + "日 " + showweek(now) + " " + hour + ":" + min;
 }
 
+/*===============判斷是否可以轉換成數字=================*/
+
 function isNumeric(num) {
     return !isNaN(num)
 }
 
-db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) {
+/*=====================所有表格資料的處理=================================*/
+
+db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連結到特定使用者的資料庫資料表
     //var size = Object.keys(data).length;
     var data = snapshot.val();
-    console.log(Object.keys(data["journey"]));
+    //console.log(Object.keys(data["journey"]));
     //var size = Object.keys(data).length;
     //console.log(size);
-    if (data["journey"] == null) {
+
+    var journey_row_count = 0; //確認行程資料的筆數
+
+    for (var journey_count = 0; journey_count < Object.keys(data["journey"]).length; journey_count++) {
+        if (isNumeric(Object.keys(data["journey"])[journey_count])) {
+            journey_row_count += 1;
+            //console.log("總共的行程數:"+Object.keys(data["journey"])[journey_count]);
+        }
+    }
+
+    if (journey_row_count == 0) {
+        console.log("no data");
         var journey_table = document.querySelector(".journey-table-tbody");
         row = `<tr>
                 <td id="journey-title">查無資料</td>
@@ -167,36 +185,30 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) {
             </tr>`;
         journey_table.insertAdjacentHTML('afterbegin', row);
     }
-    if (data["journey"] != null) {
-        console.log("aru");
+
+    if (journey_row_count > 0) {
+        //console.log("aru");
         var journey_table = document.querySelector(".journey-table-tbody");
         var journey = data["journey"];
-
-        var journey_row_count = 0;
-
-        for (var journey_count = 0; journey_count < Object.keys(data["journey"]).length; journey_count++) {
-            if (isNumeric(Object.keys(data["journey"])[journey_count])) {
-                journey_row_count += 1;
-                console.log(Object.keys(data["journey"])[journey_count]);
-            }
-        }
 
         //console.log("eeeee"+journey_row_count);
 
         for (var i = 0; i < journey_row_count; i++) {
-            console.log(journey[Object.keys(journey)[i]]);
+            console.log(journey[Object.keys(journey)[i]]['start_time']);
             row = `
-                <td id="journey-title">`+ journey[Object.keys(journey)[i]]['start_time'] + `</td>
+                <td id="journey-title">`+ journey[Object.keys(journey)[i]].start_time + `</td>
                 <td id="acceleration_stat"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">Click me</a></td>
                 <td id="distance_stat"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">Click me</a></td>
-                <td id="gps_stat"><a href="#">Click me</a></td>
+                <td id="gps_stat"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">Click me</a></td>
                 <td id="journey-detail"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">Click me</a></td>
             `;
+
+            console.log(row);
 
             journey_table.insertAdjacentHTML('afterbegin', row);
 
 
-            console.log(document.querySelector("td#journey-detail a#journey_" + String(journey[Object.keys(journey)[i]]['start_time'])));
+            //console.log(document.querySelector("td#journey-detail a#journey_" + String(journey[Object.keys(journey)[i]]['start_time'])));
 
 
             //行程資訊的 event handle
@@ -328,6 +340,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) {
 
             });
 
+            /*================加速度資料處理===============*/
             //加速度 event handle
             document.querySelector("td#acceleration_stat a#journey_" + String(journey[Object.keys(journey)[i]]['start_time'])).addEventListener("click", e => {
                 $("#acceleration-modal").dialog({
@@ -374,145 +387,192 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) {
 
 
             });
+            /*================加速度資料處理結束===============*/
 
-            if ($('#table-demo tbody tr').length == journey_row_count) {
-                console.log("data length" + $('#table-demo tbody tr').length);
-                var CurrentPage = 0;
-                $('#table-demo').after('<div id="nav"><ul class="pagination"></ul></div>');
-                var rowsShown = 5;
-                var rowsTotal = $('#table-demo tbody tr').length;
-                var numPages = rowsTotal / rowsShown;
-                for (var i = 0; i < numPages; i++) {
-                    var pageNum = i + 1;
-                    $('#nav .pagination').append('<li class="page-item normal-page-item"><a class="page-link normalLink link' + i + '" rel="' + i + '">' + pageNum + '</a></li>');
+
+            document.querySelector("td#gps_stat a#journey_" + String(journey[Object.keys(journey)[i]]['start_time'])).addEventListener("click", e => {
+                $("#speed-modal").dialog({
+                    width: 420,
+                    height: 250,
+                    modal: true
+                });
+                $("#speed-modal").show();
+                //速度資料
+                var avg_speed = document.getElementById("avg_speed");
+                //將實際資料放入 variable
+                var data_avg_speed = (Math.round(journey[String(e['path'][0].id).substring(8)]["speed_stat"].avg_speed * 1000) / 1000).toFixed(2);
+                //修改表格內資料
+                avg_speed.innerHTML = data_avg_speed + " km/hr";
+
+                //速度違規有資料
+                if (journey[String(e['path'][0].id).substring(8)]["speed_stat"].speed_violation != null) {
+
+                    console.log("have data");
+
+                    var dialog_1 = document.querySelector("#speed-modal div#violation_1");
+                    var count = 1;
+
+                    if (document.querySelector('table#speed_violation1_' + String(e['path'][0].id).substring(8)) == null) { //避免重複修改 html 導致錯誤
+                        console.log(document.querySelector('table#speed_violation1_' + String(e['path'][0].id).substring(8)));
+                        dialog_1.innerHTML = `<table id="speed_violation1_` + String(e['path'][0].id).substring(8) + `" style="border: 1px solid black;text-align: center;"><p style="margin-top: 20px;">速度違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;padding: 5px;">違規編號</th><th style="border: 1px solid black;padding: 5px;">道路名稱</th><th style="border: 1px solid black;padding: 5px;">車速</th><th style="border: 1px solid black;padding: 5px;">道路速限</th></tr></table>`;
+                        journey[String(e['path'][0].id).substring(8)]["speed_stat"].speed_violation.forEach(element => {
+                            console.log(element);
+                            var violation_row = document.querySelector('table#speed_violation1_' + String(e['path'][0].id).substring(8));
+                            violation_row.innerHTML += `<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;">` + count + `</td><td style="border: 1px solid black;padding: 5px;">` + element.road + `</td><td style="border: 1px solid black;padding: 5px;">` + (Math.round(element.speed * 1000) / 1000).toFixed(2) + " km/hr" + `</td><td style="border: 1px solid black;padding: 5px;">` + (Math.round(element.speed_limit * 1000) / 1000).toFixed(0) + " km/hr" + `</td></tr>`;
+                            count += 1;
+                        });
+                    }
                 }
-                $('#nav .pagination').prepend('<li class="page-item special-page-item"><a class="page-link lastPage" rel="0" aria-label="Previous"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>');
-                $('#nav .pagination').append('<li class="page-item special-page-item"><a class="page-link nextPage" aria-label="Next"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>');
-                $('#table-demo tbody tr').hide();
-                $('#table-demo tbody tr').slice(0, rowsShown).show();
-                $('#nav a.normalLink:first').addClass('active');
-                if (Number(CurrentPage) - 1 <= 0) {
-                    $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage, CurrentPage + 3).show().css('opacity', '1.0');
+
+                //速度違規沒資料
+                if (journey[String(e['path'][0].id).substring(8)]["speed_stat"].speed_violation == null) {
+                    var dialog_1 = document.querySelector("#speed-modal div#violation_1");
+                    dialog_1.innerHTML = "";
                 }
 
-                // normal link click enent handle
-                $('#nav a.normalLink').bind('click', function () {
-
-                    $('#nav a').removeClass('active');
-                    $('#nav a').removeClass('active');
-                    $('#nav a').removeClass('active');
-                    $(this).addClass('active');
-
-                    var currPage = $(this).attr('rel');
-                    CurrentPage = $(this).attr('rel');
-                    var startItem = currPage * rowsShown;
-                    var endItem = startItem + rowsShown;
-
-                    $('#table-demo tbody tr').css('opacity', '0.0').hide().slice(startItem, endItem).
-                        css('display', 'table-row').animate({ opacity: 1 }, 300);
-
-                    if (Number(CurrentPage) - 1 <= 0) {
-                        $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage, CurrentPage + 3).show().css('opacity', '1.0');
-                    }
-                    if (Number(CurrentPage) == numPages - 1) {
-                        $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 2, Number(CurrentPage) + 1).show().css('opacity', '1.0');
-                    }
-                    if (Number(CurrentPage) - 1 >= 0 & Number(CurrentPage) != numPages - 1) {
-                        $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
-                    }
-
-                    console.log(CurrentPage);
-                });
-
-                // lastPage link click event handle
-                $('#nav a.lastPage').bind('click', function () {
-
-                    $('#nav a.normalLink').removeClass('active');
-                    $('#nav a.lastPage').removeClass('active');
-                    $('#nav a.nextPage').removeClass('active');
-
-                    if ((CurrentPage - 1) >= 0) {
-                        $(this).attr('rel', CurrentPage - 1)
-                    } else {
-                        $(this).attr('rel', 0)
-                    }
-                    var currPage = $(this).attr('rel');
-                    CurrentPage = $(this).attr('rel');
-                    var startItem = currPage * rowsShown;
-                    var endItem = startItem + rowsShown;
-                    $('#table-demo tbody tr').css('opacity', '0.0').hide().slice(startItem, endItem).
-                        css('display', 'table-row').animate({ opacity: 1 }, 300);
-
-                    for (var i = 0; i < numPages; i++) {
-                        if (i == Number(CurrentPage)) {
-                            $("#nav .pagination li.normal-page-item a.link" + String(i)).addClass("active");
-                        } else {
-                            $("#nav .pagination li.normal-page-item a.link" + String(i)).removeClass("active");
-                        }
-                    }
-
-                    if (Number(CurrentPage) - 1 <= 0) {
-                        $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage, CurrentPage + 3).show().css('opacity', '1.0');
-                    }
-                    if (Number(CurrentPage) == numPages - 1) {
-                        $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 2, Number(CurrentPage) + 1).show().css('opacity', '1.0');
-                    }
-                    if (Number(CurrentPage) - 1 >= 0 & Number(CurrentPage) != numPages - 1) {
-                        $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
-                    }
-
-                    console.log(CurrentPage);
-                });
-
-                // nextPage link click event handle
-                $('#nav a.nextPage').bind('click', function () {
-
-                    $('#nav a.normalLink').removeClass('active');
-                    $('#nav a.lastPage').removeClass('active');
-                    $('#nav a.nextPage').removeClass('active');
-
-                    $(this).addClass('active');
-                    if ((Number(CurrentPage) + 1) < numPages) {
-                        $(this).attr('rel', Number(CurrentPage) + 1)
-                    } else {
-                        $(this).attr('rel', CurrentPage)
-                    }
-                    var currPage = $(this).attr('rel');
-                    CurrentPage = $(this).attr('rel');
-                    var startItem = currPage * rowsShown;
-                    var endItem = startItem + rowsShown;
-                    $('#table-demo tbody tr').css('opacity', '0.0').hide().slice(startItem, endItem).
-                        css('display', 'table-row').animate({ opacity: 1 }, 300);
-
-                    for (var i = 0; i < numPages; i++) {
-                        if (i == Number(CurrentPage)) {
-                            $("#nav .pagination li.normal-page-item a.link" + String(i)).addClass("active");
-                        } else {
-                            $("#nav .pagination li.normal-page-item a.link" + String(i)).removeClass("active");
-                        }
-                    }
-
-                    $('#nav a.nextPage').removeClass('active');
-
-                    if (Number(CurrentPage) - 1 <= 0) {
-                        $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage, CurrentPage + 3).show().css('opacity', '1.0');
-                    }
-                    if (Number(CurrentPage) == numPages - 1) {
-                        $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 2, Number(CurrentPage) + 1).show().css('opacity', '1.0');
-                    }
-                    if (Number(CurrentPage) - 1 >= 0 & Number(CurrentPage) != numPages - 1) {
-                        $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
-                    }
-
-                    console.log(CurrentPage);
-                });
-            }
+            });
 
         }
 
+        /*================表格資料分頁功能===============*/
+        if ($('#table-demo tbody tr').length == journey_row_count) { //等資料都載入完才做分頁功能的載入(pagination)
+            console.log("data length" + $('#table-demo tbody tr').length);
+            var CurrentPage = 0;
+            $('#table-demo').after('<div id="nav"><ul class="pagination"></ul></div>');
+            var rowsShown = 5;
+            var rowsTotal = $('#table-demo tbody tr').length;
+            var numPages = rowsTotal / rowsShown;
+            for (var i = 0; i < numPages; i++) {
+                var pageNum = i + 1;
+                $('#nav .pagination').append('<li class="page-item normal-page-item"><a class="page-link normalLink link' + i + '" rel="' + i + '">' + pageNum + '</a></li>');
+            }
+            $('#nav .pagination').prepend('<li class="page-item special-page-item"><a class="page-link lastPage" rel="0" aria-label="Previous"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>');
+            $('#nav .pagination').append('<li class="page-item special-page-item"><a class="page-link nextPage" aria-label="Next"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>');
+            $('#table-demo tbody tr').hide();
+            $('#table-demo tbody tr').slice(0, rowsShown).show();
+            $('#nav a.normalLink:first').addClass('active');
+            if (Number(CurrentPage) - 1 <= 0) {
+                $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage, CurrentPage + 3).show().css('opacity', '1.0');
+            }
+
+            // normal link click enent handle
+            $('#nav a.normalLink').bind('click', function () {
+
+                $('#nav a').removeClass('active');
+                $('#nav a').removeClass('active');
+                $('#nav a').removeClass('active');
+                $(this).addClass('active');
+
+                var currPage = $(this).attr('rel');
+                CurrentPage = $(this).attr('rel');
+                var startItem = currPage * rowsShown;
+                var endItem = startItem + rowsShown;
+
+                $('#table-demo tbody tr').css('opacity', '0.0').hide().slice(startItem, endItem).
+                    css('display', 'table-row').animate({ opacity: 1 }, 300);
+
+                if (Number(CurrentPage) - 1 <= 0) {
+                    $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage, CurrentPage + 3).show().css('opacity', '1.0');
+                }
+                if (Number(CurrentPage) == numPages - 1) {
+                    $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 2, Number(CurrentPage) + 1).show().css('opacity', '1.0');
+                }
+                if (Number(CurrentPage) - 1 >= 0 & Number(CurrentPage) != numPages - 1) {
+                    $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
+                }
+
+                console.log(CurrentPage);
+            });
+
+            // lastPage link click event handle
+            $('#nav a.lastPage').bind('click', function () {
+
+                $('#nav a.normalLink').removeClass('active');
+                $('#nav a.lastPage').removeClass('active');
+                $('#nav a.nextPage').removeClass('active');
+
+                if ((CurrentPage - 1) >= 0) {
+                    $(this).attr('rel', CurrentPage - 1)
+                } else {
+                    $(this).attr('rel', 0)
+                }
+                var currPage = $(this).attr('rel');
+                CurrentPage = $(this).attr('rel');
+                var startItem = currPage * rowsShown;
+                var endItem = startItem + rowsShown;
+                $('#table-demo tbody tr').css('opacity', '0.0').hide().slice(startItem, endItem).
+                    css('display', 'table-row').animate({ opacity: 1 }, 300);
+
+                for (var i = 0; i < numPages; i++) {
+                    if (i == Number(CurrentPage)) {
+                        $("#nav .pagination li.normal-page-item a.link" + String(i)).addClass("active");
+                    } else {
+                        $("#nav .pagination li.normal-page-item a.link" + String(i)).removeClass("active");
+                    }
+                }
+
+                if (Number(CurrentPage) - 1 <= 0) {
+                    $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage, CurrentPage + 3).show().css('opacity', '1.0');
+                }
+                if (Number(CurrentPage) == numPages - 1) {
+                    $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 2, Number(CurrentPage) + 1).show().css('opacity', '1.0');
+                }
+                if (Number(CurrentPage) - 1 >= 0 & Number(CurrentPage) != numPages - 1) {
+                    $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
+                }
+
+                console.log(CurrentPage);
+            });
+
+            // nextPage link click event handle
+            $('#nav a.nextPage').bind('click', function () {
+
+                $('#nav a.normalLink').removeClass('active');
+                $('#nav a.lastPage').removeClass('active');
+                $('#nav a.nextPage').removeClass('active');
+
+                $(this).addClass('active');
+                if ((Number(CurrentPage) + 1) < numPages) {
+                    $(this).attr('rel', Number(CurrentPage) + 1)
+                } else {
+                    $(this).attr('rel', CurrentPage)
+                }
+                var currPage = $(this).attr('rel');
+                CurrentPage = $(this).attr('rel');
+                var startItem = currPage * rowsShown;
+                var endItem = startItem + rowsShown;
+                $('#table-demo tbody tr').css('opacity', '0.0').hide().slice(startItem, endItem).
+                    css('display', 'table-row').animate({ opacity: 1 }, 300);
+
+                for (var i = 0; i < numPages; i++) {
+                    if (i == Number(CurrentPage)) {
+                        $("#nav .pagination li.normal-page-item a.link" + String(i)).addClass("active");
+                    } else {
+                        $("#nav .pagination li.normal-page-item a.link" + String(i)).removeClass("active");
+                    }
+                }
+
+                $('#nav a.nextPage').removeClass('active');
+
+                if (Number(CurrentPage) - 1 <= 0) {
+                    $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage, CurrentPage + 3).show().css('opacity', '1.0');
+                }
+                if (Number(CurrentPage) == numPages - 1) {
+                    $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 2, Number(CurrentPage) + 1).show().css('opacity', '1.0');
+                }
+                if (Number(CurrentPage) - 1 >= 0 & Number(CurrentPage) != numPages - 1) {
+                    $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
+                }
+
+                console.log(CurrentPage);
+            });
+        }
+
+        /*預防資料載入後 Pagination 不正常顯示*/
         $('#nav a.normalLink').first().click();
 
-
+        console.log($('#table-demo tbody tr').length);
+        console.log(document.querySelector(".journey-table-tbody"));
         console.log(Object.keys(data['journey']));
     }
 
