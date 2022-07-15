@@ -173,10 +173,11 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
         }
     }
 
-    if (journey_row_count == 0) {
+    if (journey_row_count == 0) { // 沒有行程資料
         console.log("no data");
         var journey_table = document.querySelector(".journey-table-tbody");
-        row = `<tr>
+        //預設顯示 no data
+        row = `<tr> 
                 <td id="journey-title">查無資料</td>
                 <td id="acceleration_stat">查無資料</td>
                 <td id="distance_stat">查無資料</td>
@@ -186,15 +187,15 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
         journey_table.insertAdjacentHTML('afterbegin', row);
     }
 
-    if (journey_row_count > 0) {
+    if (journey_row_count > 0) { //有行程資料
         //console.log("aru");
         var journey_table = document.querySelector(".journey-table-tbody");
-        var journey = data["journey"];
+        var journey = data["journey"]; //將資料限縮在 journey 資料表上
 
         //console.log("eeeee"+journey_row_count);
 
-        for (var i = 0; i < journey_row_count; i++) {
-            console.log(journey[Object.keys(journey)[i]]['start_time']);
+        for (var i = 0; i < journey_row_count; i++) { //透過迴圈依序把資料放進資料表裡面
+            //console.log(journey[Object.keys(journey)[i]]['start_time']);
             row = `
                 <td id="journey-title">`+ journey[Object.keys(journey)[i]].start_time + `</td>
                 <td id="acceleration_stat"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">Click me</a></td>
@@ -203,51 +204,57 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 <td id="journey-detail"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">Click me</a></td>
             `;
 
-            console.log(row);
+            //console.log(row);
 
-            journey_table.insertAdjacentHTML('afterbegin', row);
+            journey_table.insertAdjacentHTML('afterbegin', row); //越新的資料會被顯示在越上層
 
 
             //console.log(document.querySelector("td#journey-detail a#journey_" + String(journey[Object.keys(journey)[i]]['start_time'])));
 
 
             //行程資訊的 event handle
+            //在行程資訊上註冊 click event
             document.querySelector("td#journey-detail a#journey_" + String(journey[Object.keys(journey)[i]]['start_time'])).addEventListener("click", e => {
                 console.log(String(e['path'][0].id).substring(8));
-                $("#journey-modal").dialog({
+                $("#journey-modal").dialog({ //彈出視窗的外觀大小設定
                     width: 400,
                     height: 250,
                     modal: true
                 });
-                $("#journey-modal").show();
+                $("#journey-modal").show(); //實際顯示視窗
                 //行程資料
-                var data_journey_start = document.getElementById("data-journey-start");
-                var data_journey_end = document.getElementById("data-journey-end");
-                var data_journey_totaltime = document.getElementById("data-journey-totaltime");
-                console.log(journey[String(e['path'][0].id).substring(8)]);
+                var data_journey_start = document.getElementById("data-journey-start"); //行程開始時間
+                var data_journey_end = document.getElementById("data-journey-end"); //行程結束時間
+                var data_journey_totaltime = document.getElementById("data-journey-totaltime"); //行程總時間
+                console.log(journey[String(e['path'][0].id).substring(8)]); //取出觸發事件的 journey 編號
+                //行程資料數值取出
                 var journey_start_time = showdate(new Date(journey[String(e['path'][0].id).substring(8)].start_time * 1000));
                 var journey_end_time = showdate(new Date(journey[String(e['path'][0].id).substring(8)].end_time * 1000));
                 var journey_time = journey[String(e['path'][0].id).substring(8)].journey_time;
+                //實際修改行程資料的 innerHTML
                 data_journey_start.innerHTML = journey_start_time;
                 data_journey_end.innerHTML = journey_end_time;
                 data_journey_totaltime.innerHTML = journey_time + "秒";
             });
 
             //車距資料 event handle
+            //在車距上註冊 click event
             document.querySelector("td#distance_stat a#journey_" + String(journey[Object.keys(journey)[i]]['start_time'])).addEventListener("click", e => {
-                $("#distance-modal").dialog({
+                $("#distance-modal").dialog({ //彈出視窗的外觀大小設定
                     width: 420,
                     height: 250,
                     modal: true
                 });
-                $("#distance-modal").show();
+                $("#distance-modal").show();//實際顯示視窗
                 //車距資料
-                var data_left_distance = document.getElementById("data-left-distance");
-                var data_right_distance = document.getElementById("data-right-distance");
-                var data_back_distance = document.getElementById("data-back-distance");
+                var data_left_distance = document.getElementById("data-left-distance"); //左方車距
+                var data_right_distance = document.getElementById("data-right-distance"); //右方車距
+                var data_back_distance = document.getElementById("data-back-distance"); // 後方車距
+                //車距資料數值取出
                 var left_distance = journey[String(e['path'][0].id).substring(8)]["distance_stat"][0].avg_distance;
                 var right_distance = journey[String(e['path'][0].id).substring(8)]["distance_stat"][1].avg_distance;
                 var back_distance = journey[String(e['path'][0].id).substring(8)]["distance_stat"][2].avg_distance;
+                //實際修改車距資料的 innerHTML
                 data_left_distance.innerHTML = left_distance + " mm";
                 data_right_distance.innerHTML = right_distance + " mm";
                 data_back_distance.innerHTML = back_distance + " mm";
@@ -258,16 +265,19 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                     console.log("have data");
 
                     var dialog_1 = document.querySelector("#distance-modal div#violation_1");
-                    var count = 1;
+                    var count = 1; //用來計算違規編號的 count
 
                     if (document.querySelector('table#violation1_' + String(e['path'][0].id).substring(8)) == null) { //避免重複修改 html 導致錯誤
                         console.log(document.querySelector('table#violation1_' + String(e['path'][0].id).substring(8)));
+                        //新增車距違規的資料表
                         dialog_1.innerHTML = `<table id="violation1_` + String(e['path'][0].id).substring(8) + `" style="border: 1px solid black;text-align: center;"><p style="margin-top: 20px;">左方車距違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;padding: 5px;">違規編號</th><th style="border: 1px solid black;padding: 5px;">違規車距差</th></tr></table>`;
+                        //針對每個違規做處理並各自生成 row 後添加到 table 中
                         journey[String(e['path'][0].id).substring(8)]["distance_stat"][0].distance_violation.forEach(element => {
                             console.log(element);
+                            //選取特定 journey 編號的 table
                             var violation_row = document.querySelector('table#violation1_' + String(e['path'][0].id).substring(8));
                             violation_row.innerHTML += '<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;" id="data-left-distance">' + count + '</td><td style="border: 1px solid black;padding: 5px;" id="data-right-distance">' + element + ' mm</td></tr>';
-                            count += 1;
+                            count += 1; //編號加一
                         });
                     }
 
@@ -277,25 +287,27 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 //左方車距違規沒資料
                 if (journey[String(e['path'][0].id).substring(8)]["distance_stat"][0].distance_violation == null) {
                     var dialog_1 = document.querySelector("#distance-modal div#violation_1");
-                    dialog_1.innerHTML = "";
+                    dialog_1.innerHTML = ""; //沒資料預設違規的 innerHTML 為空值
                 }
 
                 //右方車距違規有資料
                 if (journey[String(e['path'][0].id).substring(8)]["distance_stat"][1].distance_violation != null) {
 
                     console.log("have data");
-
                     var dialog_1 = document.querySelector("#distance-modal div#violation_2");
-                    var count = 1;
+                    var count = 1; //用來計算違規編號的 count
 
                     if (document.querySelector('table#violation2_' + String(e['path'][0].id).substring(8)) == null) { //避免重複修改 html 導致錯誤
                         console.log(document.querySelector('table#violation2_' + String(e['path'][0].id).substring(8)));
+                        //新增車距違規的資料表
                         dialog_1.innerHTML = `<table id="violation2_` + String(e['path'][0].id).substring(8) + `" style="border: 1px solid black;text-align: center;"><p style="margin-top: 20px;">右方車距違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;padding: 5px;">違規編號</th><th style="border: 1px solid black;padding: 5px;">違規車距差</th></tr></table>`;
+                        //針對每個違規做處理並各自生成 row 後添加到 table 中
                         journey[String(e['path'][0].id).substring(8)]["distance_stat"][1].distance_violation.forEach(element => {
                             console.log(element);
+                            //選取特定 journey 編號的 table
                             var violation_row = document.querySelector('table#violation2_' + String(e['path'][0].id).substring(8));
                             violation_row.innerHTML += '<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;" id="data-left-distance">' + count + '</td><td style="border: 1px solid black;padding: 5px;" id="data-right-distance">' + element + ' mm</td></tr>';
-                            count += 1;
+                            count += 1;//編號加一
                         });
                     }
 
@@ -305,7 +317,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 //右方車距違規沒資料
                 if (journey[String(e['path'][0].id).substring(8)]["distance_stat"][1].distance_violation == null) {
                     var dialog_1 = document.querySelector("#distance-modal div#violation_2");
-                    dialog_1.innerHTML = "";
+                    dialog_1.innerHTML = ""; //沒資料預設違規的 innerHTML 為空值
                 }
 
                 //後方車距違規有資料
@@ -318,12 +330,15 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
 
                     if (document.querySelector('table#violation3_' + String(e['path'][0].id).substring(8)) == null) { //避免重複修改 html 導致錯誤
                         console.log(document.querySelector('table#violation3_' + String(e['path'][0].id).substring(8)));
+                        //新增車距違規的資料表
                         dialog_1.innerHTML = `<table id="violation3_` + String(e['path'][0].id).substring(8) + `" style="border: 1px solid black;text-align: center;"><p style="margin-top: 20px;">後方車距違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;padding: 5px;">違規編號</th><th style="border: 1px solid black;padding: 5px;">違規車距差</th></tr></table>`;
+                        //針對每個違規做處理並各自生成 row 後添加到 table 中
                         journey[String(e['path'][0].id).substring(8)]["distance_stat"][2].distance_violation.forEach(element => {
                             console.log(element);
+                            //選取特定 journey 編號的 table
                             var violation_row = document.querySelector('table#violation3_' + String(e['path'][0].id).substring(8));
                             violation_row.innerHTML += '<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;" id="data-left-distance">' + count + '</td><td style="border: 1px solid black;padding: 5px;" id="data-right-distance">' + element + ' mm</td></tr>';
-                            count += 1;
+                            count += 1; //編號加一
                         });
                     }
 
@@ -333,7 +348,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 //後方車距違規沒資料
                 if (journey[String(e['path'][0].id).substring(8)]["distance_stat"][2].distance_violation == null) {
                     var dialog_1 = document.querySelector("#distance-modal div#violation_3");
-                    dialog_1.innerHTML = "";
+                    dialog_1.innerHTML = "";  //沒資料預設違規的 innerHTML 為空值
                 }
 
 
@@ -436,7 +451,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
 
         /*================表格資料分頁功能===============*/
         if ($('#table-demo tbody tr').length == journey_row_count) { //等資料都載入完才做分頁功能的載入(pagination)
-            console.log("data length" + $('#table-demo tbody tr').length);
+            //console.log("data length" + $('#table-demo tbody tr').length);
             var CurrentPage = 0;
             $('#table-demo').after('<div id="nav"><ul class="pagination"></ul></div>');
             var rowsShown = 5;
@@ -459,8 +474,6 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
             $('#nav a.normalLink').bind('click', function () {
 
                 $('#nav a').removeClass('active');
-                $('#nav a').removeClass('active');
-                $('#nav a').removeClass('active');
                 $(this).addClass('active');
 
                 var currPage = $(this).attr('rel');
@@ -481,7 +494,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                     $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
                 }
 
-                console.log(CurrentPage);
+                //console.log(CurrentPage);
             });
 
             // lastPage link click event handle
@@ -571,9 +584,14 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
         /*預防資料載入後 Pagination 不正常顯示*/
         $('#nav a.normalLink').first().click();
 
-        console.log($('#table-demo tbody tr').length);
-        console.log(document.querySelector(".journey-table-tbody"));
-        console.log(Object.keys(data['journey']));
+        //console.log($('#table-demo tbody tr').length);
+        //console.log(document.querySelector(".journey-table-tbody"));
+        //console.log(Object.keys(data['journey']));
     }
 
+});
+
+$(".navbar-toggler").bind("click", function () { // toggle button bug fix
+    //console.log("clicked");
+    $('div.navbar-collapse').slideToggle(500);
 });

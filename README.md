@@ -19,5 +19,6 @@
 4. 表格的分頁功能(Pagination)已完成
 5. 表格資料顯示相關 bug 已修正
 6. 暫不支援保險公司相關功能 (資料庫資料表尚未建置)
+7. 修正個人頁面 toggleButton 點擊後無法展開 bug
 
 ![](https://i.imgur.com/7Lu3FLq.jpg)
