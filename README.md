@@ -7,6 +7,7 @@
 * [註冊 (請勿在此註冊，僅供開發人員使用)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/signup.html)
 * [忘記密碼](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/resetPassword.html)
 * [個人頁面](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/user_profile.html)
+* [保險公司檢視客戶](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/InsuranceCompany.html)
 * [登入分流頁面](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/login_seperation.html)
 
 ### 建議使用電腦瀏覽，RWD尚未完善!!!
@@ -20,6 +21,7 @@
 5. 表格資料顯示相關 bug 已修正
 6. 暫不支援保險公司相關功能 (資料庫資料表尚未建置)
 7. 修正個人頁面 toggleButton 點擊後無法展開 bug
-8. 目前確認支援的瀏覽器為 Chrome、Edge、FireFox、Samsung Internet、Safari
+8. 保險公司檢視介面檢視客戶功能完成
+9. 目前確認支援的瀏覽器為 Chrome、Edge、FireFox、Samsung Internet、Safari
 
 ![](https://i.imgur.com/7Lu3FLq.jpg)
