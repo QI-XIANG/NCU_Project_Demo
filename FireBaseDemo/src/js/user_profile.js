@@ -46,7 +46,7 @@ var user_insuranceCompanyName = document.querySelector('.user_insuranceCompanyNa
 db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) {
     //var size = Object.keys(data).length; 資料庫 key 的長度取得
     var data = snapshot.val(); //讀出資料庫的使用者資料
-    //console.log(data); 
+    console.log(data); 
     //var size = Object.keys(data).length;
     //console.log(size);
     /*===========使用者基本資料處理==============*/
@@ -55,7 +55,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) {
     user_gender.innerHTML = data['gender']; //修改性別的 innerHTML
     user_idCardNumber.innerHTML = data['idCardNumber']; //修改身分證字號的 innerHTML
     user_realName.innerHTML = data['realName']; //修改真實名稱的 innerHTML
-    user_insuranceCompanyName.innerHTML = data['insuranceCompanyName']; //修改保險公司的 innerHTML
+    user_insuranceCompanyName.innerHTML = data['insuranceCompany']['name']; //修改保險公司的 innerHTML
     user_referenceNumber.innerHTML = data['referenceNumber']; //修改管轄編號的 innerHTML
 });
 
