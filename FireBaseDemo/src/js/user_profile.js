@@ -186,6 +186,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 <td id="journey-detail">查無資料</td>
             </tr>`;
         journey_table.insertAdjacentHTML('afterbegin', row);
+        $(".loader-wrapper").fadeOut("slow");
     }
 
     if (journey_row_count > 0) { //有行程資料
