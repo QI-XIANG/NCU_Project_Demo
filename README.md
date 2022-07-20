@@ -2,12 +2,12 @@
 
 ![](https://badgen.net/github/watchers/QI-XIANG/NCU_Project_Demo) ![](https://badgen.net/github/commits/QI-XIANG/NCU_Project_Demo) ![](https://badgen.net/github/last-commit/QI-XIANG/NCU_Project_Demo) ![](https://badgen.net/github/license/QI-XIANG/NCU_Project_Demo)
 
-* [一般登入](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/index.html)
-* [保險公司登入(邏輯尚未實作)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/insuranceCompany_login.html)
-* [註冊 (請勿在此註冊，僅供開發人員使用)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/signup.html)
+* [一般用戶登入](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/userLogin.html)
+* [保險公司登入](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/insuranceCompany_login.html)
 * [忘記密碼](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/resetPassword.html)
-* [個人頁面](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/user_profile.html)
-* [保險公司檢視客戶](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/InsuranceCompany.html)
+* [個人頁面 (需先登入)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/user_profile.html)
+* [保險公司頁面 (需先登入)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/InsuranceCompany.html)
+* [保險公司檢視個人頁面 (需先登入)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/insuranceCompany_UserProfile.html)
 * [登入分流頁面](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/login_seperation.html)
 
 ### 建議使用電腦瀏覽，RWD尚未完善!!!
