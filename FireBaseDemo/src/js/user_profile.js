@@ -17,7 +17,6 @@ const firebaseConfig = {
     measurementId: "G-68RXLWEXS7"
 };
 
-
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
@@ -591,18 +590,18 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 console.log(CurrentPage);
             });
         }
-
+        $(".loader-wrapper").fadeOut("slow");
         /*預防資料載入後 Pagination 不正常顯示*/
         $('#nav a.normalLink').first().click();
-
         //console.log($('#table-demo tbody tr').length);
         //console.log(document.querySelector(".journey-table-tbody"));
         //console.log(Object.keys(data['journey']));
     }
-
+    
 });
 
 $(".navbar-toggler").bind("click", function (e) { // toggle button bug fix
     console.log(e);
     $('div.navbar-collapse').slideToggle(500);
 });
+
