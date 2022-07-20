@@ -125,7 +125,7 @@ db.ref("/Users").once('value', function (snapshot) {
                         <td class="customer_name">`+ element.realName + `</td>
                         <td class="customer_gender">`+ element.gender + `</td>
                         <td class="customer_birth">`+ element.birthDate + `</td>
-                        <td class="customer_detail"><a href="#" id="user_info_`+ element.user_id + `" class="user_info">Click Me</a></td>
+                        <td class="customer_detail"><a href="#" id="user_info_`+ element.user_id + `" class="user_info">點擊查看</a></td>
                     </tr>`;
         customer_table_tbody.innerHTML += customer_row;
         count++;
@@ -136,7 +136,7 @@ db.ref("/Users").once('value', function (snapshot) {
                         <td class="customer_name">`+ element.realName + `</td>
                         <td class="customer_gender">`+ element.gender + `</td>
                         <td class="customer_birth">`+ element.birthDate + `</td>
-                        <td class="customer_detail"><a href="#" id="user_info_`+ element.user_id + `" class="user_info">Click Me</a></td>
+                        <td class="customer_detail"><a href="#" id="user_info_`+ element.user_id + `" class="user_info">點擊查看</a></td>
                     </tr>`;
         customer_table_tbody.innerHTML += customer_row;
         count++;
@@ -147,7 +147,7 @@ db.ref("/Users").once('value', function (snapshot) {
                         <td class="customer_name">`+ element.realName + `</td>
                         <td class="customer_gender">`+ element.gender + `</td>
                         <td class="customer_birth">`+ element.birthDate + `</td>
-                        <td class="customer_detail"><a href="#" id="user_info_`+ element.user_id + `" class="user_info">Click Me</a></td>
+                        <td class="customer_detail"><a href="#" id="user_info_`+ element.user_id + `" class="user_info">點擊查看</a></td>
                     </tr>`;
         customer_table_tbody.innerHTML += customer_row;
         count++;
@@ -158,7 +158,7 @@ db.ref("/Users").once('value', function (snapshot) {
                         <td class="customer_name">`+ element.realName + `</td>
                         <td class="customer_gender">`+ element.gender + `</td>
                         <td class="customer_birth">`+ element.birthDate + `</td>
-                        <td class="customer_detail"><a href="#" id="user_info_`+ element.user_id + `" class="user_info">Click Me</a></td>
+                        <td class="customer_detail"><a href="#" id="user_info_`+ element.user_id + `" class="user_info">點擊查看</a></td>
                     </tr>`;
         customer_table_tbody.innerHTML += customer_row;
         count++;
@@ -169,7 +169,7 @@ db.ref("/Users").once('value', function (snapshot) {
                         <td class="customer_name">`+ element.realName + `</td>
                         <td class="customer_gender">`+ element.gender + `</td>
                         <td class="customer_birth">`+ element.birthDate + `</td>
-                        <td class="customer_detail"><a href="#" id="user_info_`+ element.user_id + `" class="user_info">Click Me</a></td>
+                        <td class="customer_detail"><a href="#" id="user_info_`+ element.user_id + `" class="user_info">點擊查看</a></td>
                     </tr>`;
         customer_table_tbody.innerHTML += customer_row;
         count++;
@@ -188,6 +188,7 @@ db.ref("/Users").once('value', function (snapshot) {
                 window.location = "insuranceCompany_UserProfile.html";
             });
         });
+        $(".loader-wrapper").fadeOut("slow");
     }
     console.log(Object.keys(data).length);
 });
