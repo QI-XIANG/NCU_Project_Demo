@@ -221,6 +221,15 @@ iframe {
   text-align: center;
 }
 
+.login100-form-subTitle-1{
+  font-family: Poppins-Bold;
+  font-size: 24px;
+  color: #fff;
+  text-transform: uppercase;
+  line-height: 1.2;
+  text-align: center;
+}
+
 .login100-form-title::before {
   content: "";
   display: block;

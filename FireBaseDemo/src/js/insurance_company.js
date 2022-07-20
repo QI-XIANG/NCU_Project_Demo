@@ -41,6 +41,7 @@ var user_id;
 var count = 1;
 var data;
 
+// Reference: https://stackoverflow.com/questions/10730362/get-cookie-by-name
 //取得cookie
 function getCookie(name) {
     const value = `; ${document.cookie}`;
@@ -56,6 +57,29 @@ function delCookie(name) {
     if (cval != null) document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
 }
 
+//若尚未登入則強行轉進登入頁面
+if(getCookie("CompanyName") == null){
+    alert("請先登入再前往本頁面!");
+    window.location = "insuranceCompany_login.html";
+}
+
+//登出按鈕的事件處理
+var logout_btn = document.querySelector(".logout_btn");
+logout_btn.addEventListener("click", e => {
+    delCookie("CompanyName");
+	document.cookie = 'LoginStatus=No';
+    window.location = "insuranceCompany_login.html";
+});
+
+//存取保險公司資料
+db.ref("/InsuranceCompany/" + getCookie("CompanyName")).once('value', function (snapshot) {
+    data = snapshot.val(); //讀出資料庫
+    console.log(data);
+    var companyName = document.querySelector(".companyName");
+    companyName.innerHTML = data.CompanyName;
+});
+
+//存取保戶資料
 db.ref("/Users").once('value', function (snapshot) {
     //var size = Object.keys(data).length; 資料庫 key 的長度取得
     data = snapshot.val(); //讀出資料庫的使用者資料
@@ -139,6 +163,17 @@ db.ref("/Users").once('value', function (snapshot) {
         customer_table_tbody.innerHTML += customer_row;
         count++;
     });
+    NAN.forEach(element => {
+        customer_row = `<tr>
+                        <td class="customer_number">`+ Number(count) + `</td>
+                        <td class="customer_name">`+ element.realName + `</td>
+                        <td class="customer_gender">`+ element.gender + `</td>
+                        <td class="customer_birth">`+ element.birthDate + `</td>
+                        <td class="customer_detail"><a href="#" id="user_info_`+ element.user_id + `" class="user_info">Click Me</a></td>
+                    </tr>`;
+        customer_table_tbody.innerHTML += customer_row;
+        count++;
+    });
 
     //console.log("count: "+Object.keys(data).length);
     if (Number(count - 1) == Object.keys(data).length) {
@@ -150,10 +185,11 @@ db.ref("/Users").once('value', function (snapshot) {
                     delCookie("uid");
                 }
                 document.cookie = 'uid=' + String(e.target.id).substring(10);
-                window.location = "user_profile.html";
+                window.location = "insuranceCompany_UserProfile.html";
             });
         });
     }
+    console.log(Object.keys(data).length);
 });
 
 console.log("Nan Shan Life")

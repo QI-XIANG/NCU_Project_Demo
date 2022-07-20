@@ -72,14 +72,14 @@ var user_logout = document.querySelector(".user_logout");
 user_logout.addEventListener("click", e => {
     if (getCookie("uid") != null) {
         delCookie("uid");
-        window.location = "index.html"; //登出會強制導引到登入頁面
+        window.location = "userLogin.html"; //登出會強制導引到登入頁面
     }
 });
 
 //是否已經登入
 if (getCookie("uid") == null) {
     alert("您還沒有登入喔~\n即將跳轉回登入頁面!");
-    window.location = "index.html"; //未登入會強制導引到登入介面
+    window.location = "userLogin.html"; //未登入會強制導引到登入介面
 }
 
 //摩托車資料變數宣告
@@ -93,7 +93,9 @@ document.querySelector("#user_motorcycle").addEventListener("click", e => {
     $("#motorcycle_detail").dialog({
         width: 320,
         height: 280,
-        modal: true
+        modal: true,
+        show: { effect: 'fade', duration: 500 },
+        hide: { effect: 'fade', duration: 500 }
     });
     db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) {
         var data = snapshot.val();
@@ -220,7 +222,9 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 $("#journey-modal").dialog({ //彈出視窗的外觀大小設定
                     width: 400,
                     height: 250,
-                    modal: true
+                    modal: true,
+                    show: { effect: 'fade', duration: 500 },
+                    hide: { effect: 'fade', duration: 500 }
                 });          
                 $("#journey-modal").show(); //實際顯示視窗
                 //行程資料
@@ -244,7 +248,9 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 $("#distance-modal").dialog({ //彈出視窗的外觀大小設定
                     width: 420,
                     height: 250,
-                    modal: true
+                    modal: true,
+                    show: { effect: 'fade', duration: 500 },
+                    hide: { effect: 'fade', duration: 500 }
                 });
                 $("#distance-modal").show();//實際顯示視窗
                 //車距資料
@@ -362,7 +368,9 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 $("#acceleration-modal").dialog({
                     width: 300,
                     height: 250,
-                    modal: true
+                    modal: true,
+                    show: { effect: 'fade', duration: 500 },
+                    hide: { effect: 'fade', duration: 500 }
                 });
                 $("#acceleration-modal").show();
                 //加速度資料
@@ -408,9 +416,11 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
 
             document.querySelector("td#gps_stat a#journey_" + String(journey[Object.keys(journey)[i]]['start_time'])).addEventListener("click", e => {
                 $("#speed-modal").dialog({
-                    width: 420,
+                    width: 460,
                     height: 250,
-                    modal: true
+                    modal: true,
+                    show: { effect: 'fade', duration: 500 },
+                    hide: { effect: 'fade', duration: 500 }
                 });
                 $("#speed-modal").show();
                 //速度資料

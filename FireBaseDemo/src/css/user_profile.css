@@ -87,6 +87,13 @@ body {
     }
 }
 
+div.ui-widget-header {
+    background: #57B846;
+    border: 0;
+    color: #fff;
+    font-weight: normal;
+}
+
 .ui-dialog-titlebar-close {
     padding: 0 !important;
 }
