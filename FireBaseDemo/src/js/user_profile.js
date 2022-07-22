@@ -231,6 +231,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 var data_journey_start = document.getElementById("data-journey-start"); //行程開始時間
                 var data_journey_end = document.getElementById("data-journey-end"); //行程結束時間
                 var data_journey_totaltime = document.getElementById("data-journey-totaltime"); //行程總時間
+                var data_journe_safetyScore = document.getElementById("data-journey-safetyScore"); //行程安全分數
                 console.log(journey[String(e.target.id.substring(8))]); //取出觸發事件的 journey 編號
                 //行程資料數值取出
                 var journey_start_time = showdate(new Date(journey[String(e.target.id.substring(8))].start_time * 1000));
@@ -240,6 +241,10 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 data_journey_start.innerHTML = journey_start_time;
                 data_journey_end.innerHTML = journey_end_time;
                 data_journey_totaltime.innerHTML = journey_time + "秒";
+                if(journey[String(e.target.id.substring(8))].safety_score != undefined){
+                    data_journe_safetyScore.innerHTML = journey[String(e.target.id.substring(8))].safety_score+"分";
+                }
+                
             });
 
             //車距資料 event handle
@@ -416,7 +421,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
 
             document.querySelector("td#gps_stat a#journey_" + String(journey[Object.keys(journey)[i]]['start_time'])).addEventListener("click", e => {
                 $("#speed-modal").dialog({
-                    width: 460,
+                    width: 500,
                     height: 250,
                     modal: true,
                     show: { effect: 'fade', duration: 500 },
@@ -444,7 +449,13 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                         journey[String(e.target.id.substring(8))]["speed_stat"].speed_violation.forEach(element => {
                             console.log(element);
                             var violation_row = document.querySelector('table#speed_violation1_' + String(e.target.id.substring(8)));
-                            violation_row.innerHTML += `<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;">` + count + `</td><td style="border: 1px solid black;padding: 5px;">` + element.road + `</td><td style="border: 1px solid black;padding: 5px;">` + (Math.round(element.speed * 1000) / 1000).toFixed(2) + " km/hr" + `</td><td style="border: 1px solid black;padding: 5px;">` + (Math.round(element.speed_limit * 1000) / 1000).toFixed(0) + " km/hr" + `</td></tr>`;
+                            if(isNumeric(String(element.road).split(",")[0])){
+                                violation_row.innerHTML += `<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;">` + count + `</td><td style="border: 1px solid black;padding: 5px;">` + "經度: " + String(element.road).split(",")[0] + "<br>緯度: " + String(element.road).split(",")[1] +`</td><td style="border: 1px solid black;padding: 5px;">` + (Math.round(element.speed * 1000) / 1000).toFixed(2) + " km/hr" + `</td><td style="border: 1px solid black;padding: 5px;">` + (Math.round(element.speed_limit * 1000) / 1000).toFixed(0) + " km/hr" + `</td></tr>`;
+                            }
+                            if(!(isNumeric(String(element.road).split(",")[0]))){
+                                violation_row.innerHTML += `<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;">` + count + `</td><td style="border: 1px solid black;padding: 5px;">` + element.road + `</td><td style="border: 1px solid black;padding: 5px;">` + (Math.round(element.speed * 1000) / 1000).toFixed(2) + " km/hr" + `</td><td style="border: 1px solid black;padding: 5px;">` + (Math.round(element.speed_limit * 1000) / 1000).toFixed(0) + " km/hr" + `</td></tr>`;
+                            }
+                            console.log(isNumeric(String(element.road).split(",")[0]));
                             count += 1;
                         });
                     }
@@ -495,16 +506,18 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 $('#table-demo tbody tr').css('opacity', '0.0').hide().slice(startItem, endItem).
                     css('display', 'table-row').animate({ opacity: 1 }, 300);
 
-                if (Number(CurrentPage) - 1 <= 0) {
-                    $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage, CurrentPage + 3).show().css('opacity', '1.0');
+                if(Math.round(numPages) >= 3){
+                    if (Number(CurrentPage) - 1 <= 0) {
+                        $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage, CurrentPage + 3).show().css('opacity', '1.0');
+                    }
+                    if (Number(CurrentPage) == Math.round(numPages) - 1) {
+                        $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 2, Number(CurrentPage) + 1).show().css('opacity', '1.0');
+                    }
+                    if (Number(CurrentPage) - 1 >= 0 & Number(CurrentPage) != Math.round(numPages) - 1) {
+                        $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
+                    }    
                 }
-                if (Number(CurrentPage) == numPages - 1) {
-                    $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 2, Number(CurrentPage) + 1).show().css('opacity', '1.0');
-                }
-                if (Number(CurrentPage) - 1 >= 0 & Number(CurrentPage) != numPages - 1) {
-                    $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
-                }
-
+                
                 //console.log(CurrentPage);
             });
 
@@ -534,16 +547,18 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                         $("#nav .pagination li.normal-page-item a.link" + String(i)).removeClass("active");
                     }
                 }
-
-                if (Number(CurrentPage) - 1 <= 0) {
-                    $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage, CurrentPage + 3).show().css('opacity', '1.0');
+                if(Math.round(numPages) >= 3){
+                    if (Number(CurrentPage) - 1 <= 0) {
+                        $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage, CurrentPage + 3).show().css('opacity', '1.0');
+                    }
+                    if (Number(CurrentPage) == numPages - 1) {
+                        $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 2, Number(CurrentPage) + 1).show().css('opacity', '1.0');
+                    }
+                    if (Number(CurrentPage) - 1 >= 0 & Number(CurrentPage) != numPages - 1) {
+                        $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
+                    }
                 }
-                if (Number(CurrentPage) == numPages - 1) {
-                    $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 2, Number(CurrentPage) + 1).show().css('opacity', '1.0');
-                }
-                if (Number(CurrentPage) - 1 >= 0 & Number(CurrentPage) != numPages - 1) {
-                    $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
-                }
+                
 
                 console.log(CurrentPage);
             });
@@ -578,17 +593,20 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
 
                 $('#nav a.nextPage').removeClass('active');
 
-                if (Number(CurrentPage) - 1 <= 0) {
-                    $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage, CurrentPage + 3).show().css('opacity', '1.0');
+                if(Math.round(numPages) >= 3){
+                    if (Number(CurrentPage) + 1 == Math.round(numPages)) {
+                        $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage-2, CurrentPage + 1).show().css('opacity', '1.0');
+                    }
+                    if (Number(CurrentPage) + 1  < Math.round(numPages)) {
+                        $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
+                    }
                 }
-                if (Number(CurrentPage) == numPages - 1) {
-                    $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 2, Number(CurrentPage) + 1).show().css('opacity', '1.0');
-                }
-                if (Number(CurrentPage) - 1 >= 0 & Number(CurrentPage) != numPages - 1) {
+                /*if (Number(CurrentPage) - 1 > 0 & Number(CurrentPage) != numPages - 1) {
                     $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
-                }
+                }*/
 
                 console.log(CurrentPage);
+                console.log(Math.round(numPages));
             });
         }
         $(".loader-wrapper").fadeOut("slow");

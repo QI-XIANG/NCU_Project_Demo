@@ -9,6 +9,7 @@
 * [保險公司頁面 (需先登入)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/InsuranceCompany.html)
 * [保險公司檢視個人頁面 (需先登入)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/insuranceCompany_UserProfile.html)
 * [登入分流頁面](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/login_seperation.html)
+* [政府頁面 (暫時不須登入)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/Government.html)
 
 ### 建議使用電腦瀏覽，RWD尚未完善!!!
 
@@ -26,6 +27,9 @@
 10. 新增彈出視窗動畫效果 2022.07.21
 11. 所有網頁均使用獨立的 min.js 檔 2022.07.21
 12. 新增表格資料載入中動畫 2022.07.21
+13. 新增政府監管用戶頁面 (僅在背後邏輯與保險公司不同) 2022.07.22
+14. 表格分頁功能部分 bug 修正 2022.07.22
+15. 行程詳情新增顯示安全分數 2022.07.22
 
 
 ![](https://i.imgur.com/7Lu3FLq.jpg)
