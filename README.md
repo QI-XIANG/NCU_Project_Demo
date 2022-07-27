@@ -9,8 +9,8 @@
 * [保險公司頁面 (需先登入)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/InsuranceCompany.html)
 * [保險公司檢視個人頁面 (需先登入)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/insuranceCompany_UserProfile.html)
 * [登入分流頁面](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/login_seperation.html)
-* [政府頁面 (暫時不須登入)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/Government.html)
-* [速度折線圖 (未完善勿demo)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/dataVisualization.html)
+* [政府頁面 (登入功能實作中...)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/Government.html)
+* [資料視覺化 (未完善勿demo，以chock的數據為例)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/dataVisualization.html)
 
 ### 建議使用電腦瀏覽，RWD尚未完善!!!
 
@@ -32,6 +32,6 @@
 14. 表格分頁功能部分 bug 修正 2022.07.22
 15. 行程詳情新增顯示安全分數 2022.07.22
 16. 速度折線圖 50% 完工 2022.07.25
-
+17. 除安全分數外其餘數據圖表皆已完成(尚未美化並實裝到user上) 2022.07.28
 
 ![](https://i.imgur.com/7Lu3FLq.jpg)

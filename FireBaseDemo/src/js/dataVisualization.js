@@ -56,50 +56,62 @@ function showdate(now) {
 }
 
 //存放 journey 結束的時間點
-var dates = []
+var dates = [];
 
 //store journey data key 
-var journey_keys = []
+var journey_keys = [];
 
 //store average speed
-var avg_speed = []
+var avg_speed = [];
 
-//dates.push('times');
-//avg_speed.push('平均速度');
+//store avg acceleration
+var avg_acceleration = [];
 
-//折線圖通用 function
-function chartGraph(CurrentPage) {
-    var current_avg_speed = avg_speed.slice(0, 1);
+//store avg distance 
+var avg_left_distance = [];
+var avg_right_distance = [];
+var avg_back_distance = [];
+
+//store different kind of violation
+var accel_vio_count = []; // accelertaion violation count
+var speed_vio_count = []; // speed violation count
+var LD_vio_count = []; // left distance violation
+var RD_vio_count = []; // right distance violation
+var BD_vio_count = []; // back distance violation
+
+//折線圖通用 function (速度、加速度適用)
+function chartGraph(CurrentPage, OriginalData, bindElement, unitText, formatT) {
+    var current_data = OriginalData.slice(0, 1);
     if (CurrentPage + 1 < TotalPage) {
         var from = Number(CurrentPage * 10) + Number(1);
         var end = (CurrentPage * 10) + 11;
-        current_avg_speed = current_avg_speed.concat(avg_speed.slice(from, end));
+        current_data = current_data.concat(OriginalData.slice(from, end));
     } else {
         var from = Number(CurrentPage * 10) + Number(1);
-        var end = avg_speed.length;
-        current_avg_speed = current_avg_speed.concat(avg_speed.slice(from,end));
+        var end = OriginalData.length;
+        current_data = current_data.concat(OriginalData.slice(from, end));
     }
 
 
-    console.log(current_avg_speed);
-    console.log(CurrentPage);
-    console.log("length: " + current_avg_speed.length);
+    //console.log(current_data);
+    //console.log(CurrentPage);
+    //console.log("length: " + current_data.length);
     //var from = Number(CurrentPage * 10) + Number(1);
     //var end = (CurrentPage * 10) + 11 - 1
-    console.log("start: " + from + " end: " + end);
-    
+    //console.log("start: " + from + " end: " + end);
+
     var chart = c3.generate({
-        bindto: '#chart',
+        bindto: bindElement,
         data: {
             type: "line",
             columns: [
-                current_avg_speed
+                current_data
             ]
         },
         axis: {
             x: {
                 type: 'category',
-                categories: dates.slice(from-1, end-1),
+                categories: dates.slice(from - 1, end - 1),
                 label: {
                     text: '時間'
                 },
@@ -109,52 +121,342 @@ function chartGraph(CurrentPage) {
             },
             y: {
                 label: {
-                    text: '速度: km / hr',
+                    text: unitText,
                     position: 'outer-middle',
+                },
+                min: 0,
+                tick: {
+                    count: 5,
+                    format: d3.format(formatT)
+                },
+                padding: {
+                    bottom: 0
                 }
-
             }
         },
         size: {
-            height: avg_speed.length * 15, //調整圖表高度
+            height: 450, //調整圖表高度
             width: 1024
         },
         padding: {
-            bottom: 10 //adjust chart padding bottom
+            bottom: 15 //adjust chart padding bottom
         }
     });
 }
 
-db.ref("/Users/Ar3W9RW0eCbDhEUqCWNQjJdrJcA3/journey").once('value', function (snapshot) {
+//折線圖 function (車距適用)
+function chartGraph_special(CurrentPage) {
+    var current_left_distance = avg_left_distance.slice(0, 1);
+    var current_right_distance = avg_right_distance.slice(0, 1);
+    var current_back_distance = avg_back_distance.slice(0, 1);
+    if (CurrentPage + 1 < TotalPage) {
+        var from = Number(CurrentPage * 10) + Number(1);
+        var end = (CurrentPage * 10) + 11;
+    } else {
+        var from = Number(CurrentPage * 10) + Number(1);
+        var end = avg_left_distance.length;
+    }
+
+    current_left_distance = current_left_distance.concat(avg_left_distance.slice(from, end));
+    current_right_distance = current_right_distance.concat(avg_right_distance.slice(from, end));
+    current_back_distance = current_back_distance.concat(avg_back_distance.slice(from, end));
+
+    //console.log(current_data);
+    //console.log(CurrentPage);
+    //console.log("length: " + current_data.length);
+    //var from = Number(CurrentPage * 10) + Number(1);
+    //var end = (CurrentPage * 10) + 11 - 1
+    //console.log("start: " + from + " end: " + end);
+
+    var chart = c3.generate({
+        bindto: '#chart3',
+        data: {
+            type: "line",
+            columns: [
+                current_left_distance, current_back_distance, current_right_distance
+            ]
+        },
+        axis: {
+            x: {
+                type: 'category',
+                categories: dates.slice(from - 1, end - 1),
+                label: {
+                    text: '時間'
+                },
+                tick: {
+                    fit: true
+                }
+            },
+            y: {
+                label: {
+                    text: '我是單位',
+                    position: 'outer-middle',
+                },
+                tick: {
+                    count: 10,
+                    format: function (d) {
+                        return parseInt(d);
+                    }
+                },
+                padding: {
+                    bottom: 0
+                },
+                min: 0
+            }
+        },
+        size: {
+            height: 450, //調整圖表高度
+            width: 1024
+        },
+        padding: {
+            bottom: 15, //adjust chart padding bottom
+
+        }
+    });
+}
+
+//長條圖通用 function (速度、加速度違規適用)
+function bar_chartGraph(CurrentPage, OriginalData, bindElement) {
+    var current_data = OriginalData.slice(0, 1);
+
+    if (CurrentPage + 1 < TotalPage) {
+        var from = Number(CurrentPage * 10) + Number(1);
+        var end = (CurrentPage * 10) + 11;
+    } else {
+        var from = Number(CurrentPage * 10) + Number(1);
+        var end = OriginalData.length;
+    }
+
+    current_data = current_data.concat(OriginalData.slice(from, end));
+
+    var chart = c3.generate({
+        bindto: bindElement,
+        data: {
+            type: "bar",
+            columns: [
+                current_data
+            ]
+        },
+        bar: {
+            width: {
+                ratio: 0.5 // this makes bar width 50% of length between ticks
+            } // width: 100 // this makes bar width 100px
+        },
+        axis: {
+            x: {
+                type: 'category',
+                categories: dates.slice(from - 1, end - 1),
+                label: {
+                    text: '時間'
+                },
+                tick: {
+                    fit: true
+                }
+            },
+            y: {
+                label: {
+                    text: '我是單位',
+                    position: 'outer-middle',
+                }
+            }
+        },
+        size: {
+            height: 450, //調整圖表高度
+            width: 1024
+        },
+        padding: {
+            bottom: 15, //adjust chart padding bottom
+        }
+    });
+}
+
+//長條圖通用 function (速度、加速度適用)
+function bar_chartGraph_special(CurrentPage) {
+    var current_LD_vio_count = LD_vio_count.slice(0, 1);
+    var current_RD_vio_count = RD_vio_count.slice(0, 1);
+    var current_BD_vio_count = BD_vio_count.slice(0, 1);
+
+    if (CurrentPage + 1 < TotalPage) {
+        var from = Number(CurrentPage * 10) + Number(1);
+        var end = (CurrentPage * 10) + 11;
+    } else {
+        var from = Number(CurrentPage * 10) + Number(1);
+        var end = avg_left_distance.length;
+    }
+
+    current_LD_vio_count = current_LD_vio_count.concat(LD_vio_count.slice(from, end));
+    current_RD_vio_count = current_RD_vio_count.concat(RD_vio_count.slice(from, end));
+    current_BD_vio_count = current_BD_vio_count.concat(BD_vio_count.slice(from, end));
+
+    var chart = c3.generate({
+        bindto: '#chart6',
+        data: {
+            type: "bar",
+            columns: [
+                current_LD_vio_count,
+                current_RD_vio_count,
+                current_BD_vio_count
+            ],
+            groups: [
+                ['車距違規(左)', '車距違規(右)', '車距違規(後)']
+            ]
+        },
+        axis: {
+            x: {
+                type: 'category',
+                categories: dates.slice(from - 1, end - 1),
+                label: {
+                    text: '時間'
+                },
+                tick: {
+                    fit: true
+                }
+            },
+            y: {
+                label: {
+                    text: '我是單位',
+                    position: 'outer-middle',
+                },
+            }
+        },
+        size: {
+            height: 450, //調整圖表高度
+            width: 1024
+        },
+        padding: {
+            bottom: 15, //adjust chart padding bottom
+
+        }
+    });
+}
+
+db.ref("/Users/ZlRfQF2N6TYTU8s7SJ5ielsyd6G3/journey").once('value', function (snapshot) {
     //var size = Object.keys(data).length; 資料庫 key 的長度取得
     var data = snapshot.val(); //讀出資料庫的使用者資料
-    console.log(data);
+    //console.log(data);
     Object.keys(data).forEach(element => {
         if (isNumeric(element)) {
             journey_keys.push(element);
         }
     });
     for (var i = 0; i < journey_keys.length; i++) {
+
         dates.push(showdate(new Date(data[journey_keys[i]].end_time * 1000)));
+
         avg_speed.push((data[journey_keys[i]]['speed_stat']['avg_speed'] * 100 / 100).toFixed(2));
+
+        avg_acceleration.push((data[journey_keys[i]]['acceleration_stat'][0]['avg_acceleration'] * 100 / 100).toFixed(2));
+
+        avg_left_distance.push(data[journey_keys[i]]['distance_stat'][0]['avg_distance']);
+        avg_right_distance.push(data[journey_keys[i]]['distance_stat'][1]['avg_distance']);
+        avg_back_distance.push(data[journey_keys[i]]['distance_stat'][2]['avg_distance']);
+
+        //accceleration violation
+        if (data[journey_keys[i]]['acceleration_stat'][0].acceleration_violation != null) {
+            accel_vio_count.push(Object.keys(data[journey_keys[i]]['acceleration_stat'][0].acceleration_violation).length);
+        }
+        if (data[journey_keys[i]]['acceleration_stat'][0].acceleration_violation == null) {
+            accel_vio_count.push(0);
+        }
+
+        //speed violation
+        if (data[journey_keys[i]]['speed_stat'].speed_violation != null) {
+            speed_vio_count.push(Object.keys(data[journey_keys[i]]['speed_stat'].speed_violation).length);
+        }
+        if (data[journey_keys[i]]['speed_stat'].speed_violation == null) {
+            speed_vio_count.push(0);
+        }
+
+        //distance violation
+        if (data[journey_keys[i]]['distance_stat'][0].distance_violation != null) {
+            LD_vio_count.push(Object.keys(data[journey_keys[i]]['distance_stat'][0].distance_violation).length);
+        }
+        if (data[journey_keys[i]]['distance_stat'][0].distance_violation == null) {
+            LD_vio_count.push(0);
+        }
+        if (data[journey_keys[i]]['distance_stat'][1].distance_violation != null) {
+            RD_vio_count.push(Object.keys(data[journey_keys[i]]['distance_stat'][1].distance_violation).length);
+        }
+        if (data[journey_keys[i]]['distance_stat'][1].distance_violation == null) {
+            RD_vio_count.push(0);
+        }
+        if (data[journey_keys[i]]['distance_stat'][2].distance_violation != null) {
+            BD_vio_count.push(Object.keys(data[journey_keys[i]]['distance_stat'][2].distance_violation).length);
+        }
+        if (data[journey_keys[i]]['distance_stat'][2].distance_violation == null) {
+            BD_vio_count.push(0);
+        }
+
     }
+
+    //console.log(speed_vio_count);
+
     avg_speed.push('平均速度');
+    avg_acceleration.push('平均加速度');
+    avg_left_distance.push('平均車距(左)');
+    avg_right_distance.push('平均車距(右)');
+    avg_back_distance.push('平均車距(後)');
+    accel_vio_count.push('加速度違規次數');
+    speed_vio_count.push('速度違規次數');
+    LD_vio_count.push('車距違規(左)');
+    RD_vio_count.push('車距違規(右)');
+    BD_vio_count.push('車距違規(後)');
+
     dates = dates.reverse();
+
+    avg_acceleration.reverse();
     avg_speed = avg_speed.reverse();
+    avg_left_distance = avg_left_distance.reverse();
+    avg_right_distance = avg_right_distance.reverse();
+    avg_back_distance = avg_back_distance.reverse();
+    accel_vio_count = accel_vio_count.reverse();
+    speed_vio_count = speed_vio_count.reverse();
+    LD_vio_count = LD_vio_count.reverse();
+    RD_vio_count = RD_vio_count.reverse();
+    BD_vio_count = BD_vio_count.reverse();
+
     TotalPage = Math.round(avg_speed.length / 10);
-    chartGraph(CurrentPage);
-    console.log("avg_speed length: " + avg_speed.length)
-    console.log("Total Page: " + Math.round(avg_speed.length / 10))
+
+
+
+    //console.log("avg_speed length: " + avg_speed.length);
+    //console.log("Total Page: " + Math.round(avg_speed.length / 10));
+    //console.log(avg_left_distance);
 
     var nextBtn = document.querySelector('.nextBtn');
     nextBtn.addEventListener('click', e => {
         if (CurrentPage + 1 < TotalPage) {
             CurrentPage += 1;
         }
-        console.log(CurrentPage);
-        chartGraph(CurrentPage);
+        //console.log(CurrentPage);
+        chartGraph(CurrentPage, avg_speed, '#chart', '我是單位', '.2f');
+        chartGraph(CurrentPage, avg_acceleration, '#chart2', '我是單位', '.3f');
+        chartGraph_special(CurrentPage);
+        bar_chartGraph(CurrentPage, accel_vio_count, '#chart4');
+        bar_chartGraph(CurrentPage, speed_vio_count, '#chart5');
+        bar_chartGraph_special(CurrentPage);
     });
 
+    var lastBtn = document.querySelector('.lastBtn');
+    lastBtn.addEventListener('click', e => {
+        if (CurrentPage - 1 >= 0) {
+            CurrentPage -= 1;
+        }
+        //console.log(CurrentPage);
+        chartGraph(CurrentPage, avg_speed, '#chart', '我是單位', '.2f');
+        chartGraph(CurrentPage, avg_acceleration, '#chart2', '我是單位', '.3f');
+        chartGraph_special(CurrentPage);
+        bar_chartGraph(CurrentPage, accel_vio_count, '#chart4');
+        bar_chartGraph(CurrentPage, speed_vio_count, '#chart5');
+        bar_chartGraph_special(CurrentPage);
+    });
+
+    chartGraph(CurrentPage, avg_speed, '#chart', '我是單位', '.2f');
+    chartGraph(CurrentPage, avg_acceleration, '#chart2', '我是單位', '.3f');
+    chartGraph_special(CurrentPage);
+    bar_chartGraph(CurrentPage, accel_vio_count, '#chart4');
+    bar_chartGraph(CurrentPage, speed_vio_count, '#chart5');
+    bar_chartGraph_special(CurrentPage);
 });
 
-console.log(new Date(1658767445000));
+//console.log(new Date(1658767445000));
