@@ -12,7 +12,6 @@
 * [保險公司檢視個人頁面 (需先登入)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/insuranceCompany_UserProfile.html)
 * [登入分流頁面](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/login_seperation.html)
 * [政府頁面 (登入功能實作中...)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/Government.html)
-* [資料視覺化 (未完善勿demo，以chock的數據為例)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/dataVisualization.html)
 
 ### 建議使用電腦瀏覽，RWD尚未完善!!!
 
@@ -35,3 +34,16 @@
 15. 行程詳情新增顯示安全分數 2022.07.22
 16. 速度折線圖 50% 完工 2022.07.25
 17. 除安全分數外其餘數據圖表皆已完成(尚未美化並實裝到user上) 2022.07.28
+18. 移除資料視覺化頁面，將其合併到使用者頁面 2022.07.29
+19. 修正使用者頁面部分連結點擊後，造成圖表下拉式選單顯示錯誤 2022.07.30
+20. 修正圖表無法正常置於視窗正中央的排版錯誤 2022.07.30
+21. 全數圖表均已繪製完成 2022.07.30
+
+### 備忘錄:
+
+1. 因資料庫有部分欄位更動，某些.js、min.js檔皆須調整
+2. 圖表標題待新增
+3. 政府登入功能尚未實作
+4. 版面重新調整
+5. 將部分通用的 function 存至另外的檔案並以 import 形式載入
+6. 重新規劃並檢視 cookie 運作狀況

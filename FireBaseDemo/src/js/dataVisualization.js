@@ -4,12 +4,15 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+// Import additional function
+import { switchChart, hideAllGraph, isNumeric, showdate, getCookie } from "./outer_function.js";
+
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: "AIzaSyDtTxfCIJIfPTEw44Ah5I1lpjiDO96FlJM",
     authDomain: "mydatabase-8f225.firebaseapp.com",
-    databaseURL: "https://mydatabase-8f225-default-rtdb.firebaseio.com",
+    databaseURL: "https://mydatabase-8f225-default-rtdb2.firebaseio.com",
     projectId: "mydatabase-8f225",
     storageBucket: "mydatabase-8f225.appspot.com",
     messagingSenderId: "68532714578",
@@ -18,42 +21,14 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig,'db2');
 
 //建立 Firebase 中的 database 功能
-var db = firebase.database();
-
-// Reference: https://stackoverflow.com/questions/10730362/get-cookie-by-name
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-}
+var db2 = firebase.database();
 
 //目前在的圖表頁數
 var CurrentPage = 0;
 var TotalPage = 0;
-
-/*===============判斷是否可以轉換成數字=================*/
-
-function isNumeric(num) {
-    return !isNaN(num)
-}
-
-function showdate(now) {
-    var year = now.getFullYear();
-    var month = now.getMonth() + 1;
-    var day = now.getDate();
-    var hour = now.getHours();
-    var min = now.getMinutes();
-    if (hour < 10) {
-        hour = '0' + hour;
-    }
-    if (min < 10) {
-        min = '0' + min;
-    }
-    return year + '年' + month + '月' + day + '日 ' + hour + ':' + min;
-}
 
 //存放 journey 結束的時間點
 var dates = [];
@@ -79,6 +54,9 @@ var LD_vio_count = []; // left distance violation
 var RD_vio_count = []; // right distance violation
 var BD_vio_count = []; // back distance violation
 
+//store safety score
+var safety_score = [];
+
 //折線圖通用 function (速度、加速度適用)
 function chartGraph(CurrentPage, OriginalData, bindElement, unitText, formatT) {
     var current_data = OriginalData.slice(0, 1);
@@ -92,16 +70,19 @@ function chartGraph(CurrentPage, OriginalData, bindElement, unitText, formatT) {
         current_data = current_data.concat(OriginalData.slice(from, end));
     }
 
-
-    //console.log(current_data);
-    //console.log(CurrentPage);
-    //console.log("length: " + current_data.length);
-    //var from = Number(CurrentPage * 10) + Number(1);
-    //var end = (CurrentPage * 10) + 11 - 1
-    //console.log("start: " + from + " end: " + end);
-
     var chart = c3.generate({
         bindto: bindElement,
+        title: {
+            show: false,
+            /*text: 'Graph Title',
+            position: 'top-center',   // top-left, top-center and top-right
+            padding: {
+              top: 20,
+              right: 20,
+              bottom: 40,
+              left: 50
+            }*/
+          },
         data: {
             type: "line",
             columns: [
@@ -161,15 +142,8 @@ function chartGraph_special(CurrentPage) {
     current_right_distance = current_right_distance.concat(avg_right_distance.slice(from, end));
     current_back_distance = current_back_distance.concat(avg_back_distance.slice(from, end));
 
-    //console.log(current_data);
-    //console.log(CurrentPage);
-    //console.log("length: " + current_data.length);
-    //var from = Number(CurrentPage * 10) + Number(1);
-    //var end = (CurrentPage * 10) + 11 - 1
-    //console.log("start: " + from + " end: " + end);
-
     var chart = c3.generate({
-        bindto: '#chart3',
+        bindto: '#avg_distance_graph_dropdown #chart',
         data: {
             type: "line",
             columns: [
@@ -289,7 +263,7 @@ function bar_chartGraph_special(CurrentPage) {
     current_BD_vio_count = current_BD_vio_count.concat(BD_vio_count.slice(from, end));
 
     var chart = c3.generate({
-        bindto: '#chart6',
+        bindto: '#avg_distance_vio_count_graph_dropdown #chart',
         data: {
             type: "bar",
             columns: [
@@ -325,12 +299,11 @@ function bar_chartGraph_special(CurrentPage) {
         },
         padding: {
             bottom: 15, //adjust chart padding bottom
-
         }
     });
 }
 
-db.ref("/Users/ZlRfQF2N6TYTU8s7SJ5ielsyd6G3/journey").once('value', function (snapshot) {
+db2.ref("/Users/"+getCookie("uid")+"/journey").once('value', function (snapshot) {
     //var size = Object.keys(data).length; 資料庫 key 的長度取得
     var data = snapshot.val(); //讀出資料庫的使用者資料
     //console.log(data);
@@ -387,9 +360,15 @@ db.ref("/Users/ZlRfQF2N6TYTU8s7SJ5ielsyd6G3/journey").once('value', function (sn
             BD_vio_count.push(0);
         }
 
-    }
+        //safety score
+        if (data[journey_keys[i]].safety_score != null) {
+            safety_score.push(data[journey_keys[i]].safety_score);
+        }
+        if(data[journey_keys[i]].safety_score == null){
+            safety_score.push(0);
+        }
 
-    //console.log(speed_vio_count);
+    }
 
     avg_speed.push('平均速度');
     avg_acceleration.push('平均加速度');
@@ -401,6 +380,7 @@ db.ref("/Users/ZlRfQF2N6TYTU8s7SJ5ielsyd6G3/journey").once('value', function (sn
     LD_vio_count.push('車距違規(左)');
     RD_vio_count.push('車距違規(右)');
     BD_vio_count.push('車距違規(後)');
+    safety_score.push('安全分數');
 
     dates = dates.reverse();
 
@@ -414,26 +394,22 @@ db.ref("/Users/ZlRfQF2N6TYTU8s7SJ5ielsyd6G3/journey").once('value', function (sn
     LD_vio_count = LD_vio_count.reverse();
     RD_vio_count = RD_vio_count.reverse();
     BD_vio_count = BD_vio_count.reverse();
+    safety_score = safety_score.reverse();
 
-    TotalPage = Math.round(avg_speed.length / 10);
-
-
-
-    //console.log("avg_speed length: " + avg_speed.length);
-    //console.log("Total Page: " + Math.round(avg_speed.length / 10));
-    //console.log(avg_left_distance);
+    TotalPage = Math.ceil(avg_speed.length / 10);
 
     var nextBtn = document.querySelector('.nextBtn');
     nextBtn.addEventListener('click', e => {
         if (CurrentPage + 1 < TotalPage) {
             CurrentPage += 1;
         }
-        //console.log(CurrentPage);
-        chartGraph(CurrentPage, avg_speed, '#chart', '我是單位', '.2f');
-        chartGraph(CurrentPage, avg_acceleration, '#chart2', '我是單位', '.3f');
+
+        chartGraph(CurrentPage, avg_speed, '#avg_speed_graph_dropdown #chart', '我是單位', '.2f');
+        chartGraph(CurrentPage, safety_score, '#safety_score_graph_dropdown #chart', '我是單位', '.1f');
+        chartGraph(CurrentPage, avg_acceleration, '#avg_acceleration_graph_dropdown #chart', '我是單位', '.3f');
         chartGraph_special(CurrentPage);
-        bar_chartGraph(CurrentPage, accel_vio_count, '#chart4');
-        bar_chartGraph(CurrentPage, speed_vio_count, '#chart5');
+        bar_chartGraph(CurrentPage, accel_vio_count, '#avg_acceleration_vio_count_graph_dropdown #chart');
+        bar_chartGraph(CurrentPage, speed_vio_count, '#avg_speed_vio_count_graph_dropdown #chart');
         bar_chartGraph_special(CurrentPage);
     });
 
@@ -442,21 +418,32 @@ db.ref("/Users/ZlRfQF2N6TYTU8s7SJ5ielsyd6G3/journey").once('value', function (sn
         if (CurrentPage - 1 >= 0) {
             CurrentPage -= 1;
         }
-        //console.log(CurrentPage);
-        chartGraph(CurrentPage, avg_speed, '#chart', '我是單位', '.2f');
-        chartGraph(CurrentPage, avg_acceleration, '#chart2', '我是單位', '.3f');
+
+        chartGraph(CurrentPage, avg_speed, '#avg_speed_graph_dropdown #chart', '我是單位', '.2f');
+        chartGraph(CurrentPage, safety_score, '#safety_score_graph_dropdown #chart', '我是單位', '.1f');
+        chartGraph(CurrentPage, avg_acceleration, '#avg_acceleration_graph_dropdown #chart', '我是單位', '.3f');
         chartGraph_special(CurrentPage);
-        bar_chartGraph(CurrentPage, accel_vio_count, '#chart4');
-        bar_chartGraph(CurrentPage, speed_vio_count, '#chart5');
+        bar_chartGraph(CurrentPage, accel_vio_count, '#avg_acceleration_vio_count_graph_dropdown #chart');
+        bar_chartGraph(CurrentPage, speed_vio_count, '#avg_speed_vio_count_graph_dropdown #chart');
         bar_chartGraph_special(CurrentPage);
     });
 
-    chartGraph(CurrentPage, avg_speed, '#chart', '我是單位', '.2f');
-    chartGraph(CurrentPage, avg_acceleration, '#chart2', '我是單位', '.3f');
+    chartGraph(CurrentPage, avg_speed, '#avg_speed_graph_dropdown #chart', '我是單位', '.2f');
+    chartGraph(CurrentPage, safety_score, '#safety_score_graph_dropdown #chart', '我是單位', '.1f');
+    chartGraph(CurrentPage, avg_acceleration, '#avg_acceleration_graph_dropdown #chart', '我是單位', '.3f');
     chartGraph_special(CurrentPage);
-    bar_chartGraph(CurrentPage, accel_vio_count, '#chart4');
-    bar_chartGraph(CurrentPage, speed_vio_count, '#chart5');
+    bar_chartGraph(CurrentPage, accel_vio_count, '#avg_acceleration_vio_count_graph_dropdown #chart');
+    bar_chartGraph(CurrentPage, speed_vio_count, '#avg_speed_vio_count_graph_dropdown #chart');
     bar_chartGraph_special(CurrentPage);
+
+    switchChart();
+    hideAllGraph();
+    $('#avg_speed_graph_dropdown #chart').fadeIn(500);
+    console.log("length:"+safety_score.length)
+    console.log(TotalPage);
 });
 
-//console.log(new Date(1658767445000));
+document.querySelector('.dropdownContainer').addEventListener("click", e => {
+    $('.dropdownContainer a').css('background-color','white');
+});
+

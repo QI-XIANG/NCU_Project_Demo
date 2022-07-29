@@ -87,6 +87,13 @@ body {
     }
 }
 
+@media (min-width: 1200px) {
+    #chart{
+        display: flex;
+        justify-content: center;
+    }
+}
+
 div.ui-widget-header {
     background: #57B846;
     border: 0;
@@ -136,6 +143,21 @@ div#nav{
 
 div#nav a.active{
     background-color: #d1d1d1;
+}
+
+.c3-axis-y-label {
+    font-size: 12px;
+    font-family: NotoSansTC-Regular;
+}
+
+.c3-axis-x-label {
+    font-size: 12px;
+    font-family: NotoSansTC-Regular;
+}
+
+.c3-tooltip {
+    box-shadow: none;
+    width: 150px;
 }
 
 

@@ -85,6 +85,7 @@ db.ref("/Users").once('value', function (snapshot) {
     data = snapshot.val(); //讀出資料庫的使用者資料
     //console.log(Object.keys(data));
     users_id = Object.keys(data);
+    users_id = users_id.slice(0,users_id.length-1)
     users_id.forEach(element => {
         //console.log(data[element].insuranceCompany.name);
         switch (String(data[element].insuranceCompany.name)) {
@@ -176,7 +177,7 @@ db.ref("/Users").once('value', function (snapshot) {
     });
 
     //console.log("count: "+Object.keys(data).length);
-    if (Number(count - 1) == Object.keys(data).length) {
+    if (Number(count - 1) == Object.keys(data).length-1) {
         console.log("count: " + Number(count - 1));
         document.querySelectorAll("a.user_info").forEach(element => {
             element.addEventListener("click", e => {
