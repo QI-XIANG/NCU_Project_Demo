@@ -4,6 +4,9 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+//import additional function
+import { delCookie, getCookie } from "./common_function.js";
+
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -22,13 +25,6 @@ firebase.initializeApp(firebaseConfig);
 
 //建立 Firebase 中的 database 功能
 var db = firebase.database();
-
-// Reference: https://stackoverflow.com/questions/10730362/get-cookie-by-name
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-}
 
 //用戶資料變數宣告
 var user_account = document.querySelector(".user_account"); //帳號
@@ -58,19 +54,12 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) {
     user_referenceNumber.innerHTML = data['referenceNumber']; //修改管轄編號的 innerHTML
 });
 
-//刪除cookie
-function delCookie(name) {
-    var exp = new Date();
-    exp.setTime(exp.getTime() - 1); //強制讓 cookie 過期
-    var cval = getCookie(name);
-    if (cval != null) document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
-}
-
 //登出功能
 var user_logout = document.querySelector(".user_logout");
 user_logout.addEventListener("click", e => {
     if (getCookie("uid") != null) {
         delCookie("uid");
+        document.cookie = 'LoginStatus=No';
         window.location = "userLogin.html"; //登出會強制導引到登入頁面
     }
 });

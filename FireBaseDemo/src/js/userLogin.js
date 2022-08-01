@@ -4,6 +4,9 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+//import additional function
+import { delCookie, getCookie } from "./common_function.js";
+
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -21,19 +24,23 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-// Reference: https://stackoverflow.com/questions/10730362/get-cookie-by-name
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
 var email = document.getElementById('Email');
 var password = document.getElementById('Password');
 var loginBtn = document.getElementById('loginBtn');
 
+if(getCookie("CompanyName") != null){ //強制登出已登入的保險公司以免影響登入
+    delCookie("CompanyName");
+    document.cookie = 'LoginStatus=No';
+}
+
+if (getCookie("identityNumber") != null) { //每次回到登入頁面都先清除登入資料
+    delCookie("identityNumber");
+    document.cookie = 'LoginStatus=No';
+}
+
 if (getCookie("uid") != null) {
     alert("您已經登入，即將跳轉回個人頁面!");
+    document.cookie = 'LoginStatus=Yes';
     window.location = "user_profile.html";
 }
 
@@ -49,6 +56,7 @@ loginBtn.addEventListener('click', function (e) {
             console.log(document.cookie);
             //window.location = "user_profile.html";
             document.cookie = 'uid=' + firebase.auth().currentUser.uid;
+            document.cookie = 'LoginStatus=Yes';
             window.location = "user_profile.html";
             //console.log(firebase.auth().currentUser.uid);
         })

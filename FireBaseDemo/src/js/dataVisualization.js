@@ -5,7 +5,7 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Import additional function
-import { switchChart, hideAllGraph, isNumeric, showdate, getCookie } from "./outer_function.js";
+import { switchChart, hideAllGraph, isNumeric, showdate, getCookie } from "./common_function.js";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional

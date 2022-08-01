@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+	<title>政府機關登入</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<div class="login100-form-title" style="background-image: url(images/bg-01.png);">
+					<span class="login100-form-title-1">
+					    政府機關登入
+					</span>
+				</div>
+
+				<form class="login100-form validate-form">
+                    <div class="wrap-input100 validate-input m-b-18" data-validate="政府機關識別碼必填">
+						<span class="label-input100">帳號</span>
+						<input class="input100" id="identityNumber" type="text" name="identityNumber"
+							placeholder="請輸入政府機關識別碼" required>
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input m-b-18" data-validate="登入密碼必填">
+						<span class="label-input100">密碼</span>
+						<input class="input100" id="officialPassword" type="password" name="pass" placeholder="請輸入預設密碼">
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="flex-sb-m w-full p-b-30">
+						<div class="contact100-form-checkbox">
+							<!--<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+							<label class="label-checkbox100" for="ckb1">
+								Remember me
+							</label>-->
+						</div>
+
+						<div>
+							<a href="#" class="txt1 InfoNeedNow">使用須知</a>
+						</div>
+					</div>
+
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn" id="loginBtn">登入</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div id="InfoNeedNow" title="使用須知" style="display:none;">
+		<p style="font-size: 16px;">測試用訊息</p>
+	</div>
+
+	<!--===============================================================================================-->
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/daterangepicker/moment.min.js"></script>
+	<script src="vendor/daterangepicker/daterangepicker.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/countdowntime/countdowntime.js"></script>
+	<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+	integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link href="https://code.jquery.com/ui/1.13.1/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
+<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-database.js"></script>
+<script type="module" src="src/js/min_js/government_login.min.js"></script>
+<style>
+	div.ui-widget-header {
+		background: #57B846;
+		border: 0;
+		color: #fff;
+		font-weight: normal;
+	}
+
+	.ui-dialog-titlebar-close {
+		padding: 0px !important;
+	}
+
+	.ui-dialog-titlebar-close:after {
+		content: '';
+		width: 18px;
+		height: 20px;
+		display: inline-block;
+		/* Change path to image*/
+		background-image: url(https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/src/jquery-ui-1.13.1.custom/images/ui-icons_777777_256x240.png);
+		background-position: -96px -128px;
+		background-repeat: no-repeat;
+		overflow: hidden;
+	}
+</style>
+
+</html>

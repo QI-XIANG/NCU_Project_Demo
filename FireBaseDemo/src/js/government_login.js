@@ -27,10 +27,9 @@ firebase.initializeApp(firebaseConfig);
 //建立 Firebase 中的 database 功能
 var db = firebase.database();
 
-var companyNumber = document.getElementById('CompanyNumber');
-var password = document.getElementById('Password');
+var identityNumber = document.getElementById('identityNumber');
+var officialPassword = document.getElementById('officialPassword');
 var loginBtn = document.getElementById('loginBtn');
-var companyName = document.getElementById('CompanyName');
 var InfoNeedNow = document.querySelector('.InfoNeedNow');
 
 if (getCookie("uid") != null) { //強制登出已登入的一般使用者以免影響登入
@@ -38,15 +37,15 @@ if (getCookie("uid") != null) { //強制登出已登入的一般使用者以免�
     document.cookie = 'LoginStatus=No';
 }
 
-if (getCookie("identityNumber") != null) { //每次回到登入頁面都先清除登入資料
-    delCookie("identityNumber");
+if(getCookie("CompanyName") != null){ //強制登出已登入的保險公司以免影響登入
+    delCookie("CompanyName");
     document.cookie = 'LoginStatus=No';
 }
 
-if(getCookie("CompanyName") != null){ //已登入的保險公司無法二次登入
-    alert("您已經登入，即將跳轉回保險公司頁面!");
+if (getCookie("identityNumber") != null) { //每次回到登入頁面都先清除登入資料
+    alert("您已經登入，即將跳轉回政府機關頁面!");
     document.cookie = 'LoginStatus=Yes';
-    window.location = "insuranceCompany.html";
+    window.location = "Government.html";
 }
 
 //處理登入事件
@@ -54,27 +53,26 @@ loginBtn.addEventListener('click', function (e) {
 
     e.preventDefault();
 
-    if (companyName.value == "default") {
-        alert("請選擇保險公司名稱!");
+    if (identityNumber.value == "") {
+        alert("請輸入政府機關識別碼!");
     }
-    if (companyName.value != "default") {
-        db.ref("/InsuranceCompany/" + String(companyName.value)).once('value', function (snapshot) {
+    if (identityNumber.value != "") {
+        db.ref("/Government/officialPassword/" + String(identityNumber.value)).once('value', function (snapshot) {
             //var size = Object.keys(data).length; 資料庫 key 的長度取得
             var data = snapshot.val(); //讀出資料庫的使用者資料
-            console.log(data);
-            if (data.CompanyId != companyNumber.value) {
-                alert("公司編號輸入有誤，請重新輸入!");
+            if(data == null){
+                alert("資料輸入有誤，請再試一次!")
             }
-            if (data.CompanyId == companyNumber.value) {
-                if (data.Password != password.value) {
-                    alert("公司預設密碼輸入有誤，請重新輸入!");
-                }
-                if (data.Password == password.value) {
-                    alert("登入成功，即將跳轉到保險公司頁面");
-                    document.cookie = 'CompanyName=' + String(companyName.value);
+            if(data != null){
+                if(officialPassword.value == data){
+                    alert("登入成功，即將跳轉到政府機關頁面。")
+                    document.cookie = 'identityNumber=' + String(identityNumber.value);
                     document.cookie = 'LoginStatus=Yes';
-                    window.location = 'InsuranceCompany.html';
+                    window.location = 'Government.html';
                 }
+                if(officialPassword.value != data){
+                    alert("預設密碼輸入有誤，請重新輸入!");
+                }  
             }
         });
     }

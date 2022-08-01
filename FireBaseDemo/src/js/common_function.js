@@ -51,3 +51,11 @@ export function getCookie(name) {
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
 }
+
+//刪除cookie
+export function delCookie(name) {
+    var exp = new Date();
+    exp.setTime(exp.getTime() - 1); //強制讓 cookie 過期
+    var cval = getCookie(name);
+    if (cval != null) document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+}
