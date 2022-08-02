@@ -43,6 +43,8 @@
 23. 所有 cookie 的操作均已調整修復完成 2022.08.01
 24. 通用的 function 存至另外的檔案並以 import 形式載入 2022.08.02
 25. min.js 檔全數修正完畢 2022.08.02
+26. 完成政府機關、保險公司頁面的 Pagination 2022.08.02
+27. 將視覺化圖表修正為舊到新排列並優先顯示最新數據 2022.08.03
 
 ### 備忘錄:
 
@@ -55,4 +57,4 @@
 7. search bar 功能待新增
 8. 將全數 CSS 從 Html 中獨立出來並壓縮成 min.css
 9. 將 CSS 轉換用 Sass 做前處理達成 DRY (Don't repeat yourself)
-10. 將視覺化圖表修正為舊到新排列(JQuery pre-click last page-link)
+10. ~~將視覺化圖表修正為舊到新排列(JQuery pre-click last page-link)~~

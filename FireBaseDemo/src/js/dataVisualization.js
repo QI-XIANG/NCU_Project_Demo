@@ -21,7 +21,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig,'db2');
+firebase.initializeApp(firebaseConfig, 'db2');
 
 //建立 Firebase 中的 database 功能
 var db2 = firebase.database();
@@ -82,7 +82,7 @@ function chartGraph(CurrentPage, OriginalData, bindElement, unitText, formatT) {
               bottom: 40,
               left: 50
             }*/
-          },
+        },
         data: {
             type: "line",
             columns: [
@@ -303,7 +303,19 @@ function bar_chartGraph_special(CurrentPage) {
     });
 }
 
-db2.ref("/Users/"+getCookie("uid")+"/journey").once('value', function (snapshot) {
+avg_speed.push('平均速度');
+avg_acceleration.push('平均加速度');
+avg_left_distance.push('平均車距(左)');
+avg_right_distance.push('平均車距(右)');
+avg_back_distance.push('平均車距(後)');
+accel_vio_count.push('加速度違規次數');
+speed_vio_count.push('速度違規次數');
+LD_vio_count.push('車距違規(左)');
+RD_vio_count.push('車距違規(右)');
+BD_vio_count.push('車距違規(後)');
+safety_score.push('安全分數');
+
+db2.ref("/Users/" + getCookie("uid") + "/journey").once('value', function (snapshot) {
     //var size = Object.keys(data).length; 資料庫 key 的長度取得
     var data = snapshot.val(); //讀出資料庫的使用者資料
     //console.log(data);
@@ -364,13 +376,13 @@ db2.ref("/Users/"+getCookie("uid")+"/journey").once('value', function (snapshot)
         if (data[journey_keys[i]].safety_score != null) {
             safety_score.push(data[journey_keys[i]].safety_score);
         }
-        if(data[journey_keys[i]].safety_score == null){
+        if (data[journey_keys[i]].safety_score == null) {
             safety_score.push(0);
         }
 
     }
 
-    avg_speed.push('平均速度');
+    /*avg_speed.push('平均速度');
     avg_acceleration.push('平均加速度');
     avg_left_distance.push('平均車距(左)');
     avg_right_distance.push('平均車距(右)');
@@ -394,7 +406,7 @@ db2.ref("/Users/"+getCookie("uid")+"/journey").once('value', function (snapshot)
     LD_vio_count = LD_vio_count.reverse();
     RD_vio_count = RD_vio_count.reverse();
     BD_vio_count = BD_vio_count.reverse();
-    safety_score = safety_score.reverse();
+    safety_score = safety_score.reverse();*/
 
     TotalPage = Math.ceil(avg_speed.length / 10);
 
@@ -428,6 +440,8 @@ db2.ref("/Users/"+getCookie("uid")+"/journey").once('value', function (snapshot)
         bar_chartGraph_special(CurrentPage);
     });
 
+    CurrentPage = TotalPage - 1;
+
     chartGraph(CurrentPage, avg_speed, '#avg_speed_graph_dropdown #chart', '我是單位', '.2f');
     chartGraph(CurrentPage, safety_score, '#safety_score_graph_dropdown #chart', '我是單位', '.1f');
     chartGraph(CurrentPage, avg_acceleration, '#avg_acceleration_graph_dropdown #chart', '我是單位', '.3f');
@@ -439,11 +453,15 @@ db2.ref("/Users/"+getCookie("uid")+"/journey").once('value', function (snapshot)
     switchChart();
     hideAllGraph();
     $('#avg_speed_graph_dropdown #chart').fadeIn(500);
-    console.log("length:"+safety_score.length)
-    console.log(TotalPage);
+    console.log("length:" + safety_score.length)
+    console.log("111" + TotalPage);
 });
 
 document.querySelector('.dropdownContainer').addEventListener("click", e => {
-    $('.dropdownContainer a').css('background-color','white');
+    $('.dropdownContainer a').css('background-color', 'white');
 });
+
+$(function () {
+    $('[data-toggle2="tooltip"]').tooltip()
+})
 
