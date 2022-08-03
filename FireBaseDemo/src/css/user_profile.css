@@ -160,6 +160,15 @@ div#nav a.active{
     width: 150px;
 }
 
+.c3-title{
+    font-size: 16px;
+    font-family: NotoSansTC-Regular;
+}
+
+.graph-selection-container{
+    padding-bottom: 10px !important;
+}
+
 .tooltip-inner {
     max-width: 200px;
     padding: 3px 8px;

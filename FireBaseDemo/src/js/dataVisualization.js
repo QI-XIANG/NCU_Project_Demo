@@ -58,7 +58,7 @@ var BD_vio_count = []; // back distance violation
 var safety_score = [];
 
 //折線圖通用 function (速度、加速度適用)
-function chartGraph(CurrentPage, OriginalData, bindElement, unitText, formatT) {
+function chartGraph(CurrentPage, OriginalData, bindElement, unitText, formatT, graphTitle) {
     var current_data = OriginalData.slice(0, 1);
     if (CurrentPage + 1 < TotalPage) {
         var from = Number(CurrentPage * 10) + Number(1);
@@ -74,14 +74,14 @@ function chartGraph(CurrentPage, OriginalData, bindElement, unitText, formatT) {
         bindto: bindElement,
         title: {
             show: false,
-            /*text: 'Graph Title',
+            text: graphTitle,
             position: 'top-center',   // top-left, top-center and top-right
             padding: {
-              top: 20,
-              right: 20,
-              bottom: 40,
-              left: 50
-            }*/
+                top: 20,
+                right: 20,
+                bottom: 40,
+                left: 50
+            }
         },
         data: {
             type: "line",
@@ -126,7 +126,7 @@ function chartGraph(CurrentPage, OriginalData, bindElement, unitText, formatT) {
 }
 
 //折線圖 function (車距適用)
-function chartGraph_special(CurrentPage) {
+function chartGraph_special(CurrentPage, graphTitle) {
     var current_left_distance = avg_left_distance.slice(0, 1);
     var current_right_distance = avg_right_distance.slice(0, 1);
     var current_back_distance = avg_back_distance.slice(0, 1);
@@ -144,6 +144,17 @@ function chartGraph_special(CurrentPage) {
 
     var chart = c3.generate({
         bindto: '#avg_distance_graph_dropdown #chart',
+        title: {
+            show: false,
+            text: graphTitle,
+            position: 'top-center',   // top-left, top-center and top-right
+            padding: {
+                top: 20,
+                right: 20,
+                bottom: 40,
+                left: 50
+            }
+        },
         data: {
             type: "line",
             columns: [
@@ -190,7 +201,7 @@ function chartGraph_special(CurrentPage) {
 }
 
 //長條圖通用 function (速度、加速度違規適用)
-function bar_chartGraph(CurrentPage, OriginalData, bindElement) {
+function bar_chartGraph(CurrentPage, OriginalData, bindElement, graphTitle) {
     var current_data = OriginalData.slice(0, 1);
 
     if (CurrentPage + 1 < TotalPage) {
@@ -205,6 +216,17 @@ function bar_chartGraph(CurrentPage, OriginalData, bindElement) {
 
     var chart = c3.generate({
         bindto: bindElement,
+        title: {
+            show: false,
+            text: graphTitle,
+            position: 'top-center',   // top-left, top-center and top-right
+            padding: {
+                top: 20,
+                right: 20,
+                bottom: 40,
+                left: 50
+            }
+        },
         data: {
             type: "bar",
             columns: [
@@ -245,7 +267,7 @@ function bar_chartGraph(CurrentPage, OriginalData, bindElement) {
 }
 
 //長條圖通用 function (速度、加速度適用)
-function bar_chartGraph_special(CurrentPage) {
+function bar_chartGraph_special(CurrentPage, graphTitle) {
     var current_LD_vio_count = LD_vio_count.slice(0, 1);
     var current_RD_vio_count = RD_vio_count.slice(0, 1);
     var current_BD_vio_count = BD_vio_count.slice(0, 1);
@@ -264,6 +286,17 @@ function bar_chartGraph_special(CurrentPage) {
 
     var chart = c3.generate({
         bindto: '#avg_distance_vio_count_graph_dropdown #chart',
+        title: {
+            show: false,
+            text: graphTitle,
+            position: 'top-center',   // top-left, top-center and top-right
+            padding: {
+                top: 20,
+                right: 20,
+                bottom: 40,
+                left: 50
+            }
+        },
         data: {
             type: "bar",
             columns: [
@@ -416,13 +449,13 @@ db2.ref("/Users/" + getCookie("uid") + "/journey").once('value', function (snaps
             CurrentPage += 1;
         }
 
-        chartGraph(CurrentPage, avg_speed, '#avg_speed_graph_dropdown #chart', '我是單位', '.2f');
-        chartGraph(CurrentPage, safety_score, '#safety_score_graph_dropdown #chart', '我是單位', '.1f');
-        chartGraph(CurrentPage, avg_acceleration, '#avg_acceleration_graph_dropdown #chart', '我是單位', '.3f');
-        chartGraph_special(CurrentPage);
-        bar_chartGraph(CurrentPage, accel_vio_count, '#avg_acceleration_vio_count_graph_dropdown #chart');
-        bar_chartGraph(CurrentPage, speed_vio_count, '#avg_speed_vio_count_graph_dropdown #chart');
-        bar_chartGraph_special(CurrentPage);
+        chartGraph(CurrentPage, avg_speed, '#avg_speed_graph_dropdown #chart', '我是單位', '.2f', "行車平均速度折線圖");
+        chartGraph(CurrentPage, safety_score, '#safety_score_graph_dropdown #chart', '我是單位', '.1f', "行車安全分數折線圖");
+        chartGraph(CurrentPage, avg_acceleration, '#avg_acceleration_graph_dropdown #chart', '我是單位', '.3f', "行車平均加速度折線圖");
+        chartGraph_special(CurrentPage, "行車平均車距折線圖");
+        bar_chartGraph(CurrentPage, accel_vio_count, '#avg_acceleration_vio_count_graph_dropdown #chart', "行車加速度違規長條圖");
+        bar_chartGraph(CurrentPage, speed_vio_count, '#avg_speed_vio_count_graph_dropdown #chart', "行車速度違規長條圖");
+        bar_chartGraph_special(CurrentPage, "行車車距違規次數長條圖");
     });
 
     var lastBtn = document.querySelector('.lastBtn');
@@ -431,24 +464,24 @@ db2.ref("/Users/" + getCookie("uid") + "/journey").once('value', function (snaps
             CurrentPage -= 1;
         }
 
-        chartGraph(CurrentPage, avg_speed, '#avg_speed_graph_dropdown #chart', '我是單位', '.2f');
-        chartGraph(CurrentPage, safety_score, '#safety_score_graph_dropdown #chart', '我是單位', '.1f');
-        chartGraph(CurrentPage, avg_acceleration, '#avg_acceleration_graph_dropdown #chart', '我是單位', '.3f');
-        chartGraph_special(CurrentPage);
-        bar_chartGraph(CurrentPage, accel_vio_count, '#avg_acceleration_vio_count_graph_dropdown #chart');
-        bar_chartGraph(CurrentPage, speed_vio_count, '#avg_speed_vio_count_graph_dropdown #chart');
-        bar_chartGraph_special(CurrentPage);
+        chartGraph(CurrentPage, avg_speed, '#avg_speed_graph_dropdown #chart', '我是單位', '.2f', "行車平均速度折線圖");
+        chartGraph(CurrentPage, safety_score, '#safety_score_graph_dropdown #chart', '我是單位', '.1f', "行車安全分數折線圖");
+        chartGraph(CurrentPage, avg_acceleration, '#avg_acceleration_graph_dropdown #chart', '我是單位', '.3f', "行車平均加速度折線圖");
+        chartGraph_special(CurrentPage, "行車平均車距折線圖");
+        bar_chartGraph(CurrentPage, accel_vio_count, '#avg_acceleration_vio_count_graph_dropdown #chart', "行車加速度違規長條圖");
+        bar_chartGraph(CurrentPage, speed_vio_count, '#avg_speed_vio_count_graph_dropdown #chart', "行車速度違規長條圖");
+        bar_chartGraph_special(CurrentPage, "行車車距違規次數長條圖");
     });
 
     CurrentPage = TotalPage - 1;
 
-    chartGraph(CurrentPage, avg_speed, '#avg_speed_graph_dropdown #chart', '我是單位', '.2f');
-    chartGraph(CurrentPage, safety_score, '#safety_score_graph_dropdown #chart', '我是單位', '.1f');
-    chartGraph(CurrentPage, avg_acceleration, '#avg_acceleration_graph_dropdown #chart', '我是單位', '.3f');
-    chartGraph_special(CurrentPage);
-    bar_chartGraph(CurrentPage, accel_vio_count, '#avg_acceleration_vio_count_graph_dropdown #chart');
-    bar_chartGraph(CurrentPage, speed_vio_count, '#avg_speed_vio_count_graph_dropdown #chart');
-    bar_chartGraph_special(CurrentPage);
+    chartGraph(CurrentPage, avg_speed, '#avg_speed_graph_dropdown #chart', '我是單位', '.2f', "行車平均速度折線圖");
+    chartGraph(CurrentPage, safety_score, '#safety_score_graph_dropdown #chart', '我是單位', '.1f', "行車安全分數折線圖");
+    chartGraph(CurrentPage, avg_acceleration, '#avg_acceleration_graph_dropdown #chart', '我是單位', '.3f', "行車平均加速度折線圖");
+    chartGraph_special(CurrentPage, "行車平均車距折線圖");
+    bar_chartGraph(CurrentPage, accel_vio_count, '#avg_acceleration_vio_count_graph_dropdown #chart', "行車加速度違規長條圖");
+    bar_chartGraph(CurrentPage, speed_vio_count, '#avg_speed_vio_count_graph_dropdown #chart', "行車速度違規長條圖");
+    bar_chartGraph_special(CurrentPage, "行車車距違規次數長條圖");
 
     switchChart();
     hideAllGraph();
