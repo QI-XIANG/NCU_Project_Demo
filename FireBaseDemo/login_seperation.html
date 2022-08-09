@@ -14,33 +14,86 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 100px">
-        <a class="navbar-brand" href="#">機車行車安全系統</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">首頁</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">公開統計數據</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">帳號登入</a>
-                </li>
-            </ul>
-            <span class="navbar-text"> Under Development by Qi Xiang</span>
-        </div>
-    </nav>
 
-    <div class="container-fluid">
+    <div class="container-fluid navbar-container sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+            <a class="navbar-brand">BykE</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <div class="cool-link">
+                            <a class="nav-link" href="https://qi-xiang.github.io/ProjectWebsite/">首頁</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <div class="cool-link">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                                aria-expanded="false">
+                                關於我們
+                            </a>
+                        </div>
+                        <div class="dropdown-menu" style="margin-top: 0;">
+                            <a class="dropdown-item" href="https://qi-xiang.github.io/ProjectWebsite/#about">關於我們</a>
+                            <a class="dropdown-item" href="https://qi-xiang.github.io/ProjectWebsite/#service">服務內容</a>
+                            <a class="dropdown-item" href="https://qi-xiang.github.io/ProjectWebsite/#product">產品特色</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="cool-link">
+                            <a class="nav-link" href="#">公開統計數據</a>
+                        </div>
+                    </li>
+                    <li class="nav-item active">
+                        <div class="cool-link">
+                            <a class="nav-link"
+                                href="https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/login_seperation.html">會員專區</a>
+                        </div>
+                    </li>
+                    <li class="nav-item active" href="#">
+                        <div class="cool-link">
+                            <a class="nav-link" href="https://qi-xiang.github.io/ProjectWebsite/#question">常見問答</a>
+                        </div>
+                    </li>
+                    <li class="nav-item active">
+                        <div class="cool-link">
+                            <a class="nav-link" href="https://qi-xiang.github.io/ProjectWebsite/#contact">聯絡我們</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container-fluid header-container">
+        <div class="jumbotron"
+            style="margin-bottom:0;padding-top: 0px;padding-bottom:32px;border-radius: 0%;background: #26353B;">
+            <div class="row">
+                <div class="col-12 py-2">
+                    <h1 class="display-4" style="text-align: center;margin-bottom: 20px;margin-top: 30px;">歡迎使用 BykE
+                    </h1>
+                    <p class="lead" style="text-align: center;">我們運用最新的AI技術與IoT裝置，為您即時掌握行車狀況，讓您放心享受每一段旅程!</p>
+                    <p class="lead2" style="text-align: center;margin-bottom: 20px;">We use newest AI technology and IoT
+                        device to ensure your sweet and safe journey.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid mt-5">
         <div class="row d-flex justify-content-center">
-            <div class="col-12 col-md-4 col-xl-3 d-flex justify-content-center" style="margin-bottom: 40px">
+            <div class="col-12 mb-3" style="overflow: hidden;" data-aos="zoom-in" data-aos-duration="1000">
+                <h1 class="section-title">分流登入窗口</h1>
+                <hr class="section-divider" />
+                <p class="section-description">請依需求點擊下方按鈕前往登入頁面。</p>
+            </div>
+            <div class="col-12 col-md-4 col-xl-3 d-flex justify-content-center mb-5">
                 <div class="card" style="width: 18rem">
-                    <img src="src/img/yor_forger.jpg" class="card-img-top" alt="..." />
+                    <img src="https://picsum.photos/id/1043/1024/640" class="card-img-top" alt="..." />
                     <div class="card-body text-center">
                         <h5 class="card-title">政府機關登入</h5>
                         <p class="card-text">
@@ -50,9 +103,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-4 col-xl-3 d-flex justify-content-center" style="margin-bottom: 40px">
+            <div class="col-12 col-md-4 col-xl-3 d-flex justify-content-center mb-5">
                 <div class="card" style="width: 18rem">
-                    <img src="src/img/elegent.jpg" class="card-img-top" alt="..." />
+                    <img src="https://picsum.photos/id/1039/1024/640" class="card-img-top" alt="..." />
                     <div class="card-body text-center">
                         <h5 class="card-title">保險公司登入</h5>
                         <p class="card-text">
@@ -62,9 +115,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-4 col-xl-3 d-flex justify-content-center" style="margin-bottom: 40px">
+            <div class="col-12 col-md-4 col-xl-3 d-flex justify-content-center mb-5">
                 <div class="card" style="width: 18rem">
-                    <img src="src/img/anya.jpg" class="card-img-top" alt="..." />
+                    <img src="https://picsum.photos/id/1040/1024/640" class="card-img-top" alt="..." />
                     <div class="card-body text-center">
                         <h5 class="card-title">一般用戶登入</h5>
                         <p class="card-text">
@@ -77,37 +130,40 @@
         </div>
     </div>
 
-    
 
-    <div class="container py-1">
-        <!-- Footer -->
-        <footer class="page-footer font-small">
-            <!-- Copyright -->
-            <div class="footer-copyright text-center py-3">
-                © 2022 Copyright:
-                <a href="https://qi-xiang.github.io/">Qi Xiang</a>
+
+    <div class="container-fluid footer" style="background-color: #222F33;">
+        <div class="row">
+            <div class="col-12" style="padding-top: 15px;">
+                <div class="d-flex justify-content-center">
+                    <a href="https://github.com/QI-XIANG"><img class="feature-img" src="src/img/25231.png" width="45px"
+                            height="45px" alt="img"></a>
+                </div>
             </div>
-            <!-- Copyright -->
-        </footer>
-        <!-- Footer -->
+            <div class="col-12" style="color: #fff;text-align:center;padding: 10px 0 20px;">
+                © 2022 Copyright: Qi Xiang
+            </div>
+        </div>
     </div>
 
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
-        crossorigin="anonymous"></script>
-
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
-    -->
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+    crossorigin="anonymous"></script>
+<link href="src/css/login_seperation.css" rel="stylesheet">
+<script>
+    if (window.screen.width <= 991) {
+        $(".dropdown-toggle").click(function () {
+            $(".dropdown-menu").toggle();
+        });
+    }
+
+    console.log(window.screen.width)
+    $(".dropdown-toggle:hover .dropdown-menu").show();
+</script>
 
 </html>

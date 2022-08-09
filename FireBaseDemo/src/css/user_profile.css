@@ -57,14 +57,13 @@ table.journey-table tr:last-child td:last-child {
     border-color: #bbb !important;
 }
 
-body {
-    font-family: NotoSansTC-Regular;
-
-}
-
 @font-face {
     font-family: NotoSansTC-Regular;
     src: url(../font/NotoSansTC-Regular.otf);
+}
+
+body {
+    font-family: NotoSansTC-Regular;
 }
 
 @media (min-width: 1439px) {
@@ -88,7 +87,7 @@ body {
 }
 
 @media (min-width: 1200px) {
-    #chart{
+    #chart {
         display: flex;
         justify-content: center;
     }
@@ -136,12 +135,12 @@ a:hover {
     filter: drop-shadow(0 0 10px white);
 }
 
-div#nav{
+div#nav {
     display: flex;
     justify-content: center;
 }
 
-div#nav a.active{
+div#nav a.active {
     background-color: #d1d1d1;
 }
 
@@ -160,12 +159,12 @@ div#nav a.active{
     width: 150px;
 }
 
-.c3-title{
+.c3-title {
     font-size: 16px;
     font-family: NotoSansTC-Regular;
 }
 
-.graph-selection-container{
+.graph-selection-container {
     padding-bottom: 10px !important;
 }
 
@@ -176,9 +175,9 @@ div#nav a.active{
     text-align: center;
     background-color: black;
     border-radius: .25rem;
-  }
+}
 
-  .tooltip-inner::after {
+.tooltip-inner::after {
     content: "";
     position: absolute;
     top: 100%;
@@ -188,13 +187,62 @@ div#nav a.active{
     border-width: 5px;
     border-style: solid;
     border-color: black transparent transparent transparent;
-  }
+}
 
-  a.disabled {
+a.disabled {
     /* Make the disabled links grayish*/
     color: gray;
     /* And disable the pointer events */
     pointer-events: none;
-  }
+}
 
+/*導覽列*/
+.navbar-container {
+    padding: 0 !important;
+    background-color: #2c2c2c;
+}
 
+.custom-navbar {
+    background-color: #2c2c2c;
+}
+
+.custom-navbar a.nav-link {
+    color: #fff !important;
+    text-align: center;
+}
+
+.custom-navbar .navbar-brand {
+    color: #fff !important;
+}
+
+.navbar-container .dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.navbar-container .dropdown-item{
+    color: black !important;
+}
+
+@media (min-width: 992px) {
+    .cool-link::after {
+        content: '';
+        display: block;
+        width: 0;
+        height: 2px;
+        margin-top: -5px;
+        background: #fff;
+        transition: width .3s;
+    }
+
+    .cool-link:hover::after {
+        width: 100%;
+        transition: width .3s;
+    }
+
+}
+
+@media (max-width: 991px) {
+    .navbar-container .dropdown-menu .dropdown-item {
+        text-align: center;
+    }
+}
