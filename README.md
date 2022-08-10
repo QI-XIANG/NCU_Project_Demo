@@ -4,6 +4,7 @@
 
 ![NCU_Project_Demo](https://socialify.git.ci/QI-XIANG/NCU_Project_Demo/image?description=1&font=Inter&language=1&name=1&owner=1&pattern=Brick%20Wall&theme=Light)
 
+* [首頁][https://qi-xiang.github.io/ProjectWebsite/]
 * [一般用戶登入](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/userLogin.html)
 * [保險公司登入](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/insuranceCompany_login.html)
 * [政府機關登入](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/Government_login.html)
@@ -13,6 +14,7 @@
 * [保險公司檢視個人頁面 (需先登入)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/insuranceCompany_UserProfile.html)
 * [登入分流頁面](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/login_seperation.html)
 * [政府機關頁面 (需先登入)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/Government.html)
+* [車友數據模板](https://qi-xiang.github.io/ProjectWebsite/dashboard.html)
 
 ### 建議使用電腦瀏覽，RWD尚未完善!!!
 
@@ -47,6 +49,7 @@
 27. 將視覺化圖表修正為舊到新排列並優先顯示最新數據 2022.08.03
 28. 新增圖表標題 2022.08.03
 29. 修改部分頁面的版面 2022.08.10 
+30. 新增車友數據供參考 2022.08.11
 
 ### 備忘錄:
 
@@ -60,4 +63,4 @@
 8. 將全數 CSS 從 Html 中獨立出來並壓縮成 min.css
 9. 將 CSS 轉換用 Sass 做前處理達成 DRY (Don't repeat yourself)
 10. ~~將視覺化圖表修正為舊到新排列(JQuery pre-click last page-link)~~
-11. Figma 版型研究中...
+11. ~~Figma 版型研究中...~~
