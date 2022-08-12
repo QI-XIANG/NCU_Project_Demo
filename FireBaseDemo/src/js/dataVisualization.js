@@ -174,7 +174,7 @@ function chartGraph_special(CurrentPage, graphTitle) {
             },
             y: {
                 label: {
-                    text: '我是單位',
+                    text: '單位 : mm',
                     position: 'outer-middle',
                 },
                 tick: {
@@ -201,7 +201,7 @@ function chartGraph_special(CurrentPage, graphTitle) {
 }
 
 //長條圖通用 function (速度、加速度違規適用)
-function bar_chartGraph(CurrentPage, OriginalData, bindElement, graphTitle) {
+function bar_chartGraph(CurrentPage, OriginalData, bindElement, unitText, graphTitle) {
     var current_data = OriginalData.slice(0, 1);
 
     if (CurrentPage + 1 < TotalPage) {
@@ -251,7 +251,7 @@ function bar_chartGraph(CurrentPage, OriginalData, bindElement, graphTitle) {
             },
             y: {
                 label: {
-                    text: '我是單位',
+                    text: unitText,
                     position: 'outer-middle',
                 }
             }
@@ -321,7 +321,7 @@ function bar_chartGraph_special(CurrentPage, graphTitle) {
             },
             y: {
                 label: {
-                    text: '我是單位',
+                    text: '單位 : 次',
                     position: 'outer-middle',
                 },
             }
@@ -363,7 +363,7 @@ db2.ref("/Users/" + getCookie("uid") + "/journey").once('value', function (snaps
 
         avg_speed.push((data[journey_keys[i]]['speed_stat']['avg_speed'] * 100 / 100).toFixed(2));
 
-        avg_acceleration.push((data[journey_keys[i]]['acceleration_stat'][0]['avg_acceleration'] * 100 / 100).toFixed(2));
+        avg_acceleration.push((data[journey_keys[i]]['acceleration_stat'][0]['avg_acceleration'] * 980 / 100).toFixed(2));
 
         avg_left_distance.push(data[journey_keys[i]]['distance_stat'][0]['avg_distance']);
         avg_right_distance.push(data[journey_keys[i]]['distance_stat'][1]['avg_distance']);
@@ -449,12 +449,12 @@ db2.ref("/Users/" + getCookie("uid") + "/journey").once('value', function (snaps
             CurrentPage += 1;
         }
 
-        chartGraph(CurrentPage, avg_speed, '#avg_speed_graph_dropdown #chart', '我是單位', '.2f', "行車平均速度折線圖");
-        chartGraph(CurrentPage, safety_score, '#safety_score_graph_dropdown #chart', '我是單位', '.1f', "行車安全分數折線圖");
-        chartGraph(CurrentPage, avg_acceleration, '#avg_acceleration_graph_dropdown #chart', '我是單位', '.3f', "行車平均加速度折線圖");
+        chartGraph(CurrentPage, avg_speed, '#avg_speed_graph_dropdown #chart', '單位 : km/hr', '.2f', "行車平均速度折線圖");
+        chartGraph(CurrentPage, safety_score, '#safety_score_graph_dropdown #chart', '單位 : 分', '.1f', "行車安全分數折線圖");
+        chartGraph(CurrentPage, avg_acceleration, '#avg_acceleration_graph_dropdown #chart', '單位 : m/s' + '\u00B2', '.3f', "行車平均加速度折線圖");
         chartGraph_special(CurrentPage, "行車平均車距折線圖");
-        bar_chartGraph(CurrentPage, accel_vio_count, '#avg_acceleration_vio_count_graph_dropdown #chart', "行車加速度違規長條圖");
-        bar_chartGraph(CurrentPage, speed_vio_count, '#avg_speed_vio_count_graph_dropdown #chart', "行車速度違規長條圖");
+        bar_chartGraph(CurrentPage, accel_vio_count, '#avg_acceleration_vio_count_graph_dropdown #chart', "單位 : 次", "行車加速度違規長條圖");
+        bar_chartGraph(CurrentPage, speed_vio_count, '#avg_speed_vio_count_graph_dropdown #chart', "單位 : 次", "行車速度違規長條圖");
         bar_chartGraph_special(CurrentPage, "行車車距違規次數長條圖");
     });
 
@@ -464,29 +464,29 @@ db2.ref("/Users/" + getCookie("uid") + "/journey").once('value', function (snaps
             CurrentPage -= 1;
         }
 
-        chartGraph(CurrentPage, avg_speed, '#avg_speed_graph_dropdown #chart', '我是單位', '.2f', "行車平均速度折線圖");
-        chartGraph(CurrentPage, safety_score, '#safety_score_graph_dropdown #chart', '我是單位', '.1f', "行車安全分數折線圖");
-        chartGraph(CurrentPage, avg_acceleration, '#avg_acceleration_graph_dropdown #chart', '我是單位', '.3f', "行車平均加速度折線圖");
+        chartGraph(CurrentPage, avg_speed, '#avg_speed_graph_dropdown #chart', '單位 : km/hr', '.2f', "行車平均速度折線圖");
+        chartGraph(CurrentPage, safety_score, '#safety_score_graph_dropdown #chart', '單位 : 分', '.1f', "行車安全分數折線圖");
+        chartGraph(CurrentPage, avg_acceleration, '#avg_acceleration_graph_dropdown #chart', '單位 : m/s' + '\u00B2', '.3f', "行車平均加速度折線圖");
         chartGraph_special(CurrentPage, "行車平均車距折線圖");
-        bar_chartGraph(CurrentPage, accel_vio_count, '#avg_acceleration_vio_count_graph_dropdown #chart', "行車加速度違規長條圖");
-        bar_chartGraph(CurrentPage, speed_vio_count, '#avg_speed_vio_count_graph_dropdown #chart', "行車速度違規長條圖");
+        bar_chartGraph(CurrentPage, accel_vio_count, '#avg_acceleration_vio_count_graph_dropdown #chart', "單位 : 次", "行車加速度違規長條圖");
+        bar_chartGraph(CurrentPage, speed_vio_count, '#avg_speed_vio_count_graph_dropdown #chart', "單位 : 次", "行車速度違規長條圖");
         bar_chartGraph_special(CurrentPage, "行車車距違規次數長條圖");
     });
 
     CurrentPage = TotalPage - 1;
 
-    chartGraph(CurrentPage, avg_speed, '#avg_speed_graph_dropdown #chart', '我是單位', '.2f', "行車平均速度折線圖");
-    chartGraph(CurrentPage, safety_score, '#safety_score_graph_dropdown #chart', '我是單位', '.1f', "行車安全分數折線圖");
-    chartGraph(CurrentPage, avg_acceleration, '#avg_acceleration_graph_dropdown #chart', '我是單位', '.3f', "行車平均加速度折線圖");
+    chartGraph(CurrentPage, avg_speed, '#avg_speed_graph_dropdown #chart', '單位 : km/hr', '.2f', "行車平均速度折線圖");
+    chartGraph(CurrentPage, safety_score, '#safety_score_graph_dropdown #chart', '單位 : 分', '.1f', "行車安全分數折線圖");
+    chartGraph(CurrentPage, avg_acceleration, '#avg_acceleration_graph_dropdown #chart', '單位 : m/s' + '\u00B2', '.3f', "行車平均加速度折線圖");
     chartGraph_special(CurrentPage, "行車平均車距折線圖");
-    bar_chartGraph(CurrentPage, accel_vio_count, '#avg_acceleration_vio_count_graph_dropdown #chart', "行車加速度違規長條圖");
-    bar_chartGraph(CurrentPage, speed_vio_count, '#avg_speed_vio_count_graph_dropdown #chart', "行車速度違規長條圖");
+    bar_chartGraph(CurrentPage, accel_vio_count, '#avg_acceleration_vio_count_graph_dropdown #chart', "單位 : 次", "行車加速度違規長條圖");
+    bar_chartGraph(CurrentPage, speed_vio_count, '#avg_speed_vio_count_graph_dropdown #chart', "單位 : 次", "行車速度違規長條圖");
     bar_chartGraph_special(CurrentPage, "行車車距違規次數長條圖");
 
     switchChart();
     hideAllGraph();
     $('#avg_speed_graph_dropdown #chart').fadeIn(500);
-    console.log("length:" + safety_score.length)
+    console.log("length:" + CurrentPage)
     console.log("111" + TotalPage);
 });
 

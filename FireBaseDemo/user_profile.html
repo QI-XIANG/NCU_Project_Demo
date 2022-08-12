@@ -8,10 +8,16 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
     integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/800089fd93.js" crossorigin="anonymous"></script>
   <title>User Profile</title>
 </head>
 
 <body>
+
+  <!-- Back to top button -->
+  <button type="button" class="btn btn-danger btn-floating btn-lg" id="btn-back-to-top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
 
   <div class="container-fluid navbar-container sticky-top">
     <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
@@ -66,15 +72,16 @@
     </nav>
   </div>
 
-  <div class="container-fluid py-5" style="padding-bottom: 0px !important;">
-    <div class="row" style="display: none;">
-      <div class="col">
-
+  <div class="container-fluid pt-0 pb-5" style="padding-bottom: 0px !important;">
+    <div class="row" style="background-color: #EFF5F5;">
+      <div class="col-12 common-section">
+        <h1 class="section-title">個人基本資料</h1>
+        <hr class="section-divider" />
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-4 leftColumn">
+      <div class="col-lg-4 leftColumn" style="background-color: #EFF5F5;">
         <div class="card mb-4">
           <div class="card-body text-center">
             <img src="src/img/user-286.png" referrerpolicy="no-referrer" alt="avatar" class="rounded-circle img-fluid"
@@ -89,7 +96,7 @@
         </div>
       </div>
 
-      <div class="col-lg-8 rightColumn">
+      <div class="col-lg-8 rightColumn" style="background-color: #EFF5F5;">
         <div class="card mb-4">
           <div class="card-body">
             <div class="row">
@@ -182,20 +189,24 @@
         </table>
       </div>
 
-      <div class="container-fluid">
 
-
+      <div class="col-12 common-section">
+        <h1 class="section-title">行程資訊</h1>
+        <hr class="section-divider" />
+        <p class="section-description">我們幫您把每次的行程整理成表格。</p>
       </div>
 
+
       <div class="table-responsive" style="padding: 0 3% 0 3%;">
-        <table id="table-demo" class="journey-table table table-hover table-borderless">
+        <table id="table-demo" class="journey-table table table-hover table-borderless" style="padding-bottom: 10px;">
           <thead>
             <tr>
-              <th scope="col">行程編號</th>
+              <th scope="col">行程時間</th>
               <th scope="col">加速度資料</th>
               <th scope="col">車距資料</th>
               <th scope="col">速度資料</th>
-              <th scope="col">行程詳情</th>
+              <th scope="col">行程總時間</th>
+              <th scope="col">行程安全分數</th>
             </tr>
           </thead>
           <tbody class="journey-table-tbody">
@@ -204,74 +215,226 @@
         </table>
       </div>
 
-      <div class="container d-flex justify-content-center py-5 graph-selection-container">
-        <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <li class="page-item"><a class="page-link lastBtn">&laquo; 上10筆</a></li>
-            <li class="disabled" style="margin: 0 5px 0 5px;">
-              <div class="dropdown dropdownContainer">
-                <a class="page-link btn btn-secondary dropdown-toggle graph-dropdown-toggle" role="button" data-toggle="dropdown"
-                  aria-expanded="false" data-toggle2="tooltip" data-placement="top" title="請選擇資料類型">
-                  平均速度
-                </a>
-                <div class="dropdown-menu graph-dropdown-menu">
-                  <a class="dropdown-item graph-dropdown-item" id="avg_speed_dropdown">平均速度</a>
-                  <a class="dropdown-item graph-dropdown-item" id="avg_acceleration_dropdown">平均加速度</a>
-                  <a class="dropdown-item graph-dropdown-item" id="avg_distance_dropdown">平均車距</a>
-                  <a class="dropdown-item graph-dropdown-item" id="avg_speed_vio_count_dropdown">速度違規次數</a>
-                  <a class="dropdown-item graph-dropdown-item" id="avg_acceleration_vio_count_dropdown">加速度違規次數</a>
-                  <a class="dropdown-item graph-dropdown-item" id="avg_distance_vio_count_dropdown">車距違規次數</a>
-                  <a class="dropdown-item graph-dropdown-item" id="safety_score_dropdown">安全分數</a>
+      <div class="col-12 common-section" style="background-color: #EFF5F5;">
+        <h1 class="section-title">視覺化圖表</h1>
+        <hr class="section-divider" />
+        <p class="section-description">我們將資料視覺化，讓您更容易掌握每次行程狀況。</p>
+      </div>
+
+      <div class="container-fluid" style="background-color: #EFF5F5;">
+        <div class="container d-flex justify-content-center graph-selection-container">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link lastBtn">&laquo; 上10筆</a></li>
+              <li class="disabled" style="margin: 0 5px 0 5px;">
+                <div class="dropdown dropdownContainer">
+                  <a class="page-link btn btn-secondary dropdown-toggle graph-dropdown-toggle" role="button"
+                    data-toggle="dropdown" aria-expanded="false" data-toggle2="tooltip" data-placement="top"
+                    title="請選擇資料類型">
+                    平均速度
+                  </a>
+                  <div class="dropdown-menu graph-dropdown-menu">
+                    <a class="dropdown-item graph-dropdown-item" id="avg_speed_dropdown">平均速度</a>
+                    <a class="dropdown-item graph-dropdown-item" id="avg_acceleration_dropdown">平均加速度</a>
+                    <a class="dropdown-item graph-dropdown-item" id="avg_distance_dropdown">平均車距</a>
+                    <a class="dropdown-item graph-dropdown-item" id="avg_speed_vio_count_dropdown">速度違規次數</a>
+                    <a class="dropdown-item graph-dropdown-item" id="avg_acceleration_vio_count_dropdown">加速度違規次數</a>
+                    <a class="dropdown-item graph-dropdown-item" id="avg_distance_vio_count_dropdown">車距違規次數</a>
+                    <a class="dropdown-item graph-dropdown-item" id="safety_score_dropdown">安全分數</a>
+                  </div>
+                </div>
+              <li class="page-item"><a class="page-link nextBtn">下10筆 &raquo;</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+
+      <div class="container-fluid" style="background-color: #EFF5F5;overflow-x: auto;padding-bottom: 20px;">
+        <div class="container d-flex justify-content-center" id="avg_speed_graph_dropdown"
+          style="overflow-x: auto;background-color: #EFF5F5;">
+          <div id="chart" style="width: 100%;"></div>
+        </div>
+
+        <div class="container d-flex justify-content-center" id="avg_acceleration_graph_dropdown"
+          style="overflow-x: auto;background-color: #EFF5F5;">
+          <div id="chart" style="width: 100%;"></div>
+        </div>
+
+        <div class="container d-flex justify-content-center" id="avg_distance_graph_dropdown"
+          style="overflow-x: auto;background-color: #EFF5F5;">
+          <div id="chart" style="width: 100%;"></div>
+        </div>
+
+        <div class="container d-flex justify-content-center" id="avg_speed_vio_count_graph_dropdown"
+          style="overflow-x: auto;background-color: #EFF5F5;">
+          <div id="chart" style="width: 100%;"></div>
+        </div>
+
+        <div class="container d-flex justify-content-center" id="avg_acceleration_vio_count_graph_dropdown"
+          style="overflow-x: auto;background-color: #EFF5F5;">
+          <div id="chart" style="width: 100%;"></div>
+        </div>
+
+        <div class="container d-flex justify-content-center" id="avg_distance_vio_count_graph_dropdown"
+          style="overflow-x: auto;background-color: #EFF5F5;">
+          <div id="chart" style="width: 100%;"></div>
+        </div>
+
+        <div class="container d-flex justify-content-center" id="safety_score_graph_dropdown"
+          style="overflow-x: auto;background-color: #EFF5F5;">
+          <div id="chart" style="width: 100%;"></div>
+        </div>
+      </div>
+
+
+      <!--其他車友資料-->
+      <div class="container-fluid common-section other_data_dashboard py-3 ml-auto mr-auto"
+        style="background-color: #F5F5ff;">
+        <div class="row">
+          <div class="col-12">
+            <h1 class="section-title">車友數據</h1>
+            <hr class="section-divider" />
+            <p class="section-description">下方為所有車友行程的平均數據。</p>
+          </div>
+          <div class="col-12 pt-2" style="padding-left: 0;padding-right:0;">
+            <div class="d-flex justify-content-center">
+              <div class="ml-3 mr-3" style="border: none;">
+                <div class="row">
+                  <div class="col-1" style="padding-right: 0;">
+                    <div class="py-3">
+                      <div class="d-flex justify-content-center">
+                        <div>
+                          <div class="d-flex justify-content-center">
+                            <div class="safetyicon"></div>
+                          </div>
+                          <h5 class="card-title other_safety_score pt-2 mb-1"
+                            style="text-align: center;font-size: 20px !important;">安全分數</h5>
+                          <p class="card-text" id="other_safety_score"
+                            style="text-align: center;font-size: 20px !important;">查無資料</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row col-11">
+                    <div class="col-2 pl-2 pr-2 py-3">
+                      <div class="d-flex justify-content-center">
+                        <div>
+                          <h5 class="card-title other_avg_speed">車速</h5>
+                          <h5 class="card-text pl-2" id="other_avg_speed">查無資料</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2 pl-2 pr-2 py-3">
+                      <div class="d-flex justify-content-center">
+                        <div>
+                          <h5 class="card-title other_avg_accel">加速度</h5>
+                          <h5 class="card-text pl-2" id="other_avg_accel">查無資料</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2 pl-2 pr-2 py-3">
+                      <div class="d-flex justify-content-center">
+                        <div>
+                          <h5 class="card-title other_avg_gyro">角加速度</h5>
+                          <h5 class="card-text pl-2" id="other_avg_gyro">查無資料</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2 pl-2 pr-2 py-3">
+                      <div class="d-flex justify-content-center">
+                        <div>
+                          <h5 class="card-title other_avg_LD">左方車距</h5>
+                          <h5 class="card-text pl-2" id="other_avg_LD">查無資料</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2 pl-2 pr-2 py-3">
+                      <div class="d-flex justify-content-center">
+                        <div>
+                          <h5 class="card-title other_avg_RD">右方車距</h5>
+                          <h5 class="card-text pl-2" id="other_avg_RD">查無資料</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2 pl-2 pr-2 py-3">
+                      <div class="d-flex justify-content-center">
+                        <div>
+                          <h5 class="card-title other_avg_BD">後方車距</h5>
+                          <h5 class="card-text pl-2" id="other_avg_BD">查無資料</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2 pl-2 pr-2 py-3">
+                      <div class="d-flex justify-content-center">
+                        <div>
+                          <h5 class="card-title other_avg_speed_count">車速違規</h5>
+                          <h5 class="card-text pl-2" id="other_avg_speed_count">查無資料</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2 pl-2 pr-2 py-3">
+                      <div class="d-flex justify-content-center">
+                        <div>
+                          <h5 class="card-title other_avg_accel_count">加速度違規</h5>
+                          <h5 class="card-text pl-2" id="other_avg_accel_count">查無資料</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2 pl-2 pr-2 py-3">
+                      <div class="d-flex justify-content-center">
+                        <div>
+                          <h5 class="card-title other_avg_LD_count">左方車距違規</h5>
+                          <h5 class="card-text pl-2" id="other_avg_LD_count">查無資料</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2 pl-2 pr-2 py-3">
+                      <div class="d-flex justify-content-center">
+                        <div>
+                          <h5 class="card-title other_avg_RD_count">右方車距違規</h5>
+                          <h5 class="card-text pl-2" id="other_avg_RD_count">查無資料</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2 pl-2 pr-2 py-3">
+                      <div class="d-flex justify-content-center">
+                        <div>
+                          <h5 class="card-title other_avg_BD_count">後方車距違規</h5>
+                          <h5 class="card-text pl-2" id="other_avg_BD_count">查無資料</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2 pl-2 pr-2 py-3">
+                      <div class="d-flex justify-content-center">
+                        <div>
+                          <h5 class="card-title other_journey_time">行程時間</h5>
+                          <h5 class="card-text pl-2" id="other_journey_time">查無資料</h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            <li class="page-item"><a class="page-link nextBtn">下10筆 &raquo;</a></li>
-          </ul>
-        </nav>
-      </div>
-
-      <div class="container d-flex justify-content-center" id="avg_speed_graph_dropdown" style="overflow-x: auto;">
-        <div id="chart" style="width: 100%;"></div>
-      </div>
-
-      <div class="container d-flex justify-content-center" id="avg_acceleration_graph_dropdown"
-        style="overflow-x: auto;">
-        <div id="chart" style="width: 100%;"></div>
-      </div>
-
-      <div class="container d-flex justify-content-center" id="avg_distance_graph_dropdown" style="overflow-x: auto;">
-        <div id="chart" style="width: 100%;"></div>
-      </div>
-
-      <div class="container d-flex justify-content-center" id="avg_speed_vio_count_graph_dropdown"
-        style="overflow-x: auto;">
-        <div id="chart" style="width: 100%;"></div>
-      </div>
-
-      <div class="container d-flex justify-content-center" id="avg_acceleration_vio_count_graph_dropdown"
-        style="overflow-x: auto;">
-        <div id="chart" style="width: 100%;"></div>
-      </div>
-
-      <div class="container d-flex justify-content-center" id="avg_distance_vio_count_graph_dropdown"
-        style="overflow-x: auto;">
-        <div id="chart" style="width: 100%;"></div>
-      </div>
-
-      <div class="container d-flex justify-content-center" id="safety_score_graph_dropdown" style="overflow-x: auto;">
-        <div id="chart" style="width: 100%;"></div>
-      </div>
-
-
-      <div class="container py-1">
-        <!-- Footer -->
-        <footer class="page-footer font-small">
-          <!-- Copyright -->
-          <div class="footer-copyright text-center py-3">© 2022 Copyright:
-            <a href="https://qi-xiang.github.io/">Qi Xiang</a>
+            </div>
           </div>
-          <!-- Copyright -->
-        </footer>
-        <!-- Footer -->
+        </div>
+      </div>
+      <!---->
+
+
+      <div class="container-fluid footer" style="background-color: #222F33;">
+        <div class="row">
+          <div class="col-12" style="padding-top: 15px;">
+            <div class="d-flex justify-content-center">
+              <a href="https://github.com/QI-XIANG"><img class="feature-img" src="src/img/25231.png" width="45px"
+                  height="45px" alt="img"></a>
+            </div>
+          </div>
+          <div class="col-12" style="color: #fff;text-align:center;padding: 10px 0 20px;">
+            © 2022 Copyright: Qi Xiang
+          </div>
+        </div>
       </div>
 
       <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -359,31 +522,6 @@
 
       </div>
 
-      <!-- @link https://emojikopieren.de/ -->
-      <!-- Add inside the flakes, whatever you like. -->
-      <!--<snowfall>
-        <snowflake><img src="src/img/spy/01.png">️</snowflake>
-        <snowflake><img src="src/img/spy/02.png">️</snowflake>
-        <snowflake><img src="src/img/spy/03 (1).png">️</snowflake>
-        <snowflake><img src="src/img/spy/03 (2).png">️</snowflake>
-        <snowflake><img src="src/img/spy/03.png">️</snowflake>
-        <snowflake><img src="src/img/spy/04 (1).png">️</snowflake>
-        <snowflake><img src="src/img/spy/04 (2).png">️</snowflake>
-        <snowflake><img src="src/img/spy/04.png">️</snowflake>
-        <snowflake><img src="src/img/spy/05.png">️</snowflake>
-        <snowflake><img src="src/img/spy/06.png">️</snowflake>
-        <snowflake><img src="src/img/spy/01.png">️</snowflake>
-        <snowflake><img src="src/img/spy/02.png">️</snowflake>
-        <snowflake><img src="src/img/spy/03 (1).png">️</snowflake>
-        <snowflake><img src="src/img/spy/03 (2).png">️</snowflake>
-        <snowflake><img src="src/img/spy/03.png">️</snowflake>
-        <snowflake><img src="src/img/spy/04 (1).png">️</snowflake>
-        <snowflake><img src="src/img/spy/04 (2).png">️</snowflake>
-        <snowflake><img src="src/img/spy/04.png">️</snowflake>
-        <snowflake><img src="src/img/spy/05.png">️</snowflake>
-        <snowflake><img src="src/img/spy/06.png">️</snowflake>
-      </snowfall>-->
-
       <!-- Loading square for squar.red network -->
       <div class="loader-wrapper">
         <p class="loader-txt">資料載入中...</p><br>
@@ -411,8 +549,10 @@
 <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-database.js"></script>
 <!--<link href="src/css/snowfall.css" rel="stylesheet" />-->
 <link href="src/css/user_profile.css" rel="stylesheet" />
+<link href="src/css/dashboard.css" rel="stylesheet" />
 <script type="module" src="src/js/min_js/user_profile.min.js"></script>
 <link href="https://code.jquery.com/ui/1.13.1/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
 <script type="module" src="src/js/min_js/dataVisualization.min.js"></script>
-
+<script type="module" src="src/js/min_js/other_data.min.js"></script>
+<script src="src/js/backToTop.js"></script>
 </html>

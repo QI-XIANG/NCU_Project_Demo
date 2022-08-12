@@ -1,0 +1,97 @@
+.other_avg_speed::before{ 
+    content: url(../img/dashboard/gauge25.png);
+    float: left;
+    width: 40px;
+    text-align: center;
+}
+.other_avg_speed_count::before{ 
+    content: url(../img/dashboard/forbidden25.png);
+    float: left;
+    width: 40px;
+    text-align: center;
+}
+.other_avg_accel::before{
+    content: url(../img/dashboard/performance25.png);
+    float: left;
+    width: 40px;
+    text-align: center;
+    font-size: 20px;
+}
+.other_avg_accel_count::before{
+    content: url(../img/dashboard/forbidden25.png);
+    float: left;
+    width: 40px;
+    text-align: center;
+    font-size: 20px;
+}
+.other_avg_gyro::before{
+    content: url(../img/dashboard/angle22.png);
+    float: left;
+    width: 40px;
+    text-align: center;
+    font-size: 20px;
+}
+.other_avg_gyro_count::before{
+    content: url(../img/dashboard/forbidden25.png);
+    float: left;
+    width: 40px;
+    text-align: center;
+    font-size: 20px;
+}
+.other_avg_LD::before{
+    content: url(../img/dashboard/distance25.png);
+    float: left;
+    width: 40px;
+    text-align: center;
+    font-size: 20px;
+}
+.other_avg_LD_count::before{
+    content: url(../img/dashboard/forbidden25.png);
+    float: left;
+    width: 40px;
+    text-align: center;
+    font-size: 20px;
+}
+.other_avg_RD::before{
+    content: url(../img/dashboard/distance25.png);
+    float: left;
+    width: 40px;
+    text-align: center;
+    font-size: 20px;
+}
+.other_avg_RD_count::before{
+    content: url(../img/dashboard/forbidden25.png);
+    float: left;
+    width: 40px;
+    text-align: center;
+    font-size: 20px;
+}
+.other_avg_BD::before{
+    content: url(../img/dashboard/distance25.png);
+    float: left;
+    width: 40px;
+    text-align: center;
+    font-size: 20px;
+}
+.other_avg_BD_count::before{
+    content: url(../img/dashboard/forbidden25.png);
+    float: left;
+    width: 40px;
+    text-align: center;
+    font-size: 20px;
+}
+.other_journey_time::before{
+    content: url(../img/dashboard/clock25.png);
+    float: left;
+    width: 40px;
+    text-align: center;
+    font-size: 20px;
+}
+.safetyicon{
+    content: url(../img/dashboard/rating50.png);
+    width: 50px;
+    font-size: 20px;
+}
+.other_data_dashboard .card-title{
+    font-size: 18px !important;
+}

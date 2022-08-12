@@ -41,7 +41,7 @@ var user_insuranceCompanyName = document.querySelector('.user_insuranceCompanyNa
 db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) {
     //var size = Object.keys(data).length; 資料庫 key 的長度取得
     var data = snapshot.val(); //讀出資料庫的使用者資料
-    console.log(data); 
+    console.log(data);
     //var size = Object.keys(data).length;
     //console.log(size);
     /*===========使用者基本資料處理==============*/
@@ -168,12 +168,13 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
         var journey_table = document.querySelector(".journey-table-tbody");
         //預設顯示 no data
         row = `<tr> 
-                <td id="journey-title">查無資料</td>
-                <td id="acceleration_stat">查無資料</td>
-                <td id="distance_stat">查無資料</td>
-                <td id="gps_stat">查無資料</td>
-                <td id="journey-detail">查無資料</td>
-            </tr>`;
+                    <td id="journey_start_time">查無資料</td>
+                    <td id="acceleration_stat">查無資料</td>
+                    <td id="distance_stat">查無資料</td>
+                    <td id="gps_stat">查無資料</td>
+                    <td id="journey_pass_time">查無資料</td>
+                    <td id="journey_safety_score">查無資料</td>
+                </tr>`;
         journey_table.insertAdjacentHTML('afterbegin', row);
         $(".loader-wrapper").fadeOut("slow");
     }
@@ -188,11 +189,13 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
         for (var i = 0; i < journey_row_count; i++) { //透過迴圈依序把資料放進資料表裡面
             //console.log(journey[Object.keys(journey)[i]]['start_time']);
             row = `
-                <td id="journey-title">`+ journey[Object.keys(journey)[i]].start_time + `</td>
+                <td id="journey_start_time">`+ showdate(new Date(journey[Object.keys(journey)[i]].start_time * 1000)) + `</td>
+                
                 <td id="acceleration_stat"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">點擊查看</a></td>
                 <td id="distance_stat"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">點擊查看</a></td>
                 <td id="gps_stat"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">點擊查看</a></td>
-                <td id="journey-detail"><a id="journey_`+ journey[Object.keys(journey)[i]]['start_time'] + `">點擊查看</a></td>
+                <td id="journey_pass_time">`+ journey[Object.keys(journey)[i]].journey_time + ` 秒</td>
+                <td id="journey_safety_score">`+ journey[Object.keys(journey)[i]].safety_score + ` 分</td>
             `;
 
             //console.log(row);
@@ -205,7 +208,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
 
             //行程資訊的 event handle
             //在行程資訊上註冊 click event
-            document.querySelector("td#journey-detail a#journey_" + String(journey[Object.keys(journey)[i]]['start_time'])).addEventListener("click", e => {
+            /*document.querySelector("td#journey-detail a#journey_" + String(journey[Object.keys(journey)[i]]['start_time'])).addEventListener("click", e => {
                 console.log(String(e.target.id.substring(8)));
                 //console.log(String(e.target.id.substring(8)));
                 $("#journey-modal").dialog({ //彈出視窗的外觀大小設定
@@ -234,7 +237,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                     data_journe_safetyScore.innerHTML = journey[String(e.target.id.substring(8))].safety_score+"分";
                 }
                 
-            });
+            });*/
 
             //車距資料 event handle
             //在車距上註冊 click event
@@ -371,8 +374,8 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 var avg_acceleration = document.getElementById("avg_acceleration");
                 var avg_gyro = document.getElementById("avg_gyro");
                 //將實際資料放入 variable
-                var data_avg_acceleration = (Math.round(journey[String(e.target.id.substring(8))]["acceleration_stat"][0].avg_acceleration * 1000) / 1000).toFixed(3);
-                var data_avg_gyro = (Math.round(journey[String(e.target.id.substring(8))]["acceleration_stat"][1].avg_gyro * 1000) / 1000).toFixed(3);
+                var data_avg_acceleration = (Math.round(journey[String(e.target.id.substring(8))]["acceleration_stat"][0].avg_acceleration * 9800) / 1000).toFixed(2) + " m/s&#178;";
+                var data_avg_gyro = (Math.round(journey[String(e.target.id.substring(8))]["acceleration_stat"][1].avg_gyro * 1000) / 1000).toFixed(2) + "&#176;/s&#178;";
                 //修改表格內資料
                 avg_acceleration.innerHTML = data_avg_acceleration;
                 avg_gyro.innerHTML = data_avg_gyro;
@@ -391,7 +394,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                         journey[String(e.target.id.substring(8))]["acceleration_stat"][0].acceleration_violation.forEach(element => {
                             console.log(element);
                             var violation_row = document.querySelector('table#acceleration_violation1_' + String(e.target.id.substring(8)));
-                            violation_row.innerHTML += '<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;" id="data-left-distance">' + count + '</td><td style="border: 1px solid black;padding: 5px;" id="data-right-distance">' + (Math.round(element * 1000) / 1000).toFixed(3); + '</td></tr>';
+                            violation_row.innerHTML += '<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;" id="data-left-distance">' + count + '</td><td style="border: 1px solid black;padding: 5px;" id="data-right-distance">' + (Math.round(element * 9800) / 1000).toFixed(2); + ' m/s&#178;</td></tr>';
                             count += 1;
                         });
                     }
@@ -438,10 +441,10 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                         journey[String(e.target.id.substring(8))]["speed_stat"].speed_violation.forEach(element => {
                             console.log(element);
                             var violation_row = document.querySelector('table#speed_violation1_' + String(e.target.id.substring(8)));
-                            if(isNumeric(String(element.road).split(",")[0])){
-                                violation_row.innerHTML += `<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;">` + count + `</td><td style="border: 1px solid black;padding: 5px;">` + "經度: " + String(element.road).split(",")[0] + "<br>緯度: " + String(element.road).split(",")[1] +`</td><td style="border: 1px solid black;padding: 5px;">` + (Math.round(element.speed * 1000) / 1000).toFixed(2) + " km/hr" + `</td><td style="border: 1px solid black;padding: 5px;">` + (Math.round(element.speed_limit * 1000) / 1000).toFixed(0) + " km/hr" + `</td></tr>`;
+                            if (isNumeric(String(element.road).split(",")[0])) {
+                                violation_row.innerHTML += `<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;">` + count + `</td><td style="border: 1px solid black;padding: 5px;">` + "經度: " + String(element.road).split(",")[0] + "<br>緯度: " + String(element.road).split(",")[1] + `</td><td style="border: 1px solid black;padding: 5px;">` + (Math.round(element.speed * 1000) / 1000).toFixed(2) + " km/hr" + `</td><td style="border: 1px solid black;padding: 5px;">` + (Math.round(element.speed_limit * 1000) / 1000).toFixed(0) + " km/hr" + `</td></tr>`;
                             }
-                            if(!(isNumeric(String(element.road).split(",")[0]))){
+                            if (!(isNumeric(String(element.road).split(",")[0]))) {
                                 violation_row.innerHTML += `<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;">` + count + `</td><td style="border: 1px solid black;padding: 5px;">` + element.road + `</td><td style="border: 1px solid black;padding: 5px;">` + (Math.round(element.speed * 1000) / 1000).toFixed(2) + " km/hr" + `</td><td style="border: 1px solid black;padding: 5px;">` + (Math.round(element.speed_limit * 1000) / 1000).toFixed(0) + " km/hr" + `</td></tr>`;
                             }
                             console.log(isNumeric(String(element.road).split(",")[0]));
@@ -495,7 +498,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 $('#table-demo tbody tr').css('opacity', '0.0').hide().slice(startItem, endItem).
                     css('display', 'table-row').animate({ opacity: 1 }, 300);
 
-                if(Math.round(numPages) >= 3){
+                if (Math.round(numPages) >= 3) {
                     if (Number(CurrentPage) - 1 <= 0) {
                         $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage, CurrentPage + 3).show().css('opacity', '1.0');
                     }
@@ -504,9 +507,9 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                     }
                     if (Number(CurrentPage) - 1 >= 0 & Number(CurrentPage) != Math.round(numPages) - 1) {
                         $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
-                    }    
+                    }
                 }
-                
+
                 //console.log(CurrentPage);
             });
 
@@ -536,7 +539,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                         $("#nav .pagination li.normal-page-item a.link" + String(i)).removeClass("active");
                     }
                 }
-                if(Math.round(numPages) >= 3){
+                if (Math.round(numPages) >= 3) {
                     if (Number(CurrentPage) - 1 <= 0) {
                         $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage, CurrentPage + 3).show().css('opacity', '1.0');
                     }
@@ -547,7 +550,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                         $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
                     }
                 }
-                
+
 
                 console.log(CurrentPage);
             });
@@ -582,11 +585,11 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
 
                 $('#nav a.nextPage').removeClass('active');
 
-                if(Math.round(numPages) >= 3){
+                if (Math.round(numPages) >= 3) {
                     if (Number(CurrentPage) + 1 == Math.round(numPages)) {
-                        $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage-2, CurrentPage + 1).show().css('opacity', '1.0');
+                        $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 2, CurrentPage + 1).show().css('opacity', '1.0');
                     }
-                    if (Number(CurrentPage) + 1  < Math.round(numPages)) {
+                    if (Number(CurrentPage) + 1 < Math.round(numPages)) {
                         $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
                     }
                 }
@@ -605,7 +608,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
         //console.log(document.querySelector(".journey-table-tbody"));
         //console.log(Object.keys(data['journey']));
     }
-    
+
 });
 
 $(".navbar-toggler").bind("click", function (e) { // toggle button bug fix

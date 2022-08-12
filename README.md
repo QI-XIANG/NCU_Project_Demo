@@ -50,6 +50,8 @@
 28. 新增圖表標題 2022.08.03
 29. 修改部分頁面的版面 2022.08.10 
 30. 新增車友數據供參考 2022.08.11
+31. 將車友數據移植到個人頁面 2022.08.12
+32. 個人頁面版面調整(同保險公司檢視個人頁面) 2022.08.12
 
 ### 備忘錄:
 
@@ -59,8 +61,13 @@
 4. 版面重新調整
 5. ~~將部分通用的 function 存至另外的檔案並以 import 形式載入~~
 6. ~~重新規劃並檢視 cookie 運作狀況~~
-7. search bar 功能待新增
+7. ~~search bar 功能待新增~~
 8. 將全數 CSS 從 Html 中獨立出來並壓縮成 min.css
-9. 將 CSS 轉換用 Sass 做前處理達成 DRY (Don't repeat yourself)
+9. ~~將 CSS 轉換用 Sass 做前處理達成 DRY (Don't repeat yourself)~~
 10. ~~將視覺化圖表修正為舊到新排列(JQuery pre-click last page-link)~~
 11. ~~Figma 版型研究中...~~
+
+### 許願池
+
+1. 將 CSS 轉換用 Sass 做前處理達成 DRY (Don't repeat yourself)
+2. search bar 功能待新增
