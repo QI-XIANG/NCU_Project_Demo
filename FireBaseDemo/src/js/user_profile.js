@@ -470,7 +470,13 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //é€£çµ
             $('#table-demo').after('<div id="nav"><ul class="pagination"></ul></div>');
             var rowsShown = 5;
             var rowsTotal = $('#table-demo tbody tr').length;
-            var numPages = rowsTotal / rowsShown;
+            var numPages;
+            if(rowsTotal%5 == 0){
+                numPages = Math.round(rowsTotal / rowsShown);
+            }
+            if(rowsTotal%5 != 0){
+                numPages = Math.ceil(rowsTotal / rowsShown);
+            }
             for (var i = 0; i < numPages; i++) {
                 var pageNum = i + 1;
                 $('#nav .pagination').append('<li class="page-item normal-page-item"><a class="page-link normalLink link' + i + '" rel="' + i + '">' + pageNum + '</a></li>');
@@ -498,14 +504,14 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //é€£çµ
                 $('#table-demo tbody tr').css('opacity', '0.0').hide().slice(startItem, endItem).
                     css('display', 'table-row').animate({ opacity: 1 }, 300);
 
-                if (Math.round(numPages) >= 3) {
+                if (numPages >= 3) {
                     if (Number(CurrentPage) - 1 <= 0) {
                         $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage, CurrentPage + 3).show().css('opacity', '1.0');
                     }
-                    if (Number(CurrentPage) == Math.round(numPages) - 1) {
+                    if (Number(CurrentPage) == numPages - 1) {
                         $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 2, Number(CurrentPage) + 1).show().css('opacity', '1.0');
                     }
-                    if (Number(CurrentPage) - 1 >= 0 & Number(CurrentPage) != Math.round(numPages) - 1) {
+                    if (Number(CurrentPage) - 1 >= 0 & Number(CurrentPage) != numPages - 1) {
                         $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
                     }
                 }
@@ -539,7 +545,7 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //é€£çµ
                         $("#nav .pagination li.normal-page-item a.link" + String(i)).removeClass("active");
                     }
                 }
-                if (Math.round(numPages) >= 3) {
+                if (numPages >= 3) {
                     if (Number(CurrentPage) - 1 <= 0) {
                         $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage, CurrentPage + 3).show().css('opacity', '1.0');
                     }
@@ -585,11 +591,11 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //é€£çµ
 
                 $('#nav a.nextPage').removeClass('active');
 
-                if (Math.round(numPages) >= 3) {
-                    if (Number(CurrentPage) + 1 == Math.round(numPages)) {
+                if (numPages >= 3) {
+                    if (Number(CurrentPage) + 1 == numPages) {
                         $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 2, CurrentPage + 1).show().css('opacity', '1.0');
                     }
-                    if (Number(CurrentPage) + 1 < Math.round(numPages)) {
+                    if (Number(CurrentPage) + 1 < numPages) {
                         $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
                     }
                 }

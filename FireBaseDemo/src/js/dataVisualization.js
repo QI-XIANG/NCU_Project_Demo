@@ -441,7 +441,13 @@ db2.ref("/Users/" + getCookie("uid") + "/journey").once('value', function (snaps
     BD_vio_count = BD_vio_count.reverse();
     safety_score = safety_score.reverse();*/
 
-    TotalPage = Math.ceil(avg_speed.length / 10);
+    
+    if((avg_speed.length-1)%10 == 0){
+        TotalPage = Math.round(avg_speed.length / 10);
+    }
+    if((avg_speed.length-1)%10 != 0){
+        TotalPage = Math.ceil(avg_speed.length / 10);
+    }
 
     var nextBtn = document.querySelector('.nextBtn');
     nextBtn.addEventListener('click', e => {

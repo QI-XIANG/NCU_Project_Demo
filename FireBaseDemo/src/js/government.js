@@ -108,7 +108,13 @@ db.ref("/Government/restrictedUsers").once('value', function (snapshot) {
     var CurrentPage = 0;
     var rowsShown = 5;
     var rowsTotal = users_id.length;
-    var numPages = rowsTotal / rowsShown;
+    var numPages;
+    if(rowsTotal%5 == 0){
+        numPages = Math.round(rowsTotal / rowsShown);
+    }
+    if(rowsTotal%5 != 0){
+        numPages = Math.ceil(rowsTotal / rowsShown);
+    }
     $('#table-demo').after('<div id="nav"><ul class="pagination"></ul></div>');
     for (var i = 0; i < numPages; i++) {
         var pageNum = i + 1;
@@ -139,14 +145,14 @@ db.ref("/Government/restrictedUsers").once('value', function (snapshot) {
         $('#table-demo tbody tr').css('opacity', '0.0').hide().slice(startItem, endItem).
             css('display', 'table-row').animate({ opacity: 1 }, 300);
 
-        if (Math.round(numPages) >= 3) {
+        if (numPages >= 3) {
             if (Number(CurrentPage) - 1 <= 0) {
                 $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage, CurrentPage + 3).show().css('opacity', '1.0');
             }
-            if (Number(CurrentPage) == Math.round(numPages) - 1) {
+            if (Number(CurrentPage) == numPages - 1) {
                 $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 2, Number(CurrentPage) + 1).show().css('opacity', '1.0');
             }
-            if (Number(CurrentPage) - 1 >= 0 & Number(CurrentPage) != Math.round(numPages) - 1) {
+            if (Number(CurrentPage) - 1 >= 0 & Number(CurrentPage) != numPages - 1) {
                 $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
             }
         }
@@ -180,7 +186,7 @@ db.ref("/Government/restrictedUsers").once('value', function (snapshot) {
                 $("#nav .pagination li.normal-page-item a.link" + String(i)).removeClass("active");
             }
         }
-        if (Math.round(numPages) >= 3) {
+        if (numPages >= 3) {
             if (Number(CurrentPage) - 1 <= 0) {
                 $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage, CurrentPage + 3).show().css('opacity', '1.0');
             }
@@ -226,20 +232,16 @@ db.ref("/Government/restrictedUsers").once('value', function (snapshot) {
 
         $('#nav a.nextPage').removeClass('active');
 
-        if (Math.round(numPages) >= 3) {
-            if (Number(CurrentPage) + 1 == Math.round(numPages)) {
+        if (numPages >= 3) {
+            if (Number(CurrentPage) + 1 == numPages) {
                 $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 2, CurrentPage + 1).show().css('opacity', '1.0');
             }
-            if (Number(CurrentPage) + 1 < Math.round(numPages)) {
+            if (Number(CurrentPage) + 1 < numPages) {
                 $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
             }
         }
 
         console.log(CurrentPage);
-        console.log(Math.round(numPages));
     });
 
 });
-
-
-

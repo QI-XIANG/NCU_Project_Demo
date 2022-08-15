@@ -43,6 +43,7 @@ var users_id;
 var user_id;
 var count = 1;
 var data;
+var customer_count = 1;
 
 //若尚未登入則強行轉進登入頁面
 if(getCookie("CompanyName") == null){
@@ -74,7 +75,7 @@ db.ref("/InsuranceCompany/" + getCookie("CompanyName")).once('value', function (
 db.ref("/Users").once('value', function (snapshot) {
     //var size = Object.keys(data).length; 資料庫 key 的長度取得
     data = snapshot.val(); //讀出資料庫的使用者資料
-    //console.log(Object.keys(data));
+    console.log(Object.keys(data));
     users_id = Object.keys(data);
     users_id = users_id.slice(0,users_id.length)
     users_id.forEach(element => {
@@ -84,26 +85,31 @@ db.ref("/Users").once('value', function (snapshot) {
                 user_id = String(element);
                 data[element]["user_id"] = user_id;
                 NanshanLife.push(data[element]);
+                count++;
                 break;
             case "China Life":
                 user_id = String(element);
                 data[element]["user_id"] = user_id;
                 ChinaLife.push(data[element]);
+                count++;
                 break;
             case "Taiwan Life":
                 user_id = String(element);
                 data[element]["user_id"] = user_id;
                 TaiwanLife.push(data[element]);
+                count++;
                 break;
             case "Cathay Life":
                 user_id = String(element);
                 data[element]["user_id"] = user_id;
                 CathayLife.push(data[element]);
+                count++;
                 break;
             case "No insurance":
                 user_id = String(element);
                 data[element]["user_id"] = user_id;
                 NAN.push(data[element]);
+                count++;
                 break;
         };
     });
@@ -111,63 +117,72 @@ db.ref("/Users").once('value', function (snapshot) {
     var customer_table_tbody = document.querySelector("tbody.customer-table-tbody");
     var customer_row;
 
-    NanshanLife.forEach(element => {
-        customer_row = `<tr>
-                        <td class="customer_number">`+ Number(count) + `</td>
-                        <td class="customer_name">`+ element.realName + `</td>
-                        <td class="customer_gender">`+ element.gender + `</td>
-                        <td class="customer_birth">`+ element.birthDate + `</td>
-                        <td class="customer_detail"><a href="#" id="user_info_`+ element.user_id + `" class="user_info">點擊查看</a></td>
-                    </tr>`;
-        customer_table_tbody.innerHTML += customer_row;
-        count++;
-    });
-    ChinaLife.forEach(element => {
-        customer_row = `<tr>
-                        <td class="customer_number">`+ Number(count) + `</td>
-                        <td class="customer_name">`+ element.realName + `</td>
-                        <td class="customer_gender">`+ element.gender + `</td>
-                        <td class="customer_birth">`+ element.birthDate + `</td>
-                        <td class="customer_detail"><a href="#" id="user_info_`+ element.user_id + `" class="user_info">點擊查看</a></td>
-                    </tr>`;
-        customer_table_tbody.innerHTML += customer_row;
-        count++;
-    });
-    TaiwanLife.forEach(element => {
-        customer_row = `<tr>
-                        <td class="customer_number">`+ Number(count) + `</td>
-                        <td class="customer_name">`+ element.realName + `</td>
-                        <td class="customer_gender">`+ element.gender + `</td>
-                        <td class="customer_birth">`+ element.birthDate + `</td>
-                        <td class="customer_detail"><a href="#" id="user_info_`+ element.user_id + `" class="user_info">點擊查看</a></td>
-                    </tr>`;
-        customer_table_tbody.innerHTML += customer_row;
-        count++;
-    });
-    CathayLife.forEach(element => {
-        customer_row = `<tr>
-                        <td class="customer_number">`+ Number(count) + `</td>
-                        <td class="customer_name">`+ element.realName + `</td>
-                        <td class="customer_gender">`+ element.gender + `</td>
-                        <td class="customer_birth">`+ element.birthDate + `</td>
-                        <td class="customer_detail"><a href="#" id="user_info_`+ element.user_id + `" class="user_info">點擊查看</a></td>
-                    </tr>`;
-        customer_table_tbody.innerHTML += customer_row;
-        count++;
-    });
-    NAN.forEach(element => {
-        customer_row = `<tr>
-                        <td class="customer_number">`+ Number(count) + `</td>
-                        <td class="customer_name">`+ element.realName + `</td>
-                        <td class="customer_gender">`+ element.gender + `</td>
-                        <td class="customer_birth">`+ element.birthDate + `</td>
-                        <td class="customer_detail"><a href="#" id="user_info_`+ element.user_id + `" class="user_info">點擊查看</a></td>
-                    </tr>`;
-        customer_table_tbody.innerHTML += customer_row;
-        count++;
-    });
-
-    //console.log("count: "+Object.keys(data).length);
+    if(getCookie("CompanyName") == "TaiwanLife"){
+        TaiwanLife.forEach(element => {
+            customer_row = `<tr>
+                            <td class="customer_number">`+ Number(customer_count) + `</td>
+                            <td class="customer_name">`+ element.realName + `</td>
+                            <td class="customer_gender">`+ element.gender + `</td>
+                            <td class="customer_birth">`+ element.birthDate + `</td>
+                            <td class="customer_detail"><a href="#" id="user_info_`+ element.user_id + `" class="user_info">點擊查看</a></td>
+                        </tr>`;
+            customer_table_tbody.innerHTML += customer_row;
+            customer_count++;
+        });
+    }
+    if(getCookie("CompanyName") == "NanShanLife"){
+        NanshanLife.forEach(element => {
+            customer_row = `<tr>
+                            <td class="customer_number">`+ Number(customer_count) + `</td>
+                            <td class="customer_name">`+ element.realName + `</td>
+                            <td class="customer_gender">`+ element.gender + `</td>
+                            <td class="customer_birth">`+ element.birthDate + `</td>
+                            <td class="customer_detail"><a href="#" id="user_info_`+ element.user_id + `" class="user_info">點擊查看</a></td>
+                        </tr>`;
+            customer_table_tbody.innerHTML += customer_row;
+            customer_count++;
+        });
+    }
+    if(getCookie("CompanyName") == "ChinaLife"){
+        ChinaLife.forEach(element => {
+            customer_row = `<tr>
+                            <td class="customer_number">`+ Number(customer_count) + `</td>
+                            <td class="customer_name">`+ element.realName + `</td>
+                            <td class="customer_gender">`+ element.gender + `</td>
+                            <td class="customer_birth">`+ element.birthDate + `</td>
+                            <td class="customer_detail"><a href="#" id="user_info_`+ element.user_id + `" class="user_info">點擊查看</a></td>
+                        </tr>`;
+            customer_table_tbody.innerHTML += customer_row;
+            customer_count++;
+        });
+    }
+    if(getCookie("CompanyName") == "CathayLife"){
+        CathayLife.forEach(element => {
+            customer_row = `<tr>
+                            <td class="customer_number">`+ Number(customer_count) + `</td>
+                            <td class="customer_name">`+ element.realName + `</td>
+                            <td class="customer_gender">`+ element.gender + `</td>
+                            <td class="customer_birth">`+ element.birthDate + `</td>
+                            <td class="customer_detail"><a href="#" id="user_info_`+ element.user_id + `" class="user_info">點擊查看</a></td>
+                        </tr>`;
+            customer_table_tbody.innerHTML += customer_row;
+            customer_count++;
+        });
+    }
+    if(getCookie("CompanyName") == "NAN"){
+        NAN.forEach(element => {
+            customer_row = `<tr>
+                            <td class="customer_number">`+ Number(customer_count) + `</td>
+                            <td class="customer_name">`+ element.realName + `</td>
+                            <td class="customer_gender">`+ element.gender + `</td>
+                            <td class="customer_birth">`+ element.birthDate + `</td>
+                            <td class="customer_detail"><a href="#" id="user_info_`+ element.user_id + `" class="user_info">點擊查看</a></td>
+                        </tr>`;
+            customer_table_tbody.innerHTML += customer_row;
+            customer_count++;
+        });
+    }
+    
     if (Number(count-1) == Object.keys(data).length) {
         console.log("count: " + Number(count - 1));
         document.querySelectorAll("a.user_info").forEach(element => {
@@ -185,10 +200,17 @@ db.ref("/Users").once('value', function (snapshot) {
         var CurrentPage = 0;
         var rowsShown = 5;
         var rowsTotal = $('#table-demo tbody tr').length;
-        var numPages = rowsTotal / rowsShown;
+        var numPages;
+        if(rowsTotal%5 == 0){
+            numPages = Math.round(rowsTotal / rowsShown);
+        }
+        if(rowsTotal%5 != 0){
+            numPages = Math.ceil(rowsTotal / rowsShown);
+        }
         $('#table-demo').after('<div id="nav"><ul class="pagination"></ul></div>');
         for (var i = 0; i < numPages; i++) {
             var pageNum = i + 1;
+            console.log("i"+i)
             $('#nav .pagination').append('<li class="page-item normal-page-item"><a class="page-link normalLink link' + i + '" rel="' + i + '">' + pageNum + '</a></li>');
         }
         $('#nav .pagination').prepend('<li class="page-item special-page-item"><a class="page-link lastPage" rel="0" aria-label="Previous"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>');
@@ -216,14 +238,14 @@ db.ref("/Users").once('value', function (snapshot) {
             $('#table-demo tbody tr').css('opacity', '0.0').hide().slice(startItem, endItem).
                 css('display', 'table-row').animate({ opacity: 1 }, 300);
 
-            if(Math.round(numPages) >= 3){
+            if(numPages >= 3){
                 if (Number(CurrentPage) - 1 <= 0) {
                     $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage, CurrentPage + 3).show().css('opacity', '1.0');
                 }
-                if (Number(CurrentPage) == Math.round(numPages) - 1) {
+                if (Number(CurrentPage) == numPages - 1) {
                     $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 2, Number(CurrentPage) + 1).show().css('opacity', '1.0');
                 }
-                if (Number(CurrentPage) - 1 >= 0 & Number(CurrentPage) != Math.round(numPages) - 1) {
+                if (Number(CurrentPage) - 1 >= 0 & Number(CurrentPage) != numPages - 1) {
                     $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
                 }    
             }
@@ -257,7 +279,7 @@ db.ref("/Users").once('value', function (snapshot) {
                     $("#nav .pagination li.normal-page-item a.link" + String(i)).removeClass("active");
                 }
             }
-            if(Math.round(numPages) >= 3){
+            if(numPages >= 3){
                 if (Number(CurrentPage) - 1 <= 0) {
                     $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage, CurrentPage + 3).show().css('opacity', '1.0');
                 }
@@ -303,17 +325,16 @@ db.ref("/Users").once('value', function (snapshot) {
 
             $('#nav a.nextPage').removeClass('active');
 
-            if(Math.round(numPages) >= 3){
-                if (Number(CurrentPage) + 1 == Math.round(numPages)) {
+            if(numPages >= 3){
+                if (Number(CurrentPage) + 1 == numPages) {
                     $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage-2, CurrentPage + 1).show().css('opacity', '1.0');
                 }
-                if (Number(CurrentPage) + 1  < Math.round(numPages)) {
+                if (Number(CurrentPage) + 1  < numPages) {
                     $('#nav .pagination li.normal-page-item').css('opacity', '0.0').hide().slice(CurrentPage - 1, Number(CurrentPage) + 2).show().css('opacity', '1.0');
                 }
             }
             
             console.log(CurrentPage);
-            console.log(Math.round(numPages));
         });
     }
 

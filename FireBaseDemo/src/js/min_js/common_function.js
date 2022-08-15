@@ -42,7 +42,7 @@ export function showdate(now) {
     if (min < 10) {
         min = '0' + min;
     }
-    return year + '年' + month + '月' + day + '日 ' + hour + ':' + min;
+    return year + '年' + month + '月' + day + '日 ' +' '+ hour + ':' + min;
 }
 
 // Reference: https://stackoverflow.com/questions/10730362/get-cookie-by-name

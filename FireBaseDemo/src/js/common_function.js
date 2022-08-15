@@ -1,4 +1,4 @@
-export function switchChart(){
+export function switchChart() {
     console.log(document.querySelectorAll('.graph-dropdown-menu .graph-dropdown-item'));
     document.querySelectorAll('.graph-dropdown-menu .graph-dropdown-item').forEach(element => {
         element.addEventListener('click', e => {
@@ -11,7 +11,7 @@ export function switchChart(){
     });
 }
 
-export function hideAllGraph(){
+export function hideAllGraph() {
     document.querySelector('#avg_speed_graph_dropdown div').style.display = 'none';
     document.querySelector('#avg_acceleration_graph_dropdown div').style.display = 'none';
     document.querySelector('#safety_score_graph_dropdown div').style.display = 'none';
@@ -21,9 +21,9 @@ export function hideAllGraph(){
     document.querySelector('#avg_distance_vio_count_graph_dropdown div').style.display = 'none';
 }
 
-export function showSpecificGraph(graph_id){
-    $('#'+String(graph_id).replace("_dropdown","")+'_graph_dropdown #chart').fadeIn(500);
-} 
+export function showSpecificGraph(graph_id) {
+    $('#' + String(graph_id).replace("_dropdown", "") + '_graph_dropdown #chart').fadeIn(500);
+}
 
 //判斷是否可以轉換成數字
 export function isNumeric(num) {
@@ -42,7 +42,7 @@ export function showdate(now) {
     if (min < 10) {
         min = '0' + min;
     }
-    return year + '年' + month + '月' + day + '日 ' + hour + ':' + min;
+    return year + '年' + month + '月' + day + '日 ' + ' ' + hour + ':' + min;
 }
 
 // Reference: https://stackoverflow.com/questions/10730362/get-cookie-by-name
