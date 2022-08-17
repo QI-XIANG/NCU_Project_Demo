@@ -1,30 +1,4 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>
-        function Person(first, last, age, eye) {
-            this.firstName = first;
-            this.lastName = last;
-            this.age = age;
-            this.eyeColor = eye;
-        }
-        var people = [];
-        for(let i=0;i<10;i++){
-            people.push(new Person(i,i,i,i));
-        }
-        console.log(JSON.stringify(people));
-        var ss = JSON.stringify(people);
-        console.log(JSON.parse(ss)[0].firstName);
-        document.body.innerHTML = JSON.stringify(people);
-    </script>
-    <title>Public Dataset</title>
-</head>
-
-<body>
+<html><head><title>API Test</title></head><body>[{"firstName":0,"lastName":0,"age":0,"eyeColor":0},{"firstName":1,"lastName":1,"age":1,"eyeColor":1},{"firstName":2,"lastName":2,"age":2,"eyeColor":2},{"firstName":3,"lastName":3,"age":3,"eyeColor":3},{"firstName":4,"lastName":4,"age":4,"eyeColor":4},{"firstName":5,"lastName":5,"age":5,"eyeColor":5},{"firstName":6,"lastName":6,"age":6,"eyeColor":6},{"firstName":7,"lastName":7,"age":7,"eyeColor":7},{"firstName":8,"lastName":8,"age":8,"eyeColor":8},{"firstName":9,"lastName":9,"age":9,"eyeColor":9}]</body></html>
 
     
 
