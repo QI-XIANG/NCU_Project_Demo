@@ -16,8 +16,8 @@ const firebaseConfig = {
     projectId: "mydatabase-8f225",
     storageBucket: "mydatabase-8f225.appspot.com",
     messagingSenderId: "68532714578",
-    appId: "1:68532714578:web:fc038b336827906b65338b",
-    measurementId: "G-68RXLWEXS7"
+    appId: "1:68532714578:web:55ae248480d4ea0a65338b",
+    measurementId: "G-0H2LVBE185"
 };
 
 // Initialize Firebase
@@ -103,7 +103,8 @@ db.ref("/OpenData/").once('value', function (snapshot) {
     gauge_chart("#chart8", "平均右方車距", average(right_avg).toFixed(0), Math.min(...right_avg).toFixed(0), Math.max(...right_avg).toFixed(0), " mm",color1);
     gauge_chart("#chart9", "平均後方車距", average(back_avg).toFixed(0), Math.min(...back_avg).toFixed(0), Math.max(...back_avg).toFixed(0), " mm",color1);
     gauge_chart("#chart10", "平均安全分數", average(score).toFixed(0), Math.min(...score).toFixed(0), Math.max(...score).toFixed(0), " 分",color1);
-});
+    $(".loader-wrapper").fadeOut("slow");
+},error => (console.log(error)));
 
 //違規 donut chart
 function donutChart(bindto, vio1_t, vio1, vio2_t, vio2, vio3_t, vio3, title) {
@@ -121,7 +122,7 @@ function donutChart(bindto, vio1_t, vio1, vio2_t, vio2, vio3_t, vio3, title) {
             title: title
         },
         size: {
-            height: 350
+            height: 320
         }
     });
 }
@@ -140,7 +141,7 @@ function donutChart_safety(bindto, score1_t, score1, score2_t, score2, title) {
             title: title
         },
         size: {
-            height: 350
+            height: 320
         }
     });
 }
@@ -168,7 +169,7 @@ function gauge_chart(bindto, data_t, data, min, max, unit,color) {
             threshold: {
                 //            unit: 'value', // percentage is default
                 //            max: 200, // 100 is default
-                values: [max*0.3, max*0.6, max*0.8, max]
+                values: [max*0.5, max*0.7, max*0.8, max]
             }
         },
         size: {

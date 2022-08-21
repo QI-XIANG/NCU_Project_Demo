@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
     integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous" />
   <script src="https://kit.fontawesome.com/800089fd93.js" crossorigin="anonymous"></script>
-  <title>登入分流頁面</title>
+  <title>公開統計數據</title>
 </head>
 
 <body>
@@ -49,7 +49,7 @@
           </li>
           <li class="nav-item">
             <div class="cool-link">
-              <a class="nav-link" href="#">公開統計數據</a>
+              <a class="nav-link" href="https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/publicData.html">公開統計數據</a>
             </div>
           </li>
           <li class="nav-item active">
@@ -88,60 +88,65 @@
     </div>
   </div>
 
-  <div class="container-fluid pt-2 pb-3">
+  <div class="container-fluid pt-4 pb-3">
     <div class="row">
-      <div class="col-4">
+      <div class="col-12">
+        <h1 class="section-title">公開統計數據</h1>
+        <hr class="section-divider" />
+        <p class="section-description">下方為所有車友行程的統計、平均數據。</p>
+      </div>
+      <div class="col-lg-4 col-md-6 col-12 py-2">
+        <div style="text-align:center;font-size: 16px;">各類違規分布圖</div>
         <div id="chart"></div>
       </div>
-      <div class="col-4">
+      <div class="col-lg-4 col-md-6 col-12 py-2">
+        <div style="text-align:center;font-size: 16px;">車距違規分布圖</div>
         <div id="chart2"></div>
       </div>
-      <div class="col-4">
+      <div class="col-lg-4 col-md-6 col-12 py-2">
+        <div style="text-align:center;font-size: 16px;">安全分數分布圖</div>
         <div id="chart3"></div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-4">
+      <div class="col-lg-4 col-md-6 col-12 py-2">
+        <div style="text-align:center;font-size: 16px;">行程平均速度</div>
         <div id="chart4"></div>
       </div>
-      <div class="col-4">
+      <div class="col-lg-4 col-md-6 col-12 py-2">
+        <div style="text-align:center;font-size: 16px;">行程平均加速度</div>
         <div id="chart5"></div>
       </div>
-      <div class="col-4">
+      <div class="col-lg-4 col-md-6 col-12 py-2">
+        <div style="text-align:center;font-size: 16px;">行程平均角加速度</div>
         <div id="chart6"></div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-4">
+      <div class="col-lg-4 col-md-6 col-12 py-2">
+        <div style="text-align:center;font-size: 16px;">行程平均左方車距</div>
         <div id="chart7"></div>
       </div>
-      <div class="col-4">
+      <div class="col-lg-4 col-md-6 col-12 py-2">
+        <div style="text-align:center;font-size: 16px;">行程平均右方車距</div>
         <div id="chart8"></div>
       </div>
-      <div class="col-4">
+      <div class="col-lg-4 col-md-6 col-12 py-2">
+        <div style="text-align:center;font-size: 16px;">行程平均後方車距</div>
         <div id="chart9"></div>
-      </div>  
+      </div>
     </div>
   </div>
-  
+
   <div id="other_safety_score" style="display: none;"></div>
 
   <!--其他車友資料-->
   <div class="container-fluid common-section other_data_dashboard py-3 ml-auto mr-auto"
     style="background-color: #F5F5ff;">
     <div class="row">
-      <div class="col-12">
-        <h1 class="section-title">車友數據</h1>
-        <hr class="section-divider" />
-        <p class="section-description">下方為所有車友行程的平均數據。</p>
-      </div>
       <div class="col-12 pt-2" style="padding-left: 0;padding-right:0;">
         <div class="d-flex justify-content-center">
           <div class="ml-3 mr-3" style="border: none;">
             <div class="row">
-              <div class="col-5" style="padding-right: 0;">
+              <div class="col-lg-5 col-md-5 col-12" style="padding-right: 0;">
                 <div style="text-align: center;">
-                 title
+                  行程平均安全分數
                 </div>
                 <div>
                   <div class="d-flex justify-content-center">
@@ -151,28 +156,53 @@
                   </div>
                 </div>
               </div>
-              <div class="row col-7">
-                <div class="col-2 pl-2 pr-2 py-3" style="display:none;">
+              <div class="row col-lg-6 col-md-7 col-12" style="padding: 0;">
+                <table class="table table-borderless" style="border: none;">
+                  <tr>
+                    <td class="pl-md-3" style="padding-bottom: 0;padding-right: 0;">平均車速違規 : <span
+                        class="card-text pl-2" id="other_avg_speed_count">查無資料</span>
+                    </td>
+                    <td class="pl-lg-4 pl-md-3 pl-sm-5" style="padding-bottom: 0;padding-right: 0;">平均加速度違規 : <span
+                        class="card-text pl-2" id="other_avg_accel_count">查無資料</span></td>
+                  </tr>
+                  <tr>
+                    <td class="pl-md-3" style="padding-bottom: 0;padding-right: 0;">平均左方車距違規 : <span
+                        class="card-text pl-2" id="other_avg_LD_count">查無資料</span>
+                    </td>
+                    <td class="pl-lg-4 pl-md-3 pl-sm-5" style="padding-bottom: 0;padding-right: 0;">平均右方車距違規 : <span
+                        class="card-text pl-2" id="other_avg_RD_count">查無資料</span></td>
+                  </tr>
+                  <tr>
+                    <td class="pl-md-3" style="padding-bottom: 0;padding-right: 0;">平均後方車距違規 : <span
+                        class="card-text pl-2" id="other_avg_BD_count">查無資料</span>
+                    </td>
+                    <td class="pl-lg-4 pl-md-3 pl-sm-5" style="padding-bottom: 0;padding-right: 0;">平均行程時間 : <span
+                        class="card-text pl-2" id="other_journey_time">查無資料</span></td>
+                  </tr>
+                </table>
+              </div>
+              <div class="row col-7" style="overflow: hidden;">
+                <div class="col-2 pl-md-2 pr-2 py-3" style="display:none;">
                   <div class="d-flex justify-content-center">
                     <div>
                       <h5 class="card-title other_avg_speed">車速</h5>
-                      <h5 class="card-text pl-2" id="other_avg_speed">查無資料</h5>
+                      <h5 class="card-text" id="other_avg_speed">查無資料</h5>
                     </div>
                   </div>
                 </div>
-                <div class="col-2 pl-2 pr-2 py-3" style="display:none;">
+                <div class="col-2 pl-md-2 pr-2 py-3" style="display:none;">
                   <div class="d-flex justify-content-center">
                     <div>
                       <h5 class="card-title other_avg_accel">加速度</h5>
-                      <h5 class="card-text pl-2" id="other_avg_accel">查無資料</h5>
+                      <h5 class="card-text" id="other_avg_accel">查無資料</h5>
                     </div>
                   </div>
                 </div>
-                <div class="col-2 pl-2 pr-2 py-3" style="display:none;">
+                <div class="col-2 pl-md-2 pr-2 py-3" style="display:none;">
                   <div class="d-flex justify-content-center">
                     <div>
                       <h5 class="card-title other_avg_gyro">角加速度</h5>
-                      <h5 class="card-text pl-2" id="other_avg_gyro">查無資料</h5>
+                      <h5 class="card-text" id="other_avg_gyro">查無資料</h5>
                     </div>
                   </div>
                 </div>
@@ -200,7 +230,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-4 pl-2 pt-4 pr-2">
+                <div class="col-4 pl-2 pt-4 pr-2" style="display:none;">
                   <div class="d-flex justify-content-center">
                     <div>
                       <h5 class="card-title other_avg_speed_count">車速違規</h5>
@@ -208,7 +238,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-4 pl-2 pt-4 pr-2">
+                <div class="col-4 pl-2 pt-4 pr-2" style="display:none;">
                   <div class="d-flex justify-content-center">
                     <div>
                       <h5 class="card-title other_avg_accel_count">加速度違規</h5>
@@ -216,7 +246,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-4 pl-2 pt-4 pr-2">
+                <div class="col-4 pl-2 pt-4 pr-2" style="display:none;">
                   <div class="d-flex justify-content-center">
                     <div>
                       <h5 class="card-title other_avg_LD_count">左方車距違規</h5>
@@ -224,7 +254,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-4 pl-2 pr-2">
+                <div class="col-4 pl-2 pr-2" style="opacity: 0;height: 1px !important;">
                   <div class="d-flex justify-content-center">
                     <div>
                       <h5 class="card-title other_avg_RD_count">右方車距違規</h5>
@@ -232,7 +262,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-4 pl-2 pr-2">
+                <div class="col-4 pl-2 pr-2" style="opacity: 0;height: 1px !important;">
                   <div class="d-flex justify-content-center">
                     <div>
                       <h5 class="card-title other_avg_BD_count">後方車距違規</h5>
@@ -240,7 +270,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-4 pl-2 pr-2">
+                <div class="col-4 pl-2 pr-2" style="display:none;">
                   <div class="d-flex justify-content-center">
                     <div>
                       <h5 class="card-title other_journey_time">行程時間</h5>
@@ -273,7 +303,14 @@
     </div>
   </div>
 
+  <!-- Loading square for squar.red network -->
+  <div class="loader-wrapper">
+    <p class="loader-txt">資料載入中...</p><br>
+    <p><span class="loader"><span class="loader-inner"></span></span></p>
+  </div>
+
 </body>
+<link href="src/css/loader.css" rel="stylesheet" />
 <!-- Load c3.css -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.18/c3.css" rel="stylesheet">
 <!-- Load d3.js and c3.js -->
@@ -291,7 +328,22 @@
 <link href="src/css/login_seperation.css" rel="stylesheet">
 <link href="src/css/dashboard.css" rel="stylesheet" />
 <script src="src/js/backToTop.js"></script>
-<script type="module" src="src/js/publicData.js"></script>
-<script type="module" src="src/js/other_data.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script type="module" src="src/js/min_js/publicData.min.js"></script>
+<script type="module" src="src/js/min_js/other_data.min.js"></script>
+<style>
+  .c3-legend-item {
+    font-size: 13px;
+  }
+
+  @media (max-width: 576px) {
+    .table {
+      font-size: 12px !important;
+      text-align: center;
+      margin-top: 10px !important;
+    }
+  }
+</style>
 
 </html>

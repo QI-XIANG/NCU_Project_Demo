@@ -14,7 +14,9 @@
 * [保險公司檢視個人頁面 (需先登入)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/insuranceCompany_UserProfile.html)
 * [登入分流頁面](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/login_seperation.html)
 * [政府機關頁面 (需先登入)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/Government.html)
-* [車友數據模板](https://qi-xiang.github.io/ProjectWebsite/dashboard.html)
+* [公開數據頁](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/publicData.html)
+* [行程資料API (Compressed Ver.)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/ApiTestCompressed.json)
+* [車友數據模板 (不採用)](https://qi-xiang.github.io/ProjectWebsite/dashboard.html)
 
 ### 建議使用電腦瀏覽，RWD尚未完善!!!
 
@@ -55,6 +57,8 @@
 33. 所有版面初步調整完畢 2022.08.14
 34. 部分bug修正 2022.08.14
 35. 追加公開資料 API 測試頁面 2022.08.17 
+36. 公開資料頁面新增完畢 2022.08.22
+37. 登入介面新增返回首頁 2022.08.22
 
 ### 備忘錄:
 
