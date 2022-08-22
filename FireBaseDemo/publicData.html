@@ -287,7 +287,18 @@
   </div>
   <!---->
 
-
+  <!-- Back to top button -->
+  <a type="button" class="btn btn-danger btn-floating btn-lg" data-toggle="tooltip" data-placement="top" id="btn-api-info" title="資料說明">
+    <i class="fa-solid fa-file-pdf"></i>
+  </a>
+  <a href="https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/ApiTestCompressed.json" target="_blank" type="button" class="btn btn-danger btn-floating btn-lg" data-toggle="tooltip" data-placement="top" id="btn-api-json" title="JSON資料">
+    <i class="fa-solid fa-file-arrow-down"></i>
+  </a>
+  <button type="button" class="btn btn-danger btn-floating btn-lg" data-toggle="tooltip" data-placement="top" id="btn-api" title="公開資料集">
+    <i class="fa-solid fa-database"></i>
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+    
 
   <div class="container-fluid footer" style="background-color: #222F33;">
     <div class="row">
@@ -344,6 +355,50 @@
       margin-top: 10px !important;
     }
   }
+  #btn-api-json{
+    position: fixed;
+    bottom: 120px;
+    left: 20px;
+    z-index: 999;
+    background-color: #1dc8cd;
+    opacity: 0.7;
+    border-radius: 50%;
+    border: none;
+    display: none;
+  }
+  #btn-api-info{
+    position: fixed;
+    bottom: 70px;
+    left: 20px;
+    z-index: 999;
+    background-color: #1dc8cd;
+    opacity: 0.7;
+    border-radius: 50%;
+    border: none;
+    display: none;
+  }
+  #btn-api {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 999;
+    background-color: #1dc8cd;
+    opacity: 0.7;
+    width: 47px;
+    border-radius: 50%;
+    border: none;
+  }
+  .fa-xmark{
+    display: none;
+  }
 </style>
-
+<script>
+  var btn_api = document.getElementById("btn-api");
+  btn_api.addEventListener("click",e=>{
+    $('#btn-api-info').stop().fadeToggle();
+    $('#btn-api-json').stop().fadeToggle();
+    $('.fa-database').toggle();
+    $('.fa-xmark').toggle();
+  });
+</script>
 </html>
