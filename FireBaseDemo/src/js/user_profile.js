@@ -390,11 +390,11 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
 
                     if (document.querySelector('table#acceleration_violation1_' + String(e.target.id.substring(8))) == null) { //避免重複修改 html 導致錯誤
                         console.log(document.querySelector('table#acceleration_violation1_' + String(e.target.id.substring(8))));
-                        dialog_1.innerHTML = `<table id="acceleration_violation1_` + String(e.target.id.substring(8)) + `" style="border: 1px solid black;text-align: center;"><p style="margin-top: 20px;">加速度違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;padding: 5px;">違規編號</th><th style="border: 1px solid black;padding: 5px;">違規加速度差</th></tr></table>`;
+                        dialog_1.innerHTML = `<table id="acceleration_violation1_` + String(e.target.id.substring(8)) + `" style="border: 1px solid black;text-align: center;"><p style="margin-top: 20px;">加速度違規資訊:</p><tr style="border: 1px solid black;"><th style="border: 1px solid black;padding: 5px;">違規編號</th><th style="border: 1px solid black;padding: 5px;">違規加速度</th></tr></table>`;
                         journey[String(e.target.id.substring(8))]["acceleration_stat"][0].acceleration_violation.forEach(element => {
                             console.log(element);
                             var violation_row = document.querySelector('table#acceleration_violation1_' + String(e.target.id.substring(8)));
-                            violation_row.innerHTML += '<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;" id="data-left-distance">' + count + '</td><td style="border: 1px solid black;padding: 5px;" id="data-right-distance">' + (Math.round(element * 9800) / 1000).toFixed(2); + ' m/s&#178;</td></tr>';
+                            violation_row.innerHTML += '<tr style="border: 1px solid black;"><td style="border: 1px solid black;padding: 5px;" id="data-left-distance">' + count + '</td><td style="border: 1px solid black;padding: 5px;" id="data-right-distance">' + (Math.round(element * 9800) / 1000).toFixed(2) + ' m/s&#178;</td></tr>';
                             count += 1;
                         });
                     }
