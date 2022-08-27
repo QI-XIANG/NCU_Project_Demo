@@ -1,12 +1,12 @@
 export function switchChart(){
-    console.log(document.querySelectorAll('.graph-dropdown-menu .graph-dropdown-item'));
+    //console.log(document.querySelectorAll('.graph-dropdown-menu .graph-dropdown-item'));
     document.querySelectorAll('.graph-dropdown-menu .graph-dropdown-item').forEach(element => {
         element.addEventListener('click', e => {
-            console.log(e.target.id);
+            //console.log(e.target.id);
             document.querySelector('.dropdown .graph-dropdown-toggle').innerHTML = element.innerHTML;
             hideAllGraph();
             showSpecificGraph(e.target.id);
-            console.log(element.innerHTML)
+            //console.log(element.innerHTML)
         })
     });
 }

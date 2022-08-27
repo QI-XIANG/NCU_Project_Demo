@@ -57,6 +57,32 @@ table.journey-table tr:last-child td:last-child {
     border-color: #bbb !important;
 }
 
+/*data table*/
+.dataTables_info{
+    padding-top: 0 !important;
+}
+
+#table-demo{
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.paginate_button.page-item a.page-link{
+    color: black !important;
+    font-size: 14px !important;
+}
+
+.paginate_button.page-item.active a.page-link{
+    background-color: #bbb !important;
+    border-color: #bbb !important;
+}
+
+.dataTables_paginate{
+    padding-top: 5px !important;
+    padding-right: 15px !important;
+}
+
 @font-face {
     font-family: NotoSansTC-Regular;
     src: url(../font/NotoSansTC-Regular.otf);

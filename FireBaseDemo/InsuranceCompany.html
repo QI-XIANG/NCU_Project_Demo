@@ -50,7 +50,8 @@
                     </li>
                     <li class="nav-item">
                         <div class="cool-link">
-                            <a class="nav-link" href="https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/publicData.html">公開統計數據</a>
+                            <a class="nav-link"
+                                href="https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/publicData.html">公開統計數據</a>
                         </div>
                     </li>
                     <li class="nav-item active">
@@ -90,7 +91,7 @@
 
     <div class="container-fluid pt-1 pb-3" style="background-color: #EFF5F5;">
         <div class="row">
-            <div class="table-responsive col-12" style="padding: 0 5% 0 5%;">
+            <div class="table-responsive col-12" style="padding: 0 5% 30px 5%;">
                 <table id="table-demo" class="customer-table table table-hover table-borderless">
                     <thead>
                         <tr>
@@ -144,8 +145,14 @@
     </link>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!--表格-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
     <script src="src/js/backToTop.js"></script>
-    <script type="module" src="src/js/min_js/insurance_company.min.js"></script>
+    <script type="module" src="src/js/min_js/insurance_company2.min.js"></script>
 </body>
 
 <style>
@@ -251,6 +258,32 @@
     .section-divider {
         border-top: 2px solid #222F33;
         width: 100px;
+    }
+
+    /*data table*/
+    .dataTables_info {
+        padding-top: 0 !important;
+    }
+
+    #table-demo {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .paginate_button.page-item a.page-link {
+        color: black !important;
+        font-size: 14px !important;
+    }
+
+    .paginate_button.page-item.active a.page-link {
+        background-color: #bbb !important;
+        border-color: #bbb !important;
+    }
+
+    .dataTables_paginate {
+        padding-top: 5px !important;
+        padding-right: 15px !important;
     }
 </style>
 
