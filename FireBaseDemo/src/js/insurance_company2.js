@@ -70,6 +70,11 @@ db.ref("/InsuranceCompany/" + getCookie("CompanyName")).once('value', function (
     companyName.innerHTML = data.CompanyName;
 });
 
+$.fn.dataTable.ext.type.order['birth-date-pre'] = function (d) {
+    let dates = d.split("/");
+    return new Date(dates[2], dates[0], dates[1]);
+};
+
 //存取保戶資料
 db.ref("/Users").once('value', function (snapshot) {
     //var size = Object.keys(data).length; 資料庫 key 的長度取得
@@ -222,6 +227,9 @@ db.ref("/Users").once('value', function (snapshot) {
                     "sSortDescending": ": 以降序排列此列"
                 }
             },
+            columnDefs: [
+                { type: 'birth-date', targets: 3 }
+            ],
         })
 
         $(".loader-wrapper").fadeOut("slow");

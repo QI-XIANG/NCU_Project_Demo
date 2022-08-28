@@ -285,6 +285,20 @@
         padding-top: 5px !important;
         padding-right: 15px !important;
     }
+    #table-demo th:nth-child(2),
+    #table-demo th:nth-child(5){
+        pointer-events: none !important;
+    }
+
+    #table-demo .sorting:nth-child(2)::after,
+    #table-demo .sorting:nth-child(2)::before {
+        display: none;
+    }
+
+    #table-demo .sorting:nth-child(5)::after,
+    #table-demo .sorting:nth-child(5)::before {
+        display: none;
+    }
 </style>
 
 </html>

@@ -83,6 +83,24 @@ table.journey-table tr:last-child td:last-child {
     padding-right: 15px !important;
 }
 
+#table-demo th:nth-child(2),
+#table-demo th:nth-child(3),
+#table-demo th:nth-child(4){
+    pointer-events: none !important;
+}
+
+#table-demo .sorting:nth-child(2)::after,#table-demo .sorting:nth-child(2)::before{
+    display: none;
+}
+
+#table-demo .sorting:nth-child(3)::after,#table-demo .sorting:nth-child(3)::before{
+    display: none;
+}
+
+#table-demo .sorting:nth-child(4)::after,#table-demo .sorting:nth-child(4)::before{
+    display: none;
+}
+
 @font-face {
     font-family: NotoSansTC-Regular;
     src: url(../font/NotoSansTC-Regular.otf);

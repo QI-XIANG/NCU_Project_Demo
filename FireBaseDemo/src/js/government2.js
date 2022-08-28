@@ -85,6 +85,11 @@ function generateCustomerRow(element, count2, user_id) {
     }
 }
 
+$.fn.dataTable.ext.type.order['birth-date-pre'] = function (d) {
+    let dates = d.split("/");
+    return new Date(dates[2], dates[0], dates[1]);
+};
+
 //存取政府限制用戶資料
 db.ref("/Government/restrictedUsers").once('value', function (snapshot) {
     data = snapshot.val(); //讀出資料庫
@@ -129,6 +134,9 @@ db.ref("/Government/restrictedUsers").once('value', function (snapshot) {
                             "sSortDescending": ": 以降序排列此列"
                         }
                     },
+                    columnDefs: [
+                        { type: 'birth-date', targets: 3 }
+                    ],
                 });
             };
         });

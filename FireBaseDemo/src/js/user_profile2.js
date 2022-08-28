@@ -429,6 +429,11 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
             //console.log(d.split(" 秒")[0]);
             return Number(d.split(" 秒")[0]);
         };
+
+        $.fn.dataTable.ext.type.order['safety-score-pre'] = function (d) {
+            //console.log(d.split(" 秒")[0]);
+            return Number(d.split(" 分")[0]);
+        };
     
         $("#table-demo").DataTable({
             "lengthMenu": [[5, 10, 15, 20], [5, 10, 15, 20]], //顯示筆數設定 預設為[10, 25, 50, 100]
@@ -461,6 +466,10 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                 {
                     type: 'journey-time',
                     targets: 4,
+                },
+                {
+                    type: 'safety-score',
+                    targets: 5,
                 },
             ],
         })
