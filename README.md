@@ -2,7 +2,9 @@
 
 ![](https://badgen.net/github/watchers/QI-XIANG/NCU_Project_Demo) ![](https://badgen.net/github/commits/QI-XIANG/NCU_Project_Demo) ![](https://badgen.net/github/last-commit/QI-XIANG/NCU_Project_Demo) ![](https://badgen.net/github/license/QI-XIANG/NCU_Project_Demo)
 
-![NCU_Project_Demo](https://socialify.git.ci/QI-XIANG/NCU_Project_Demo/image?description=1&font=Inter&language=1&name=1&owner=1&pattern=Brick%20Wall&theme=Light)
+![](https://i.imgur.com/uWQ6eml.png)
+
+## 網頁連結
 
 * [首頁](https://qi-xiang.github.io/ProjectWebsite/)
 * [一般用戶登入](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/userLogin.html)
@@ -16,11 +18,28 @@
 * [政府機關頁面 (需先登入)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/Government.html)
 * [公開數據頁](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/publicData.html)
 * [行程資料API (Compressed Ver.)](https://qi-xiang.github.io/NCU_Project_Demo/FireBaseDemo/ApiTestCompressed.json)
-* [車友數據模板 (不採用)](https://qi-xiang.github.io/ProjectWebsite/dashboard.html)
 
-### 建議使用電腦瀏覽，RWD尚未完善!!!
+> ps. 需登入方可拜訪的頁面建議使用尺寸較大之裝置進行瀏覽!!!
 
-### 附註:
+## 測試帳號
+
+### 一般用戶
+
+帳號: ncumotorcycleapp2@gmail.com
+密碼: A123456a
+
+### 保險公司
+
+公司名稱: 台灣人壽
+公司編號: 123456
+登入密碼: taiwanlife123456
+
+### 政府
+
+帳號: 123456
+密碼: gv123456
+
+## 附註:
 
 1. 已完成登入/登出/註冊/找回密碼功能 2022.06
 2. 個人頁面必須先登入才能檢視 2022.06
@@ -56,11 +75,14 @@
 32. 個人頁面版面調整(同保險公司檢視個人頁面) 2022.08.12
 33. 所有版面初步調整完畢 2022.08.14
 34. 部分bug修正 2022.08.14
-35. 追加公開資料 API 測試頁面 2022.08.17 
+35. 追加公開資料 API 測試頁面 (含資料說明書撰寫) 2022.08.17 
 36. 公開資料頁面新增完畢 2022.08.22
 37. 登入介面新增返回首頁 2022.08.22
+38. 資料表格功能擴展(含排序、分頁、搜尋) 2022.08.29
 
-### 備忘錄:
+> 版本更新紀錄 38. 暫為最後一次大更新，之後僅做版面部分細微調整。
+
+## 備忘錄:
 
 1. ~~因資料庫有部分欄位更動，某些.js、min.js檔皆須調整~~
 2. ~~圖表標題待新增~~
@@ -77,7 +99,7 @@
 13. 所有帳號的密碼都必須含英數字!!!
 14. CSS 獨立出來勿夾雜在 HTML 裡面
 
-### 許願池
+## 許願池
 
 1. 將 CSS 轉換用 Sass 做前處理達成 DRY (Don't repeat yourself)
-2. search bar 功能待新增
+2. ~~search bar 功能待新增~~ (許願成功 2022.08.27)
