@@ -28,16 +28,17 @@ firebase.initializeApp(firebaseConfig);
 var db = firebase.database();
 
 //不同保險公司用戶的Array (存放用戶的所有資料於陣列中)
-//台灣人壽
-const TaiwanLife = [];
-//國泰人壽
-const CathayLife = [];
-//南山人壽
-const NanshanLife = [];
-//中國人壽
-const ChinaLife = [];
+//富邦產險
+const FubonInsurance = [];
+//國泰產險
+const CathayCenturyInsurance = [];
+//南山產險
+const NanShanInsurance = [];
+//新光產險
+const ShinkongInsurance= [];
 //沒有投保的公司
 const NAN = [];
+
 
 var users_id;
 var user_id;
@@ -82,46 +83,41 @@ db.ref("/Users").once('value', function (snapshot) {
     users_id = Object.keys(data);
     users_id = users_id.slice(0, users_id.length)
     users_id.forEach(element => {
-        //console.log(data[element].insuranceCompany.name);
         switch (String(data[element].insuranceCompany.name)) {
-            case "Nan Shan Life":
+            case "Shinkong Insurance":
                 user_id = String(element);
                 data[element]["user_id"] = user_id;
-                NanshanLife.push(data[element]);
-                count++;
+                ShinkongInsurance.push(data[element]);
                 break;
-            case "China Life":
+            case "Nan Shan Insurance":
                 user_id = String(element);
-                data[element]["user_id"] = user_id;
-                ChinaLife.push(data[element]);
-                count++;
+                data[element]["user_id"] = user_id; 
+                NanShanInsurance.push(data[element]);
                 break;
-            case "Taiwan Life":
+            case "Fubon Insurance ":
                 user_id = String(element);
                 data[element]["user_id"] = user_id;
-                TaiwanLife.push(data[element]);
-                count++;
+                FubonInsurance.push(data[element]);
                 break;
-            case "Cathay Life":
+            case "Cathay Century Insurance":
                 user_id = String(element);
                 data[element]["user_id"] = user_id;
-                CathayLife.push(data[element]);
-                count++;
+                CathayCenturyInsurance.push(data[element]);
                 break;
             case "No insurance":
                 user_id = String(element);
                 data[element]["user_id"] = user_id;
                 NAN.push(data[element]);
-                count++;
                 break;
         };
+        count++;
     });
 
     var customer_table_tbody = document.querySelector("tbody.customer-table-tbody");
     var customer_row;
 
-    if (getCookie("CompanyName") == "TaiwanLife") {
-        TaiwanLife.forEach(element => {
+    if (getCookie("CompanyName") == "FubonInsurance") {
+        FubonInsurance.forEach(element => {
             customer_row = `<tr>
                             <td class="customer_number">`+ Number(customer_count) + `</td>
                             <td class="customer_name">`+ element.realName + `</td>
@@ -133,8 +129,8 @@ db.ref("/Users").once('value', function (snapshot) {
             customer_count++;
         });
     }
-    if (getCookie("CompanyName") == "NanShanLife") {
-        NanshanLife.forEach(element => {
+    if (getCookie("CompanyName") == "NanShanInsurance") {
+        NanShanInsurance.forEach(element => {
             customer_row = `<tr>
                             <td class="customer_number">`+ Number(customer_count) + `</td>
                             <td class="customer_name">`+ element.realName + `</td>
@@ -146,8 +142,8 @@ db.ref("/Users").once('value', function (snapshot) {
             customer_count++;
         });
     }
-    if (getCookie("CompanyName") == "ChinaLife") {
-        ChinaLife.forEach(element => {
+    if (getCookie("CompanyName") == "CathayCenturyInsurance") {
+        CathayCenturyInsurance.forEach(element => {
             customer_row = `<tr>
                             <td class="customer_number">`+ Number(customer_count) + `</td>
                             <td class="customer_name">`+ element.realName + `</td>
@@ -159,8 +155,8 @@ db.ref("/Users").once('value', function (snapshot) {
             customer_count++;
         });
     }
-    if (getCookie("CompanyName") == "CathayLife") {
-        CathayLife.forEach(element => {
+    if (getCookie("CompanyName") == "ShinkongInsurance") {
+        ShinkongInsurance.forEach(element => {
             customer_row = `<tr>
                             <td class="customer_number">`+ Number(customer_count) + `</td>
                             <td class="customer_name">`+ element.realName + `</td>
@@ -183,10 +179,11 @@ db.ref("/Users").once('value', function (snapshot) {
                         </tr>`;
             customer_table_tbody.innerHTML += customer_row;
             customer_count++;
+            console.log("Shin2")
         });
     }
 
-    if (Number(count - 1) == Object.keys(data).length) {
+    if (Number(count-1) == Object.keys(data).length) {
         document.querySelectorAll("a.user_info").forEach(element => {
             element.addEventListener("click", e => {
                 console.log(String(e.target.id).substring(10));
