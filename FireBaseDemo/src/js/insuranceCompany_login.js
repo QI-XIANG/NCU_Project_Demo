@@ -43,7 +43,7 @@ if (getCookie("identityNumber") != null) { //每次回到登入頁面都先清�
     document.cookie = 'LoginStatus=No';
 }
 
-if(getCookie("CompanyName") != null){ //已登入的保險公司無法二次登入
+if (getCookie("CompanyName") != null) { //已登入的保險公司無法二次登入
     alert("您已經登入，即將跳轉回保險公司頁面!");
     document.cookie = 'LoginStatus=Yes';
     window.location = "insuranceCompany.html";
@@ -53,12 +53,12 @@ if(getCookie("CompanyName") != null){ //已登入的保險公司無法二次登�
 loginBtn.addEventListener('click', function (e) {
 
     e.preventDefault();
-
+    
     if (companyName.value == "default") {
         alert("請選擇保險公司名稱!");
     }
     if (companyName.value != "default") {
-        db.ref("/InsuranceCompany/" + String(companyName.value)).once('value', function (snapshot) {
+        db.ref("InsuranceCompany/" + String(companyName.value)).once('value', function (snapshot) {
             //var size = Object.keys(data).length; 資料庫 key 的長度取得
             var data = snapshot.val(); //讀出資料庫的使用者資料
             console.log(data);

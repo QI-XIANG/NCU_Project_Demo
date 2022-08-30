@@ -94,7 +94,7 @@ db.ref("/Users").once('value', function (snapshot) {
                 data[element]["user_id"] = user_id; 
                 NanShanInsurance.push(data[element]);
                 break;
-            case "Fubon Insurance ":
+            case "Fubon Insurance":
                 user_id = String(element);
                 data[element]["user_id"] = user_id;
                 FubonInsurance.push(data[element]);
@@ -182,6 +182,7 @@ db.ref("/Users").once('value', function (snapshot) {
             console.log("Shin2")
         });
     }
+
 
     if (Number(count-1) == Object.keys(data).length) {
         document.querySelectorAll("a.user_info").forEach(element => {
