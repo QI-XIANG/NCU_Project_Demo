@@ -85,7 +85,8 @@ table.journey-table tr:last-child td:last-child {
 
 #table-demo th:nth-child(2),
 #table-demo th:nth-child(3),
-#table-demo th:nth-child(4){
+#table-demo th:nth-child(4),
+#table-demo th:nth-child(7){
     pointer-events: none !important;
 }
 
@@ -98,6 +99,10 @@ table.journey-table tr:last-child td:last-child {
 }
 
 #table-demo .sorting:nth-child(4)::after,#table-demo .sorting:nth-child(4)::before{
+    display: none;
+}
+
+#table-demo .sorting:nth-child(7)::after,#table-demo .sorting:nth-child(7)::before{
     display: none;
 }
 
