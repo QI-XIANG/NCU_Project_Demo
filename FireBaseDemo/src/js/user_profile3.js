@@ -382,6 +382,12 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
             });
             /*================加速度資料處理結束===============*/
 
+            //console.log(document.querySelector("td#journey_download #journey_" + String(journey[Object.keys(journey)[i]]['start_time'])))
+            document.querySelector("td#journey_download #journey_" + String(journey[Object.keys(journey)[i]]['start_time'])).addEventListener('click',e=>{
+                console.log(e.target);
+                download_journey(e.target,journey);
+            });
+
 
             document.querySelector("td#gps_stat a#journey_" + String(journey[Object.keys(journey)[i]]['start_time'])).addEventListener("click", e => {
                 $("#speed-modal").dialog({
@@ -431,12 +437,6 @@ db.ref("/Users/" + getCookie("uid")).once('value', function (snapshot) { //連�
                     dialog_1.innerHTML = "";
                 }
 
-            });
-
-            //console.log(document.querySelector("td#journey_download #journey_" + String(journey[Object.keys(journey)[i]]['start_time'])))
-            document.querySelector("td#journey_download #journey_" + String(journey[Object.keys(journey)[i]]['start_time'])).addEventListener('click',e=>{
-                console.log(e.target);
-                download_journey(e.target,journey);
             });
 
         }
