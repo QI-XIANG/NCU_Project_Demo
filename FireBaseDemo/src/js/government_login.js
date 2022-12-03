@@ -10,14 +10,14 @@ import { delCookie, getCookie } from "./common_function.js";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "AIzaSyDtTxfCIJIfPTEw44Ah5I1lpjiDO96FlJM",
-    authDomain: "mydatabase-8f225.firebaseapp.com",
-    databaseURL: "https://mydatabase-8f225-default-rtdb.firebaseio.com",
-    projectId: "mydatabase-8f225",
-    storageBucket: "mydatabase-8f225.appspot.com",
-    messagingSenderId: "68532714578",
-    appId: "1:68532714578:web:fc038b336827906b65338b",
-    measurementId: "G-68RXLWEXS7"
+    apiKey: "AIzaSyC13uDK9UfZdEhmZo9Go6YtQ9sGO4Ru1uI",
+    authDomain: "mydatabase-757e9.firebaseapp.com",
+    databaseURL: "https://mydatabase-757e9-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "mydatabase-757e9",
+    storageBucket: "mydatabase-757e9.appspot.com",
+    messagingSenderId: "564843461513",
+    appId: "1:564843461513:web:eec03975926e31c4a4ff58",
+    measurementId: "G-ENN2N176ET"
 };
 
 
